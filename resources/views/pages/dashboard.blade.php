@@ -53,7 +53,7 @@
 
 
                     <!--begin::Secondary button-->
-                    <a href="{{ route('products') }}"
+                    <a href="{{ route('orders') }}"
                         class="btn btn-sm fw-bold bg-body btn-color-gray-700 btn-active-color-primary">
                         Manage Sales </a>
                     <!--end::Secondary button-->

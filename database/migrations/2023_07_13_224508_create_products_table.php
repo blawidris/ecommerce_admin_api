@@ -1,5 +1,6 @@
 <?php
 
+use App\Models\User;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
@@ -20,9 +21,9 @@ return new class extends Migration
             $table->integer('quantity');
             $table->string('image_thumbnail');
             $table->jsonb('media')->nullable();
-            $table->jsonb('discount');
-            $table->jsonb('variantions');
-            $table->decimal('price',10,2);
+            $table->jsonb('discount')->nullable();
+            $table->jsonb('variantions')->nullable();
+            $table->decimal('price', 10, 2);
             $table->string('meta_title')->nullable();
             $table->string('meta_descripiton')->nullable();
             $table->string('meta_keyword')->nullable();

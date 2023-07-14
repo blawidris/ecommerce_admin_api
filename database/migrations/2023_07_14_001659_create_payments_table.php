@@ -14,7 +14,7 @@ return new class extends Migration
     {
         Schema::create('payments', function (Blueprint $table) {
             $table->id();
-            $table->foreignIdFor(Userer::class, 'created_by')->constrained();
+            $table->foreignIdFor(User::class, 'created_by');
             $table->decimal('amount', 10,2);
             $table->string('status');
             $table->string('type');
