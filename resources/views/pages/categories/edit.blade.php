@@ -67,7 +67,13 @@
             <!--begin::Content container-->
             <div id="kt_app_content_container" class="app-container  container-xxl ">
                 <form id="kt_ecommerce_add_category_form" class="form d-flex flex-column flex-lg-row"
-                    data-kt-redirect="categories.html">
+                    data-kt-redirect="{{ route('categories') }}">
+
+                    @csrf
+                    @method('PUT')
+                    <input type="hidden" name="id" value="{{ $category->id }}">
+
+
                     <!--begin::Aside column-->
                     <div class="d-flex flex-column gap-7 gap-lg-10 w-100 w-lg-300px mb-7 me-lg-10">
                         <!--begin::Thumbnail settings-->
@@ -91,7 +97,7 @@
                                     data-kt-image-input="true">
                                     <!--begin::Preview existing avatar-->
                                     <div class="image-input-wrapper w-150px h-150px"
-                                        style="background-image: url({{ asset('assets/media/stock/ecommerce/123.gif') }})">
+                                        style="background-image: url({{ asset($category->thumbnail ?? 'assets/media/svg/files/blank-image.svg') }})">
                                     </div>
                                     <!--end::Preview existing avatar-->
 
@@ -150,7 +156,8 @@
                                 <!--begin::Card toolbar-->
                                 <div class="card-toolbar">
                                     <div class="rounded-circle bg-success w-15px h-15px"
-                                        id="kt_ecommerce_add_category_status"></div>
+                                        id="kt_ecommerce_add_category_status" data-catgory-status="{{ $category->status }}">
+                                    </div>
                                 </div>
                                 <!--begin::Card toolbar-->
                             </div>
@@ -160,11 +167,17 @@
                             <div class="card-body pt-0">
                                 <!--begin::Select2-->
                                 <select class="form-select mb-2" data-control="select2" data-hide-search="true"
-                                    data-placeholder="Select an option" id="kt_ecommerce_add_category_status_select">
+                                    data-placeholder="Select an option" id="kt_ecommerce_add_category_status_select"
+                                    name="status">
                                     <option></option>
-                                    <option value="published" selected>Published</option>
-                                    <option value="scheduled">Scheduled</option>
-                                    <option value="unpublished">Unpublished</option>
+                                    <option value="published" {{ $category->status == 'published' ? 'selected ' : '' }}>
+                                        Published
+                                    </option>
+                                    <option value="scheduled" {{ $category->status == 'scheduled' ? 'selected ' : '' }}>
+                                        Scheduled
+                                    </option>
+                                    <option value="unpublished" {{ $category->status == 'unpublished' ? 'selected ' : '' }}>
+                                        Unpublished</option>
                                 </select>
                                 <!--end::Select2-->
 
@@ -177,7 +190,8 @@
                                     <label for="kt_ecommerce_add_category_status_datepicker" class="form-label">Select
                                         publishing date and time</label>
                                     <input class="form-control" id="kt_ecommerce_add_category_status_datepicker"
-                                        placeholder="Pick date & time" />
+                                        placeholder="Pick date & time" value="{{ $category->published_date ?? '' }}"
+                                        name="published_date" />
                                 </div>
                                 <!--end::Datepicker-->
                             </div>
@@ -209,7 +223,7 @@
 
                                     <!--begin::Input-->
                                     <input type="text" name="category_name" class="form-control mb-2"
-                                        placeholder="Product name" value="Footwear" />
+                                        placeholder="Category name" value="{{ $category->name }}" />
                                     <!--end::Input-->
 
                                     <!--begin::Description-->
@@ -261,7 +275,7 @@
 
                                     <!--begin::Input-->
                                     <input type="text" class="form-control mb-2" name="meta_title"
-                                        placeholder="Meta tag name" />
+                                        placeholder="Meta tag name" value="{{ $category->meta_tag->title ?? '' }}" />
                                     <!--end::Input-->
 
                                     <!--begin::Description-->
@@ -296,8 +310,8 @@
                                     <!--end::Label-->
 
                                     <!--begin::Editor-->
-                                    <input id="kt_ecommerce_add_category_meta_keywords"
-                                        name="kt_ecommerce_add_category_meta_keywords" class="form-control mb-2" />
+                                    <input id="kt_ecommerce_add_category_meta_keywords" name="meta_keywords"
+                                        class="form-control mb-2" value="{{ $category->meta_tag->keywords ?? '' }}" />
                                     <!--end::Editor-->
 
                                     <!--begin::Description-->
@@ -313,7 +327,7 @@
                         <!--end::Meta options-->
 
                         <!--begin::Automation-->
-                        <div class="card card-flush py-4">
+                        {{-- <div class="card card-flush py-4">
                             <!--begin::Card header-->
                             <div class="card-header">
                                 <div class="card-title">
@@ -483,8 +497,9 @@
                                 <!--end::Input group-->
                             </div>
                             <!--end::Card header-->
-                        </div>
+                        </div> --}}
                         <!--end::Automation-->
+
                         <div class="d-flex justify-content-end">
                             <!--begin::Button-->
                             <a href="products.html" id="kt_ecommerce_add_product_cancel" class="btn btn-light me-5">
@@ -517,18 +532,12 @@
 
 @section('custom-js')
     <!--begin::Vendors Javascript(used for this page only)-->
-    <script src="assets/plugins/custom/datatables/datatables.bundle.js"></script>
-    <script src="assets/plugins/custom/formrepeater/formrepeater.bundle.js"></script>
+    <script src="{{ asset('assets/plugins/custom/datatables/datatables.bundle.js') }}"></script>
+    <script src="{{ asset('assets/plugins/custom/formrepeater/formrepeater.bundle.js') }}"></script>
     <!--end::Vendors Javascript-->
 
     <!--begin::Custom Javascript(used for this page only)-->
-    <script src="assets/js/custom/apps/ecommerce/catalog/save-category.js"></script>
-    <script src="assets/js/widgets.bundle.js"></script>
-    <script src="assets/js/custom/widgets.js"></script>
-    <script src="assets/js/custom/apps/chat/chat.js"></script>
-    <script src="assets/js/custom/utilities/modals/upgrade-plan.js"></script>
-    <script src="assets/js/custom/utilities/modals/create-app.js"></script>
-    <script src="assets/js/custom/utilities/modals/users-search.js"></script>
+    <script src="{{ asset('assets/js/custom/apps/ecommerce/catalog/save-category.js') }}"></script>
     <!--end::Custom Javascript-->
     <!--end::Javascript-->
 @endsection

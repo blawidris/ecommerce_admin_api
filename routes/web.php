@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\CategoriesController;
 use App\Http\Controllers\CustomerController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\OrderController;
@@ -35,9 +36,14 @@ Route::group(['prefix' => 'product'], function () {
 Route::group(['prefix' => 'category'], function () {
 
     // GETS
-    Route::get('/lists', [HomeController::class, 'categories'])->name('categories');
-    Route::get('/add', [HomeController::class, 'addCategory'])->name('category.add');
-    Route::get('/edit', [HomeController::class, 'editCategory'])->name('category.edit');
+    Route::get('/lists', [CategoriesController::class, 'index'])->name('categories');
+    Route::get('/add', [CategoriesController::class, 'create'])->name('category.add');
+    Route::get('/edit/{slug}', [CategoriesController::class, 'edit'])->name('category.edit')->where(['slug' => '[a-z]+']);
+
+    // POST
+    Route::post('/create', [CategoriesController::class, 'store'])->name('create_category');
+    Route::put('/update', [CategoriesController::class, 'update'])->name('update_category');
+    Route::delete('/delete', [CategoriesController::class, 'destroy'])->name('delete_category');
 });
 
 

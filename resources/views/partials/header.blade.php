@@ -153,7 +153,8 @@
                                              class="d-flex text-dark text-hover-primary align-items-center mb-5">
                                              <!--begin::Symbol-->
                                              <div class="symbol symbol-40px me-4">
-                                                 <img src="{{ 'assets/media/avatars/300-2.jpg' }}" alt="" />
+                                                 <img src="{{ asset('assets/media/avatars/300-2.jpg') }}"
+                                                     alt="" />
                                              </div>
                                              <!--end::Symbol-->
 
@@ -174,7 +175,8 @@
                                              class="d-flex text-dark text-hover-primary align-items-center mb-5">
                                              <!--begin::Symbol-->
                                              <div class="symbol symbol-40px me-4">
-                                                 <img src="{{ 'assets/media/avatars/300-9.jpg' }}" alt="" />
+                                                 <img src="{{ asset('assets/media/avatars/300-9.jpg') }}"
+                                                     alt="" />
                                              </div>
                                              <!--end::Symbol-->
 
@@ -195,7 +197,8 @@
                                              class="d-flex text-dark text-hover-primary align-items-center mb-5">
                                              <!--begin::Symbol-->
                                              <div class="symbol symbol-40px me-4">
-                                                 <img src="{{ 'assets/media/avatars/300-14.jp' }}g" alt="" />
+                                                 <img src="{{ asset('assets/media/avatars/300-14.jpg') }}"
+                                                     alt="" />
                                              </div>
                                              <!--end::Symbol-->
 
@@ -216,7 +219,8 @@
                                              class="d-flex text-dark text-hover-primary align-items-center mb-5">
                                              <!--begin::Symbol-->
                                              <div class="symbol symbol-40px me-4">
-                                                 <img src="{{ 'assets/media/avatars/300-11.jp' }}g" alt="" />
+                                                 <img src="{{ asset('assets/media/avatars/300-11.jpg') }}"
+                                                     alt="" />
                                              </div>
                                              <!--end::Symbol-->
 
@@ -244,7 +248,7 @@
                                              <div class="symbol symbol-40px me-4">
                                                  <span class="symbol-label bg-light">
                                                      <img class="w-20px h-20px"
-                                                         src="assets/media/svg/brand-logos/volicity-9.svg"
+                                                         src="{{ asset('assets/media/svg/brand-logos/volicity-9.svg') }}"
                                                          alt="" />
                                                  </span>
                                              </div>
@@ -268,7 +272,8 @@
                                              <div class="symbol symbol-40px me-4">
                                                  <span class="symbol-label bg-light">
                                                      <img class="w-20px h-20px"
-                                                         src="assets/media/svg/brand-logos/tvit.svg" alt="" />
+                                                         src="{{ asset('assets/media/svg/brand-logos/tvit.svg') }}"
+                                                         alt="" />
                                                  </span>
                                              </div>
                                              <!--end::Symbol-->
@@ -292,7 +297,8 @@
                                              <div class="symbol symbol-40px me-4">
                                                  <span class="symbol-label bg-light">
                                                      <img class="w-20px h-20px"
-                                                         src="assets/media/svg/misc/infography.svg" alt="" />
+                                                         src="{{ asset('assets/media/svg/misc/infography.svg') }}"
+                                                         alt="" />
                                                  </span>
                                              </div>
                                              <!--end::Symbol-->
@@ -315,7 +321,8 @@
                                              <div class="symbol symbol-40px me-4">
                                                  <span class="symbol-label bg-light">
                                                      <img class="w-20px h-20px"
-                                                         src="assets/media/svg/brand-logos/leaf.svg" alt="" />
+                                                         src="{{ asset('assets/media/svg/brand-logos/leaf.svg') }}"
+                                                         alt="" />
                                                  </span>
                                              </div>
                                              <!--end::Symbol-->
@@ -338,7 +345,7 @@
                                              <div class="symbol symbol-40px me-4">
                                                  <span class="symbol-label bg-light">
                                                      <img class="w-20px h-20px"
-                                                         src="assets/media/svg/brand-logos/tower.svg"
+                                                         src="{{asset('assets/media/svg/brand-logos/tower.svg')}}"
                                                          alt="" />
                                                  </span>
                                              </div>

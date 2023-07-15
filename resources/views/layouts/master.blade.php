@@ -7,6 +7,7 @@
     <title>Gianna - @yield('pageTitle')</title>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="" content="">
     <meta property="og:locale" content="en_US" />
     <meta property="og:type" content="article" />
     <link rel="shortcut icon" href="{{ asset('media/logos/favicon.ico') }}" />
@@ -129,7 +130,7 @@
 
     <!--begin::Javascript-->
     <script>
-        // var hostUrl = "assets/index.html";
+        var hostUrl = '{!! url('/') !!}'
     </script>
 
     <!--begin::Global Javascript Bundle(mandatory for all pages)-->

@@ -19,15 +19,6 @@ class HomeController extends Controller
 
 
 
-    public function categories()
-    {
-
-        $data = [
-            'pageTitle' => 'Categories'
-        ];
-
-        return view('pages.categories.index', $data);
-    }
 
     public function categoryView()
     {
