@@ -97,7 +97,7 @@
                                     data-kt-image-input="true">
                                     <!--begin::Preview existing avatar-->
                                     <div class="image-input-wrapper w-150px h-150px"
-                                        style="background-image: url({{ asset($category->thumbnail ?? 'assets/media/svg/files/blank-image.svg') }})">
+                                        style="background-image: url({{ asset('storage/' . $category->thumbnail ?? 'assets/media/svg/files/blank-image.svg') }})">
                                     </div>
                                     <!--end::Preview existing avatar-->
 
@@ -243,6 +243,8 @@
                                     <div id="kt_ecommerce_add_category_description"
                                         name="kt_ecommerce_add_category_description" class="min-h-200px mb-2">
                                     </div>
+                                    <input type="hidden" name="descritpion" id="kt_ecommerce_add_category_description_input">
+
                                     <!--end::Editor-->
 
                                     <!--begin::Description-->
@@ -290,6 +292,9 @@
                                     <!--begin::Label-->
                                     <label class="form-label">Meta Tag Description</label>
                                     <!--end::Label-->
+
+                                   <input type="hidden" name="meta_description"
+                                        id="kt_ecommerce_add_category_meta_description_input">
 
                                     <!--begin::Editor-->
                                     <div id="kt_ecommerce_add_category_meta_description"

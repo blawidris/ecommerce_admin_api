@@ -55,7 +55,8 @@
 
              <!--begin::Menu item-->
              <div class="menu-item px-3">
-                 <a href="#" class="menu-link px-3" data-kt-ecommerce-category-filter="delete_row">
+                 <a href="#" class="menu-link px-3" data-kt-ecommerce-category-filter="delete_row"
+                     data-id="{{ $item->id }}" data-token="{{ csrf_token() }}">
                      Delete
                  </a>
              </div>

@@ -3,6 +3,7 @@
 // Class definition
 var KTAppEcommerceSaveCategory = (function () {
     // Private functions
+    let description, meta_description;
 
     // Init quill editor
     const initQuill = () => {
@@ -41,7 +42,7 @@ var KTAppEcommerceSaveCategory = (function () {
 
             quill.on("text-change", function (delta, oldDelta, source) {
                 document.querySelector(`${element}_input`).value =
-                    quill.root.innerHTML;
+                    quill.getText();
             });
         });
     };
@@ -244,9 +245,12 @@ var KTAppEcommerceSaveCategory = (function () {
 
                         const post_id = form.id.value ?? "";
                         const method = post_id ? "PUT" : "POST";
+                        const url = post_id
+                            ? "/category/update"
+                            : "/category/create";
 
                         await handles.formRequest(
-                            "/category/create",
+                            url,
                             form,
                             method,
                             submitButton

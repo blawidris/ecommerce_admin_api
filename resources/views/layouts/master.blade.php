@@ -7,9 +7,7 @@
     <title>Gianna - @yield('pageTitle')</title>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <meta name="" content="">
-    <meta property="og:locale" content="en_US" />
-    <meta property="og:type" content="article" />
+    <meta name="csrf-token" content="{{ csrf_token() }}">
     <link rel="shortcut icon" href="{{ asset('media/logos/favicon.ico') }}" />
 
     <!--begin::Fonts(mandatory for all pages)-->
@@ -154,7 +152,9 @@
     <script src="{{ asset('assets/plugins/custom/datatables/datatables.bundle.js') }}"></script>
     <!--end::Vendors Javascript-->
 
+
     <!--begin::Custom Javascript(used for this page only)-->
+    <script src="{{ asset('assets/js/custom/utilities/js-handle-request.js') }}"></script>
     @yield('custom-js')
     <!--end::Custom Javascript-->
 

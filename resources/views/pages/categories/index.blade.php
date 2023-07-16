@@ -134,18 +134,10 @@
                                     </thead>
                                     <tbody class="fw-semibold text-gray-600">
 
-                                        @forelse ($categories as $category)
+                                        @foreach ($categories as $category)
                                             <x-category.item :item="$category" />
-                                        @empty
-                                            <tr class="odd">
-                                                <td>
-                                                    <div
-                                                        class="form-check form-check-sm form-check-custom form-check-solid">
-                                                        <input class="form-check-input" type="checkbox" value="1">
-                                                    </div>
-                                                </td>
-                                            </tr>
-                                        @endforelse
+                                        @endforeach
+
 
 
                                     </tbody>

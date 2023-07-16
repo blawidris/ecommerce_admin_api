@@ -38,7 +38,7 @@ Route::group(['prefix' => 'category'], function () {
     // GETS
     Route::get('/lists', [CategoriesController::class, 'index'])->name('categories');
     Route::get('/add', [CategoriesController::class, 'create'])->name('category.add');
-    Route::get('/edit/{slug}', [CategoriesController::class, 'edit'])->name('category.edit')->where(['slug' => '[a-z]+']);
+    Route::get('/edit/{slug}', [CategoriesController::class, 'edit'])->name('category.edit')->where(['slug' => '^([a-z]+)-([a-z]+)']);
 
     // POST
     Route::post('/create', [CategoriesController::class, 'store'])->name('create_category');

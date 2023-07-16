@@ -54,7 +54,6 @@ var KTAppEcommerceCategories = (function () {
                 const categoryName = parent.querySelector(
                     '[data-kt-ecommerce-category-filter="category_name"]'
                 ).innerText;
-                const _token = document.querySelector('');
 
                 // SweetAlert2 pop up --- official docs reference: https://sweetalert2.github.io/
                 Swal.fire({
@@ -71,24 +70,16 @@ var KTAppEcommerceCategories = (function () {
                     },
                 }).then(async function (result) {
                     if (result.value) {
-                        const response = await fetch(`${hostUrl}/delete`, {
-                            method: "DELETE",
-                            headers: {
-                                "X-CRSF-TOKEN": _token,
-                            },
-                        });
-                        Swal.fire({
-                            text: "You have deleted " + categoryName + "!.",
-                            icon: "success",
-                            buttonsStyling: false,
-                            confirmButtonText: "Ok, got it!",
-                            customClass: {
-                                confirmButton: "btn fw-bold btn-primary",
-                            },
-                        }).then(function () {
-                            // Remove current row
-                            datatable.row($(parent)).remove().draw();
-                        });
+                        const _id = d.getAttribute("data-id");
+                        const _token = d.getAttribute("data-token");
+
+                        const data = {
+                            id: _id,
+                            token: _token,
+                        };
+
+                        await handles.delete("/category/delete", data);
+                        
                     } else if (result.dismiss === "cancel") {
                         Swal.fire({
                             text: categoryName + " was not deleted.",

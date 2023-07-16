@@ -247,6 +247,9 @@
                                     <div id="kt_ecommerce_add_category_description" class="min-h-200px mb-2"
                                         data-category-desc="description">
                                     </div>
+
+                                    <input type="hidden" name="descritpion"
+                                        id="kt_ecommerce_add_category_description_input">
                                     <!--end::Editor-->
 
                                     <!--begin::Description-->
@@ -285,6 +288,7 @@
                                     <!--begin::Description-->
                                     <div class="text-muted fs-7">Set a meta tag title. Recommended to be simple
                                         and precise keywords.</div>
+
                                     <!--end::Description-->
                                 </div>
                                 <!--end::Input group-->
@@ -295,12 +299,11 @@
                                     <label class="form-label">Meta Tag Description</label>
                                     <!--end::Label-->
 
-                                    <input type="hidden" name="description"
+                                    <input type="hidden" name="meta_description"
                                         id="kt_ecommerce_add_category_meta_description_input">
 
                                     <!--begin::Editor-->
-                                    <div id="kt_ecommerce_add_category_meta_description" name="meta_description"
-                                        class="min-h-100px mb-2"></div>
+                                    <div id="kt_ecommerce_add_category_meta_description" class="min-h-100px mb-2"></div>
                                     <!--end::Editor-->
 
                                     <!--begin::Description-->
@@ -544,7 +547,6 @@
     <!--end::Vendors Javascript-->
 
     <!--begin::Custom Javascript(used for this page only)-->
-    <script src="{{ asset('assets/js/custom/utilities/js-handle-request.js') }}"></script>
     <script src="{{ asset('assets/js/custom/apps/ecommerce/catalog/save-category.js') }}"></script>
     <!--end::Custom Javascript-->
     <!--end::Javascript-->

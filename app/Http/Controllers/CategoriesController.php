@@ -73,6 +73,7 @@ class CategoriesController extends Controller
             'name' => $name,
             'status' => $request->status,
             'publish_date' => $request->publish_date,
+            'description' => $request->description,
             'meta_tag' => json_encode([
                 'title' => $request->meta_title,
                 'description' => $request->meta_description,
@@ -85,7 +86,7 @@ class CategoriesController extends Controller
         Category::create($data);
 
 
-        return response()->json(['message' => 'Category created successfully', 'success' => true]);
+        return response()->json(['message' => 'Category created successfully', 'success' => true, 'type' => 'success'], 200);
     }
 
 
@@ -157,6 +158,7 @@ class CategoriesController extends Controller
                 'name' => $name,
                 'status' => $request->status,
                 'publish_date' => $request->publish_date,
+                'description' => $request->description,
                 'meta_tag' => json_encode([
                     'title' => $request->meta_title,
                     'description' => $request->meta_description,
@@ -166,14 +168,23 @@ class CategoriesController extends Controller
             ];
             Category::where('id', $id)->update($data);
 
-            return response()->json(['message' => 'Your updated has been implemented', 'status' => 200]);
+            return response()->json(['message' => 'Your updated has been implemented', 'type']);
         }
     }
 
 
-    public function destroy(string $id)
+    public function destroy(Request $request)
     {
-        //
+        $id = $request->id;
+
+        if ($id) {
+
+            if (!Category::where('id', $id)->delete()) {
+                return response()->json(['success' => false, 'type' => 'error', 'message' => 'Category deleted successfully'], 400);
+            }
+
+            return response()->json(['type' => 'success', 'success' => true, 'message' => 'Category deleted successfully'], 200);
+        }
     }
 
 
@@ -184,8 +195,11 @@ class CategoriesController extends Controller
         $fileDir = $dir . str_replace(' ', '_', strtolower($name));
         $newFile = time() . '.' . $ext;
 
+        // set new name
+        $fileName = $fileDir . '/' . $newFile;
+
         //check path is not empty
-        if (!empty($oldFile) && Storage::path($oldFile)) {
+        if (!empty($fileName) && Storage::exists($oldFile)) {
             Storage::delete($oldFile);
         }
 
@@ -194,7 +208,6 @@ class CategoriesController extends Controller
             return ['success' => false];
         } else {
 
-            $fileName = $fileDir . '/' . $newFile;
             return ['success' => true, 'name' => $fileName];
         }
     }
