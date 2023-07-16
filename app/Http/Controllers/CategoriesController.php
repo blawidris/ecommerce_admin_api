@@ -188,27 +188,27 @@ class CategoriesController extends Controller
     }
 
 
-    protected function upload($file, $name, $dir, $oldFile = '')
-    {
-        $ext = $file->getClientOriginalExtension();
+    // protected function upload($file, $name, $dir, $oldFile = '')
+    // {
+    //     $ext = $file->getClientOriginalExtension();
 
-        $fileDir = $dir . str_replace(' ', '_', strtolower($name));
-        $newFile = time() . '.' . $ext;
+    //     $fileDir = $dir . str_replace(' ', '_', strtolower($name));
+    //     $newFile = time() . '.' . $ext;
 
-        // set new name
-        $fileName = $fileDir . '/' . $newFile;
+    //     // set new name
+    //     $fileName = $fileDir . '/' . $newFile;
 
-        //check path is not empty
-        if (!empty($fileName) && Storage::exists($oldFile)) {
-            Storage::delete($oldFile);
-        }
+    //     //check path is not empty
+    //     if (!empty($fileName) && Storage::exists($oldFile)) {
+    //         Storage::delete($oldFile);
+    //     }
 
 
-        if (!$file->storeAs("/$fileDir", $newFile)) {
-            return ['success' => false];
-        } else {
+    //     if (!$file->storeAs("/$fileDir", $newFile)) {
+    //         return ['success' => false];
+    //     } else {
 
-            return ['success' => true, 'name' => $fileName];
-        }
-    }
+    //         return ['success' => true, 'name' => $fileName];
+    //     }
+    // }
 }

@@ -6,6 +6,7 @@ use App\Http\Controllers\HomeController;
 use App\Http\Controllers\OrderController;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\SiteReportController;
+use Illuminate\Support\Facades\Artisan;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -30,7 +31,11 @@ Route::group(['prefix' => 'product'], function () {
     // GETS
     Route::get('/', [ProductController::class, 'index'])->name('products');
     Route::get('/add', [ProductController::class, 'create'])->name('product.add');
-    Route::get('/edit', [ProductController::class, 'edit'])->name('product.edit');
+    Route::get('/edit/{slug}/{id}', [ProductController::class, 'edit'])->name('product.edit')->where(['slug' => '^([0-9A-Za-z\-]+)', 'id' => '[0-9]+']);
+
+    Route::post('/add', [ProductController::class, 'store'])->name('product.store');
+    Route::put('/update', [ProductController::class, 'update'])->name('product.update');
+    Route::delete('/delete-{id}', [ProductController::class, 'delete'])->where(['id' => '[0-9]+']);
 });
 
 Route::group(['prefix' => 'category'], function () {
@@ -38,7 +43,7 @@ Route::group(['prefix' => 'category'], function () {
     // GETS
     Route::get('/lists', [CategoriesController::class, 'index'])->name('categories');
     Route::get('/add', [CategoriesController::class, 'create'])->name('category.add');
-    Route::get('/edit/{slug}', [CategoriesController::class, 'edit'])->name('category.edit')->where(['slug' => '^([a-z]+)-([a-z]+)']);
+    Route::get('/edit/{slug}', [CategoriesController::class, 'edit'])->name('category.edit')->where(['slug' => '^([0-9A-Za-z\-]+)']);
 
     // POST
     Route::post('/create', [CategoriesController::class, 'store'])->name('create_category');
@@ -75,3 +80,19 @@ Route::group(['prefix' => 'report'], function () {
 
 
 Route::get('/settings', [HomeController::class, 'settings'])->name('setings');
+
+
+// clear routes
+Route::get('/clear-cache', function () {
+
+    if (Artisan::call('config:cache')) {
+        return 'Browser config optimised';
+    }
+});
+
+Route::get('/clear-optimize', function () {
+
+    if (Artisan::call('optimize:clear')) {
+        return 'Browser config optimised';
+    }
+});

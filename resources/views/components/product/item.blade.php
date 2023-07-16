@@ -7,7 +7,7 @@
      <td>
          <div class="d-flex align-items-center">
              <!--begin::Thumbnail-->
-             <a href="{{ route('product.edit', ['slug' => $item->slug]) }}" class="symbol symbol-50px">
+             <a href="{{ route('product.edit', ['slug' => $item->slug, 'id' => $item->id]) }}" class="symbol symbol-50px">
                  <span class="symbol-label"
                      style="background-image:url({{ asset('storage/' . $item->thumbnail) ?? '' }});"></span>
              </a>
@@ -15,18 +15,18 @@
 
              <div class="ms-5">
                  <!--begin::Title-->
-                 <a href="{{ route('product.edit', ['slug' => $item->slug]) }}"
+                 <a href="{{ route('product.edit', ['slug' => $item->slug, 'id' => $item->id]) }}"
                      class="text-gray-800 text-hover-primary fs-5 fw-bold"
                      data-kt-ecommerce-product-filter="product_name">{{ $item->title }}</a>
                  <!--end::Title-->
              </div>
          </div>
      </td>
-     {{-- <td class="text-end pe-0">
-         <span class="fw-bold">02686005</span>
-     </td> --}}
+     <td class="text-end pe-0">
+         <span class="fw-bold">{{ $item->sku }}</span>
+     </td>
      <td class="text-end pe-0" data-order="{{ $item->quantity }}">
-         <span class="fw-bold ms-3">{{ $item->item }}</span>
+         <span class="fw-bold ms-3">{{ $item->quantity }}</span>
      </td>
      <td class="text-end pe-0">
          {{ $item->price }}
@@ -55,7 +55,8 @@
              data-kt-menu="true">
              <!--begin::Menu item-->
              <div class="menu-item px-3">
-                 <a href="{{ route('product.edit', ['slug' => $item->slug]) }}" class="menu-link px-3">
+                 <a href="{{ route('product.edit', ['slug' => $item->slug, 'id' => $item->id]) }}"
+                     class="menu-link px-3">
                      Edit
                  </a>
              </div>
@@ -63,7 +64,8 @@
 
              <!--begin::Menu item-->
              <div class="menu-item px-3">
-                 <a href="#" class="menu-link px-3" data-kt-ecommerce-product-filter="delete_row">
+                 <a href="#" class="menu-link px-3" data-kt-ecommerce-product-filter="delete_row"
+                     data-id="{{ $item->id }}" data-token="{{ csrf_token() }}">
                      Delete
                  </a>
              </div>

@@ -1,5 +1,6 @@
 <?php
 
+use App\Models\Category;
 use App\Models\User;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
@@ -16,22 +17,22 @@ return new class extends Migration
             $table->id();
             $table->string('title', 2000);
             $table->string('slug', 2000);
-            $table->string('sku', 45);
+            $table->string('sku', 45)->nullable();
+            $table->foreignIdFor(Category::class, 'category_id');
             $table->longText('description');
             $table->integer('quantity');
-            $table->string('image_thumbnail');
+            $table->string('thumbnail');
             $table->jsonb('media')->nullable();
             $table->jsonb('discount')->nullable();
             $table->jsonb('variantions')->nullable();
             $table->decimal('price', 10, 2);
-            $table->string('meta_title')->nullable();
-            $table->string('meta_descripiton')->nullable();
-            $table->string('meta_keyword')->nullable();
+            $table->jsonb('meta_tag')->nullable();
             $table->timestamps();
-            $table->foreignIdFor(User::class, 'created_by');
-            $table->foreignIdFor(User::class, 'updated_by');
+            $table->dateTime('publish_date')->nullable();
+            $table->foreignIdFor(User::class, 'created_by')->nullable();
+            $table->foreignIdFor(User::class, 'updated_by')->nullable();
             $table->softDeletes();
-            $table->foreignIdFor(User::class, 'deleted_by');
+            $table->foreignIdFor(User::class, 'deleted_by')->nullable();
         });
     }
 

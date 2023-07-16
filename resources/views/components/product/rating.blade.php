@@ -3,7 +3,7 @@
 @endphp
 
 
-@for ($i = 1; $i < $total; $i++)
+@for ($i = 1; $i <= $total; $i++)
 
     <div class="rating-label checked">
         <i class="ki-duotone ki-star fs-6"></i>

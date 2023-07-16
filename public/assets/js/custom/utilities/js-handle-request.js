@@ -48,8 +48,7 @@ var handles = (function () {
             text:
                 response.message ??
                 "Sorry, looks like there are some errors detected, please try again.",
-            icon: response ?? "error",
-            type,
+            icon: response.type ?? "error",
             buttonsStyling: false,
             confirmButtonText: "Ok, got it!",
             customClass: {
@@ -62,6 +61,8 @@ var handles = (function () {
         formRequest: async function (url, form, type, submitButton) {
             const formData = new FormData(form);
 
+            // console.log(formData);
+
             // set header
             const headers = {
                 "X-CSRF-TOKEN": formData._token,
@@ -71,26 +72,37 @@ var handles = (function () {
             const response = await makeRequest(url, formData, type, headers);
 
             if (!response.success) {
+                submitButton.removeAttribute("data-kt-indicator");
+                submitButton.disabled = false;
+
                 popupNotification(response);
 
                 return;
             }
 
+            console.log(response);
+
             setTimeout(function () {
+                submitButton.removeAttribute("data-kt-indicator");
+                submitButton.disabled = false;
+
                 triggerPopupNotify(response, submitButton, form);
             }, 2000);
             // console.log(response);
         },
 
         delete: async function (url, data) {
-            const _data = JSON.stringify(data);
+            const _data = new FormData();
+
+            _data.append("id", data.id);
+            _data.append("_method", "DELETE");
+            _data.append("_token", data.token);
 
             // set header
             const headers = {
-                "X-CSRF-TOKEN": _token,
+                "Content-Type": "application/json",
+                "X-CSRF-TOKEN": data.token,
             };
-
-            // console.log(headers);
 
             const response = await makeRequest(url, _data, "DELETE", headers);
 

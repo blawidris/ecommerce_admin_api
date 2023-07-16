@@ -50,7 +50,8 @@
 
                         <!--begin::Item-->
                         <li class="breadcrumb-item text-muted">
-                            Catalog </li>
+                            Product
+                        </li>
                         <!--end::Item-->
 
                     </ul>
@@ -71,7 +72,9 @@
             <div id="kt_app_content_container" class="app-container  container-xxl ">
                 <!--begin::Form-->
                 <form id="kt_ecommerce_add_product_form" class="form d-flex flex-column flex-lg-row"
-                    data-kt-redirect="products.html">
+                    data-kt-redirect="{{ route('products') }}">
+
+                    @csrf
                     <!--begin::Aside column-->
                     <div class="d-flex flex-column gap-7 gap-lg-10 w-100 w-lg-300px mb-7 me-lg-10">
                         <!--begin::Thumbnail settings-->
@@ -169,7 +172,8 @@
                             <div class="card-body pt-0">
                                 <!--begin::Select2-->
                                 <select class="form-select mb-2" data-control="select2" data-hide-search="true"
-                                    data-placeholder="Select an option" id="kt_ecommerce_add_product_status_select">
+                                    data-placeholder="Select an option" id="kt_ecommerce_add_product_status_select"
+                                    name="status">
                                     <option></option>
                                     <option value="published" selected>Published</option>
                                     <option value="draft">Draft</option>
@@ -216,18 +220,11 @@
 
                                 <!--begin::Select2-->
                                 <select class="form-select mb-2" data-control="select2" data-placeholder="Select an option"
-                                    data-allow-clear="true" multiple="multiple">
+                                    data-allow-clear="true" multiple="multiple" name="category">
                                     <option></option>
-                                    <option value="Computers">Computers</option>
-                                    <option value="Watches">Watches</option>
-                                    <option value="Headphones">Headphones</option>
-                                    <option value="Footwear">Footwear</option>
-                                    <option value="Cameras">Cameras</option>
-                                    <option value="Shirts">Shirts</option>
-                                    <option value="Household">Household</option>
-                                    <option value="Handbags">Handbags</option>
-                                    <option value="Wines">Wines</option>
-                                    <option value="Sandals">Sandals</option>
+                                    @foreach ($categories as $category)
+                                        <option value="{{ $category->id }}">{{ $category->name }}</option>
+                                    @endforeach
                                 </select>
                                 <!--end::Select2-->
 
@@ -237,7 +234,7 @@
                                 <!--end::Input group-->
 
                                 <!--begin::Button-->
-                                <a href="add-category.html" class="btn btn-light-primary btn-sm mb-10">
+                                <a href="{{ route('category.add') }}" class="btn btn-light-primary btn-sm mb-10">
                                     <i class="ki-duotone ki-plus fs-2"></i> Create new category
                                 </a>
                                 <!--end::Button-->
@@ -248,7 +245,7 @@
                                 <!--end::Label-->
 
                                 <!--begin::Input-->
-                                <input id="kt_ecommerce_add_product_tags" name="kt_ecommerce_add_product_tags"
+                                <input id="kt_ecommerce_add_product_tags" name="product_tags"
                                     class="form-control mb-2" value="" />
                                 <!--end::Input-->
 
@@ -349,6 +346,8 @@
                                                 <!--end::Label-->
 
                                                 <!--begin::Editor-->
+                                                <input type="hidden" name="description"
+                                                    id="kt_ecommerce_add_product_description_input">
                                                 <div id="kt_ecommerce_add_product_description"
                                                     name="kt_ecommerce_add_product_description" class="min-h-200px mb-2">
                                                 </div>
@@ -580,7 +579,7 @@
                                             <!--end::Input group-->
 
                                             <!--begin::Tax-->
-                                            <div class="d-flex flex-wrap gap-5">
+                                            {{-- <div class="d-flex flex-wrap gap-5">
                                                 <!--begin::Input group-->
                                                 <div class="fv-row w-100 flex-md-root">
                                                     <!--begin::Label-->
@@ -619,7 +618,7 @@
                                                     <!--end::Description-->
                                                 </div>
                                                 <!--end::Input group-->
-                                            </div>
+                                            </div> --}}
                                             <!--end:Tax-->
                                         </div>
                                         <!--end::Card header-->
@@ -648,7 +647,7 @@
                                             <!--begin::Input group-->
                                             <div class="mb-10 fv-row">
                                                 <!--begin::Label-->
-                                                <label class="required form-label">SKU</label>
+                                                <label class="form-label">SKU</label>
                                                 <!--end::Label-->
 
                                                 <!--begin::Input-->
@@ -663,7 +662,7 @@
                                             <!--end::Input group-->
 
                                             <!--begin::Input group-->
-                                            <div class="mb-10 fv-row">
+                                            {{-- <div class="mb-10 fv-row">
                                                 <!--begin::Label-->
                                                 <label class="required form-label">Barcode</label>
                                                 <!--end::Label-->
@@ -676,7 +675,7 @@
                                                 <!--begin::Description-->
                                                 <div class="text-muted fs-7">Enter the product barcode number.</div>
                                                 <!--end::Description-->
-                                            </div>
+                                            </div> --}}
                                             <!--end::Input group-->
 
                                             <!--begin::Input group-->
@@ -687,10 +686,11 @@
 
                                                 <!--begin::Input-->
                                                 <div class="d-flex gap-3">
-                                                    <input type="number" name="shelf" class="form-control mb-2"
-                                                        placeholder="On shelf" value="" />
-                                                    <input type="number" name="warehouse" class="form-control mb-2"
-                                                        placeholder="In warehouse" />
+                                                    <input type="number" name="quantity" class="form-control mb-2"
+                                                        placeholder="Available" value="" />
+
+                                                    {{-- <input type="number" name="warehouse" class="form-control mb-2"
+                                                        placeholder="In warehouse" /> --}}
                                                 </div>
                                                 <!--end::Input-->
 
@@ -701,7 +701,7 @@
                                             <!--end::Input group-->
 
                                             <!--begin::Input group-->
-                                            <div class="fv-row">
+                                            {{-- <div class="fv-row">
                                                 <!--begin::Label-->
                                                 <label class="form-label">Allow Backorders</label>
                                                 <!--end::Label-->
@@ -719,7 +719,7 @@
                                                 <div class="text-muted fs-7">Allow customers to purchase products that are
                                                     out of stock.</div>
                                                 <!--end::Description-->
-                                            </div>
+                                            </div> --}}
                                             <!--end::Input group-->
                                         </div>
                                         <!--end::Card header-->
@@ -748,7 +748,7 @@
                                                 <div id="kt_ecommerce_add_product_options">
                                                     <!--begin::Form group-->
                                                     <div class="form-group">
-                                                        <div data-repeater-list="kt_ecommerce_add_product_options"
+                                                        <div data-repeater-list="product_options"
                                                             class="d-flex flex-column gap-3">
                                                             <div data-repeater-item
                                                                 class="form-group d-flex flex-wrap align-items-center gap-5">
@@ -799,7 +799,7 @@
                                     <!--end::Variations-->
 
                                     <!--begin::Shipping-->
-                                    <div class="card card-flush py-4">
+                                    {{-- <div class="card card-flush py-4">
                                         <!--begin::Card header-->
                                         <div class="card-header">
                                             <div class="card-title">
@@ -876,8 +876,9 @@
                                             <!--end::Shipping form-->
                                         </div>
                                         <!--end::Card header-->
-                                    </div>
+                                    </div> --}}
                                     <!--end::Shipping-->
+
                                     <!--begin::Meta options-->
                                     <div class="card card-flush py-4">
                                         <!--begin::Card header-->
@@ -915,6 +916,8 @@
                                                 <!--end::Label-->
 
                                                 <!--begin::Editor-->
+                                                <input type="hidden" name="meta_description"
+                                                    id="kt_ecommerce_add_product_meta_description_input">
                                                 <div id="kt_ecommerce_add_product_meta_description"
                                                     name="kt_ecommerce_add_product_meta_description"
                                                     class="min-h-100px mb-2"></div>
