@@ -75,6 +75,8 @@
                     data-kt-redirect="{{ route('products') }}">
 
                     @csrf
+                    <input type="hidden" name="id">
+
                     <!--begin::Aside column-->
                     <div class="d-flex flex-column gap-7 gap-lg-10 w-100 w-lg-300px mb-7 me-lg-10">
                         <!--begin::Thumbnail settings-->
@@ -245,8 +247,8 @@
                                 <!--end::Label-->
 
                                 <!--begin::Input-->
-                                <input id="kt_ecommerce_add_product_tags" name="product_tags"
-                                    class="form-control mb-2" value="" />
+                                <input id="kt_ecommerce_add_product_tags" name="product_tags" class="form-control mb-2"
+                                    value="" />
                                 <!--end::Input-->
 
                                 <!--begin::Description-->

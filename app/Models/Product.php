@@ -26,7 +26,8 @@ class Product extends Model
         'created_by',
         'updated_by',
         'deleted_by',
-        'slug'
+        'slug',
+        'status'
 
     ];
 }

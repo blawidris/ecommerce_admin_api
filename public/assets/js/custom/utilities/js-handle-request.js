@@ -5,8 +5,12 @@ var handles = (function () {
         .querySelector('meta[name="csrf-token"]')
         .getAttribute("content");
 
-    const makeRequest = async (url, formData, type, header) => {
-        // console.log(_token);
+    let headers = {
+        "X-CSRF-TOKEN": _token,
+    };
+
+    const makeRequest = async (url, formData, type) => {
+        // console.log(headers);
 
         // resource location
         const resourceLink = hostUrl + url;
@@ -14,9 +18,11 @@ var handles = (function () {
         // access data
         const request = await fetch(resourceLink, {
             method: type,
-            header: header,
+            headers: headers,
             body: formData,
         });
+
+        // console.log(header);
 
         return request.json();
     };
@@ -63,13 +69,8 @@ var handles = (function () {
 
             // console.log(formData);
 
-            // set header
-            const headers = {
-                "X-CSRF-TOKEN": formData._token,
-            };
-
             // make a request
-            const response = await makeRequest(url, formData, type, headers);
+            const response = await makeRequest(url, formData, type);
 
             if (!response.success) {
                 submitButton.removeAttribute("data-kt-indicator");
@@ -80,7 +81,7 @@ var handles = (function () {
                 return;
             }
 
-            console.log(response);
+            // console.log(response);
 
             setTimeout(function () {
                 submitButton.removeAttribute("data-kt-indicator");
@@ -91,20 +92,21 @@ var handles = (function () {
             // console.log(response);
         },
 
-        delete: async function (url, data) {
-            const _data = new FormData();
+        delete: async function (url, data, submitButton) {
+            // const _data = new FormData();
 
-            _data.append("id", data.id);
-            _data.append("_method", "DELETE");
-            _data.append("_token", data.token);
+            // _data.append("id", data.id);
+            // _data.append("_method", "DELETE");
+            // _data.append("_token", data.token);
 
             // set header
-            const headers = {
-                "Content-Type": "application/json",
-                "X-CSRF-TOKEN": data.token,
-            };
+            headers["Content-Type"] = "application/json";
 
-            const response = await makeRequest(url, _data, "DELETE", headers);
+            const response = await makeRequest(
+                url,
+                JSON.stringify(data),
+                "DELETE"
+            );
 
             if (!response.success) {
                 popupNotification(response);
@@ -113,7 +115,18 @@ var handles = (function () {
             }
 
             setTimeout(function () {
-                triggerPopupNotify(response, submitButton, form);
+                Swal.fire({
+                    text: response.message + "!.",
+                    icon: "success",
+                    buttonsStyling: false,
+                    confirmButtonText: "Ok, got it!",
+                    customClass: {
+                        confirmButton: "btn fw-bold btn-primary",
+                    },
+                }).then(function () {
+                    // Remove current row
+                    datatable.row($(parent)).remove().draw();
+                });
             }, 2000);
         },
     };

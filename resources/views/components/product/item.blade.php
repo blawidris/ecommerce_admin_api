@@ -42,7 +42,9 @@
      </td>
      <td class="text-end pe-0" data-order="Scheduled">
          <!--begin::Badges-->
-         <div class="badge badge-light-primary">Scheduled</div>
+         <div
+             class="text-capitalize badge badge-light-{{ $item->status == 'published' ? 'success' : ($item->status == 'scheduled' ? 'primary' : ($item->status == 'draft' ? 'warning' : 'danger')) }}">
+             {{ $item->status }}</div>
          <!--end::Badges-->
      </td>
      <td class="text-end">

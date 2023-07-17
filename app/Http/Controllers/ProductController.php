@@ -8,7 +8,6 @@ use App\Models\Product;
 use Exception;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
-use Illuminate\Support\Str;
 
 class ProductController extends Controller
 {
@@ -88,7 +87,7 @@ class ProductController extends Controller
                 'price' => $request->price,
                 'quantity' => $request->quantity,
                 'description' => $request->description,
-                'thumbnail' => $thumbnail['name'],
+                'thumbnail' => $thumbnail,
                 'discount' => json_encode(['value' => $request->discount_option, 'name' => $this->discount[$request->discount_option]]),
                 'tags' => json_encode($request->product_tags),
                 'variantions' => json_encode(
@@ -111,7 +110,7 @@ class ProductController extends Controller
 
             return response()->json($this->sendMessage('Product added successfully', 'success', true));
         } catch (Exception $e) {
-            return response()->json($this->sendMessage($e->getMessage(), 'error', false));
+            return response()->json($this->sendMessage($e->getMessage(), 'error', false), 400);
         }
     }
 
@@ -148,8 +147,25 @@ class ProductController extends Controller
     }
 
 
-    public function destroy(string $id)
+    public function destroy(Request $req)
     {
-        //
+
+        try {
+            $id = $req->id;
+
+            // dd($req);
+
+            if (!$id) {
+                return response()->json($this->sendMessage('Product id is missing', 'error', false), 400);
+            }
+
+            if (!Product::where('id', $id)->delete($id)) {
+                throw new Exception('Sorry, looks like there are some errors detected, please try again');
+            }
+
+            return response()->json($this->sendMessage('Product deleted successfully', 'error', true));
+        } catch (Exception $e) {
+            response()->json($this->sendMessage($e->getMessage(), 'error', false), 400);
+        }
     }
 }

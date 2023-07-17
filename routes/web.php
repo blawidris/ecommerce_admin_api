@@ -35,7 +35,7 @@ Route::group(['prefix' => 'product'], function () {
 
     Route::post('/add', [ProductController::class, 'store'])->name('product.store');
     Route::put('/update', [ProductController::class, 'update'])->name('product.update');
-    Route::delete('/delete-{id}', [ProductController::class, 'delete'])->where(['id' => '[0-9]+']);
+    Route::delete('/delete', [ProductController::class, 'destroy'])->name('product.delete');
 });
 
 Route::group(['prefix' => 'category'], function () {
@@ -83,16 +83,20 @@ Route::get('/settings', [HomeController::class, 'settings'])->name('setings');
 
 
 // clear routes
+Route::get('/clear-config', function () {
+
+    Artisan::call('config:clear');
+    return 'Browser config optimised';
+});
+
 Route::get('/clear-cache', function () {
 
-    if (Artisan::call('config:cache')) {
-        return 'Browser config optimised';
-    }
+    Artisan::call('config:cache');
+    return 'Browser config optimised';
 });
 
 Route::get('/clear-optimize', function () {
 
-    if (Artisan::call('optimize:clear')) {
-        return 'Browser config optimised';
-    }
+    Artisan::call('optimize:clear');
+    return 'Browser config optimised';
 });

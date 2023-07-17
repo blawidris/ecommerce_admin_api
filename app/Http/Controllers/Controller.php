@@ -29,11 +29,10 @@ class Controller extends BaseController
 
 
         if (!$file->storeAs("/$fileDir", $newFile)) {
-            return ['success' => false, 'message' => 'Unable to upload image'];
-        } else {
-
-            return ['success' => true, 'name' => $fileName];
+            return false;
         }
+
+        return $fileName;
     }
 
     public function sendMessage($message, $type, $success, $entity = '')

@@ -64,9 +64,10 @@ class CategoriesController extends Controller
         $thumbnail = $request->hasFile('avatar') ? $this->upload($file, $name, 'category/') : '';
 
 
-        if (!$thumbnail['success']) {
-            return response()->json(['message' => 'Error uploading your image', 'success' => false, 'type' => 'error'], 400);
-        }
+        // if (!$thumbnail) {
+        //     return response()->json(['message' => 'Unable to upload image', 'success' => false, 'type' => 'error'], 400);
+        // }
+
 
         // set form data
         $data = [
@@ -79,7 +80,7 @@ class CategoriesController extends Controller
                 'description' => $request->meta_description,
                 'keywords' => $request->meta_keywords,
             ]),
-            'thumbnail' => $thumbnail['name'],
+            'thumbnail' => $thumbnail,
         ];
 
         // save to database

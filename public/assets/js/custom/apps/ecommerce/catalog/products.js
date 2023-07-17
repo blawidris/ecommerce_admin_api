@@ -93,7 +93,9 @@ var KTAppEcommerceProducts = (function () {
                             id: id,
                             token: _token,
                         };
-                        await handles.delete("/product/delete-" + id, data);
+
+                        await handles.delete("/product/delete", data);
+                        
                         Swal.fire({
                             text: "You have deleted " + productName + "!.",
                             icon: "success",
