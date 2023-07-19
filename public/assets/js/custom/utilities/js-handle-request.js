@@ -10,6 +10,13 @@ var handles = (function () {
     };
 
     const makeRequest = async (url, formData, type) => {
+
+
+        if (type == "DELETE") {
+            headers["Content-Type"] = "application/json";
+            formData = JSON.stringify(formData);
+        }
+
         // console.log(headers);
 
         // resource location
@@ -67,8 +74,6 @@ var handles = (function () {
         formRequest: async function (url, form, type, submitButton) {
             const formData = new FormData(form);
 
-            // console.log(formData);
-
             // make a request
             const response = await makeRequest(url, formData, type);
 
@@ -77,6 +82,8 @@ var handles = (function () {
                 submitButton.disabled = false;
 
                 popupNotification(response);
+
+                console.log(response);
 
                 return;
             }
@@ -92,27 +99,19 @@ var handles = (function () {
             // console.log(response);
         },
 
-        delete: async function (url, data, submitButton) {
-            // const _data = new FormData();
-
-            // _data.append("id", data.id);
-            // _data.append("_method", "DELETE");
-            // _data.append("_token", data.token);
-
+        delete: async function (url, data, button, table) {
             // set header
-            headers["Content-Type"] = "application/json";
+            // headers["Content-Type"] = "application/json";
 
-            const response = await makeRequest(
-                url,
-                JSON.stringify(data),
-                "DELETE"
-            );
+            const response = await makeRequest(url, data, "DELETE");
 
             if (!response.success) {
                 popupNotification(response);
 
                 return;
             }
+
+            const parent = button.target.closest("tr");
 
             setTimeout(function () {
                 Swal.fire({
@@ -125,7 +124,7 @@ var handles = (function () {
                     },
                 }).then(function () {
                     // Remove current row
-                    datatable.row($(parent)).remove().draw();
+                    table.row($(parent)).remove().draw();
                 });
             }, 2000);
         },

@@ -94,20 +94,20 @@ var KTAppEcommerceProducts = (function () {
                             token: _token,
                         };
 
-                        await handles.delete("/product/delete", data);
-                        
-                        Swal.fire({
-                            text: "You have deleted " + productName + "!.",
-                            icon: "success",
-                            buttonsStyling: false,
-                            confirmButtonText: "Ok, got it!",
-                            customClass: {
-                                confirmButton: "btn fw-bold btn-primary",
-                            },
-                        }).then(function () {
-                            // Remove current row
+                        await handles.delete("/product/delete", data,e, datatable);
+
+                        // Swal.fire({
+                        //     text: "You have deleted " + productName + "!.",
+                        //     icon: "success",
+                        //     buttonsStyling: false,
+                        //     confirmButtonText: "Ok, got it!",
+                        //     customClass: {
+                        //         confirmButton: "btn fw-bold btn-primary",
+                        //     },
+                        // }).then(function () {
+                        //     // Remove current row
                             datatable.row($(parent)).remove().draw();
-                        });
+                        // });
                     } else if (result.dismiss === "cancel") {
                         Swal.fire({
                             text: productName + " was not deleted.",

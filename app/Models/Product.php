@@ -28,6 +28,11 @@ class Product extends Model
         'deleted_by',
         'slug',
         'status'
+    ];
 
+    protected $hidden = [
+        'created_by',
+        'updated_by',
+        'deleted_by',
     ];
 }

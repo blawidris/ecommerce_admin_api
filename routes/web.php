@@ -36,6 +36,10 @@ Route::group(['prefix' => 'product'], function () {
     Route::post('/add', [ProductController::class, 'store'])->name('product.store');
     Route::put('/update', [ProductController::class, 'update'])->name('product.update');
     Route::delete('/delete', [ProductController::class, 'destroy'])->name('product.delete');
+
+    // media upload
+    Route::post('/media/upload', [ProductController::class, 'uploadMedia'])->name('product-media.post');
+    // Route::put('/media/upload', [ProductController::class, 'uploadMedia'])->name('product-media.put');
 });
 
 Route::group(['prefix' => 'category'], function () {
@@ -47,7 +51,7 @@ Route::group(['prefix' => 'category'], function () {
 
     // POST
     Route::post('/create', [CategoriesController::class, 'store'])->name('create_category');
-    Route::put('/update', [CategoriesController::class, 'update'])->name('update_category');
+    Route::put('/update', [CategoriesController::class, 'update'])->name('category.update');
     Route::delete('/delete', [CategoriesController::class, 'destroy'])->name('delete_category');
 });
 

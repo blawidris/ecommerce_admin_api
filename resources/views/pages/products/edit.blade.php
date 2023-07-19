@@ -56,135 +56,7 @@
                     <!--end::Breadcrumb-->
                 </div>
                 <!--end::Page title-->
-                <!--begin::Actions-->
-                <div class="d-flex align-items-center gap-2 gap-lg-3">
-                    <!--begin::Filter menu-->
-                    <div class="m-0">
-                        <!--begin::Menu toggle-->
-                        <a href="#"
-                            class="btn btn-sm btn-flex bg-body btn-color-gray-700 btn-active-color-primary fw-bold"
-                            data-kt-menu-trigger="click" data-kt-menu-placement="bottom-end">
-                            <i class="ki-duotone ki-filter fs-6 text-muted me-1"><span class="path1"></span><span
-                                    class="path2"></span></i>
-                            Filter
-                        </a>
-                        <!--end::Menu toggle-->
 
-
-
-                        <!--begin::Menu 1-->
-                        <div class="menu menu-sub menu-sub-dropdown w-250px w-md-300px" data-kt-menu="true"
-                            id="kt_menu_64a0c28121c88">
-                            <!--begin::Header-->
-                            <div class="px-7 py-5">
-                                <div class="fs-5 text-dark fw-bold">Filter Options</div>
-                            </div>
-                            <!--end::Header-->
-
-                            <!--begin::Menu separator-->
-                            <div class="separator border-gray-200"></div>
-                            <!--end::Menu separator-->
-
-                            <!--begin::Form-->
-                            <div class="px-7 py-5">
-                                <!--begin::Input group-->
-                                <div class="mb-10">
-                                    <!--begin::Label-->
-                                    <label class="form-label fw-semibold">Status:</label>
-                                    <!--end::Label-->
-
-                                    <!--begin::Input-->
-                                    <div>
-                                        <select class="form-select form-select-solid" data-kt-select2="true"
-                                            data-placeholder="Select option" data-dropdown-parent="#kt_menu_64a0c28121c88"
-                                            data-allow-clear="true">
-                                            <option></option>
-                                            <option value="1">Approved</option>
-                                            <option value="2">Pending</option>
-                                            <option value="2">In Process</option>
-                                            <option value="2">Rejected</option>
-                                        </select>
-                                    </div>
-                                    <!--end::Input-->
-                                </div>
-                                <!--end::Input group-->
-
-                                <!--begin::Input group-->
-                                <div class="mb-10">
-                                    <!--begin::Label-->
-                                    <label class="form-label fw-semibold">Member Type:</label>
-                                    <!--end::Label-->
-
-                                    <!--begin::Options-->
-                                    <div class="d-flex">
-                                        <!--begin::Options-->
-                                        <label class="form-check form-check-sm form-check-custom form-check-solid me-5">
-                                            <input class="form-check-input" type="checkbox" value="1" />
-                                            <span class="form-check-label">
-                                                Author
-                                            </span>
-                                        </label>
-                                        <!--end::Options-->
-
-                                        <!--begin::Options-->
-                                        <label class="form-check form-check-sm form-check-custom form-check-solid">
-                                            <input class="form-check-input" type="checkbox" value="2"
-                                                checked="checked" />
-                                            <span class="form-check-label">
-                                                Customer
-                                            </span>
-                                        </label>
-                                        <!--end::Options-->
-                                    </div>
-                                    <!--end::Options-->
-                                </div>
-                                <!--end::Input group-->
-
-                                <!--begin::Input group-->
-                                <div class="mb-10">
-                                    <!--begin::Label-->
-                                    <label class="form-label fw-semibold">Notifications:</label>
-                                    <!--end::Label-->
-
-                                    <!--begin::Switch-->
-                                    <div class="form-check form-switch form-switch-sm form-check-custom form-check-solid">
-                                        <input class="form-check-input" type="checkbox" value="" name="notifications"
-                                            checked />
-                                        <label class="form-check-label">
-                                            Enabled
-                                        </label>
-                                    </div>
-                                    <!--end::Switch-->
-                                </div>
-                                <!--end::Input group-->
-
-                                <!--begin::Actions-->
-                                <div class="d-flex justify-content-end">
-                                    <button type="reset" class="btn btn-sm btn-light btn-active-light-primary me-2"
-                                        data-kt-menu-dismiss="true">Reset</button>
-
-                                    <button type="submit" class="btn btn-sm btn-primary"
-                                        data-kt-menu-dismiss="true">Apply</button>
-                                </div>
-                                <!--end::Actions-->
-                            </div>
-                            <!--end::Form-->
-                        </div>
-                        <!--end::Menu 1-->
-                    </div>
-                    <!--end::Filter menu-->
-
-
-                    <!--begin::Secondary button-->
-                    <!--end::Secondary button-->
-
-                    <!--begin::Primary button-->
-                    <a href="#" class="btn btn-sm fw-bold btn-primary" data-bs-toggle="modal"
-                        data-bs-target="#kt_modal_create_app">
-                        Create </a>
-                    <!--end::Primary button-->
-                </div>
-                <!--end::Actions-->
             </div>
             <!--end::Toolbar container-->
         </div>
@@ -198,7 +70,11 @@
             <div id="kt_app_content_container" class="app-container  container-xxl ">
                 <!--begin::Form-->
                 <form id="kt_ecommerce_add_product_form" class="form d-flex flex-column flex-lg-row"
-                    data-kt-redirect="products.html">
+                    data-kt-redirect="{{ route('products') }}" enctype="multipart/form-data">
+
+                    @csrf
+                    @method('PUT')
+                    <input type="hidden" name="id" value="{{ $product->id }}" id="product_id">
                     <!--begin::Aside column-->
                     <div class="d-flex flex-column gap-7 gap-lg-10 w-100 w-lg-300px mb-7 me-lg-10">
                         <!--begin::Thumbnail settings-->
@@ -221,7 +97,8 @@
                                     data-kt-image-input="true">
                                     <!--begin::Preview existing avatar-->
                                     <div class="image-input-wrapper w-150px h-150px"
-                                        style="background-image: url(../../../assets/media/stock/ecommerce/78.gif)"></div>
+                                        style="background-image: url({{ asset($product->thumbnail ? $product->thumbnail : 'assets/media/svg/files/blank-image.svg') }})">
+                                    </div>
                                     <!--end::Preview existing avatar-->
 
                                     <!--begin::Label-->
@@ -240,8 +117,7 @@
                                     <!--begin::Cancel-->
                                     <span
                                         class="btn btn-icon btn-circle btn-active-color-primary w-25px h-25px bg-body shadow"
-                                        data-kt-image-input-action="cancel" data-bs-toggle="tooltip"
-                                        title="Cancel avatar">
+                                        data-kt-image-input-action="cancel" data-bs-toggle="tooltip" title="Cancel avatar">
                                         <i class="ki-duotone ki-cross fs-2"><span class="path1"></span><span
                                                 class="path2"></span></i> </span>
                                     <!--end::Cancel-->
@@ -249,8 +125,7 @@
                                     <!--begin::Remove-->
                                     <span
                                         class="btn btn-icon btn-circle btn-active-color-primary w-25px h-25px bg-body shadow"
-                                        data-kt-image-input-action="remove" data-bs-toggle="tooltip"
-                                        title="Remove avatar">
+                                        data-kt-image-input-action="remove" data-bs-toggle="tooltip" title="Remove avatar">
                                         <i class="ki-duotone ki-cross fs-2"><span class="path1"></span><span
                                                 class="path2"></span></i> </span>
                                     <!--end::Remove-->
@@ -288,12 +163,17 @@
                             <div class="card-body pt-0">
                                 <!--begin::Select2-->
                                 <select class="form-select mb-2" data-control="select2" data-hide-search="true"
-                                    data-placeholder="Select an option" id="kt_ecommerce_add_product_status_select">
+                                    data-placeholder="Select an option" id="kt_ecommerce_add_product_status_select"
+                                    name="status">
                                     <option></option>
-                                    <option value="published" selected>Published</option>
-                                    <option value="draft">Draft</option>
-                                    <option value="scheduled">Scheduled</option>
-                                    <option value="inactive">Inactive</option>
+                                    <option value="published" {{ $product->status == 'published' ? 'selected' : '' }}>
+                                        Published</option>
+                                    <option value="draft" {{ $product->status == 'draft' ? 'selected' : '' }}>Draft
+                                    </option>
+                                    <option value="scheduled" {{ $product->status == 'scheduled' ? 'selected' : '' }}>
+                                        Scheduled</option>
+                                    <option value="inactive" {{ $product->status == 'inactive' ? 'selected' : '' }}>
+                                        Inactive</option>
                                 </select>
                                 <!--end::Select2-->
 
@@ -334,19 +214,15 @@
                                 <!--end::Label-->
 
                                 <!--begin::Select2-->
-                                <select class="form-select mb-2" data-control="select2"
-                                    data-placeholder="Select an option" data-allow-clear="true" multiple="multiple">
+                                <select class="form-select mb-2" data-control="select2" data-placeholder="Select an option"
+                                    data-allow-clear="true" multiple="multiple" name="category">
                                     <option></option>
-                                    <option value="Computers">Computers</option>
-                                    <option value="Watches">Watches</option>
-                                    <option value="Headphones">Headphones</option>
-                                    <option value="Footwear">Footwear</option>
-                                    <option value="Cameras">Cameras</option>
-                                    <option value="Shirts">Shirts</option>
-                                    <option value="Household">Household</option>
-                                    <option value="Handbags">Handbags</option>
-                                    <option value="Wines">Wines</option>
-                                    <option value="Sandals">Sandals</option>
+                                    @foreach ($categories as $category)
+                                        <option value="{{ $category->id }}"
+                                            {{ $product->category_id === $category->id ? 'selected' : '' }}>
+                                            {{ $category->name }}
+                                        </option>
+                                    @endforeach
                                 </select>
                                 <!--end::Select2-->
 
@@ -367,8 +243,8 @@
                                 <!--end::Label-->
 
                                 <!--begin::Input-->
-                                <input id="kt_ecommerce_add_product_tags" name="kt_ecommerce_add_product_tags"
-                                    class="form-control mb-2" value="new, trending, sale" />
+                                <input id="kt_ecommerce_add_product_tags" name="tags" class="form-control mb-2"
+                                    value="new, trending, sale" />
                                 <!--end::Input-->
 
                                 <!--begin::Description-->
@@ -480,7 +356,7 @@
 
                                                 <!--begin::Input-->
                                                 <input type="text" name="product_name" class="form-control mb-2"
-                                                    placeholder="Product name" value="Sample product" />
+                                                    placeholder="Product name" value="{{ $product->title }}" />
                                                 <!--end::Input-->
 
                                                 <!--begin::Description-->
@@ -499,6 +375,7 @@
                                                 <!--begin::Editor-->
                                                 <div id="kt_ecommerce_add_product_description"
                                                     name="kt_ecommerce_add_product_description" class="min-h-200px mb-2">
+                                                    {{ $product->description ?? '' }}
                                                 </div>
                                                 <!--end::Editor-->
 
@@ -524,6 +401,15 @@
 
                                         <!--begin::Card body-->
                                         <div class="card-body pt-0">
+
+                                            @php
+                                                $medias = json_decode($product->media);
+                                            @endphp
+
+                                            @foreach ($medias as $media)
+                                                <input type="hidden" name="media[]"
+                                                    value="{{ asset('storage/' . $media) }}" class="medias">
+                                            @endforeach
                                             <!--begin::Input group-->
                                             <div class="fv-row mb-2">
                                                 <!--begin::Dropzone-->
@@ -576,7 +462,7 @@
 
                                                 <!--begin::Input-->
                                                 <input type="text" name="price" class="form-control mb-2"
-                                                    placeholder="Product price" value="199.99" />
+                                                    placeholder="Product price" value="{{ $product->price }}" />
                                                 <!--end::Input-->
 
                                                 <!--begin::Description-->
@@ -586,6 +472,10 @@
                                             <!--end::Input group-->
 
                                             <!--begin::Input group-->
+                                            @php
+                                                $discount = json_decode($product->discount);
+                                                // dd($discount);
+                                            @endphp
                                             <div class="fv-row mb-10">
                                                 <!--begin::Label-->
                                                 <label class="fs-6 fw-semibold mb-2">
@@ -607,13 +497,14 @@
                                                     <div class="col">
                                                         <!--begin::Option-->
                                                         <label
-                                                            class="btn btn-outline btn-outline-dashed btn-active-light-primary  d-flex text-start p-6"
+                                                            class="btn btn-outline btn-outline-dashed btn-active-light-primary {{ $discount->value == 1 ? 'active' : '' }}  d-flex text-start p-6"
                                                             data-kt-button="true">
                                                             <!--begin::Radio-->
                                                             <span
                                                                 class="form-check form-check-custom form-check-solid form-check-sm align-items-start mt-1">
                                                                 <input class="form-check-input" type="radio"
-                                                                    name="discount_option" value="1" />
+                                                                    name="discount_option" value="1"
+                                                                    {{ $discount->value == 1 ? 'checked' : '' }} />
                                                             </span>
                                                             <!--end::Radio-->
 
@@ -632,14 +523,14 @@
                                                     <div class="col">
                                                         <!--begin::Option-->
                                                         <label
-                                                            class="btn btn-outline btn-outline-dashed btn-active-light-primary active d-flex text-start p-6"
+                                                            class="btn btn-outline btn-outline-dashed btn-active-light-primary {{ $discount->value == 2 ? 'active' : '' }} d-flex text-start p-6"
                                                             data-kt-button="true">
                                                             <!--begin::Radio-->
                                                             <span
                                                                 class="form-check form-check-custom form-check-solid form-check-sm align-items-start mt-1">
                                                                 <input class="form-check-input" type="radio"
                                                                     name="discount_option" value="2"
-                                                                    checked="checked" />
+                                                                    {{ $discount->value == 2 ? 'checked' : '' }} />
                                                             </span>
                                                             <!--end::Radio-->
 
@@ -658,13 +549,14 @@
                                                     <div class="col">
                                                         <!--begin::Option-->
                                                         <label
-                                                            class="btn btn-outline btn-outline-dashed btn-active-light-primary d-flex text-start p-6"
+                                                            class="btn btn-outline btn-outline-dashed btn-active-light-primary {{ $discount->value == 3 ? 'active' : '' }} d-flex text-start p-6"
                                                             data-kt-button="true">
                                                             <!--begin::Radio-->
                                                             <span
                                                                 class="form-check form-check-custom form-check-solid form-check-sm align-items-start mt-1">
                                                                 <input class="form-check-input" type="radio"
-                                                                    name="discount_option" value="3" />
+                                                                    name="discount_option" value="3"
+                                                                    {{ $discount->value == 3 ? 'checked' : '' }} />
                                                             </span>
                                                             <!--end::Radio-->
 
@@ -684,7 +576,8 @@
                                             <!--end::Input group-->
 
                                             <!--begin::Input group-->
-                                            <div class=" mb-10 fv-row" id="kt_ecommerce_add_product_discount_percentage">
+                                            <div class="d-none mb-10 fv-row"
+                                                id="kt_ecommerce_add_product_discount_percentage">
                                                 <!--begin::Label-->
                                                 <label class="form-label">Set Discount Percentage</label>
                                                 <!--end::Label-->
@@ -727,7 +620,7 @@
                                             <!--end::Input group-->
 
                                             <!--begin::Tax-->
-                                            <div class="d-flex flex-wrap gap-5">
+                                            {{-- <div class="d-flex flex-wrap gap-5">
                                                 <!--begin::Input group-->
                                                 <div class="fv-row w-100 flex-md-root">
                                                     <!--begin::Label-->
@@ -766,7 +659,7 @@
                                                     <!--end::Description-->
                                                 </div>
                                                 <!--end::Input group-->
-                                            </div>
+                                            </div> --}}
                                             <!--end:Tax-->
                                         </div>
                                         <!--end::Card header-->
@@ -795,12 +688,12 @@
                                             <!--begin::Input group-->
                                             <div class="mb-10 fv-row">
                                                 <!--begin::Label-->
-                                                <label class="required form-label">SKU</label>
+                                                <label class="form-label">SKU</label>
                                                 <!--end::Label-->
 
                                                 <!--begin::Input-->
                                                 <input type="text" name="sku" class="form-control mb-2"
-                                                    placeholder="SKU Number" value="011985001" />
+                                                    placeholder="SKU Number" value="{{ $product->sku }}" />
                                                 <!--end::Input-->
 
                                                 <!--begin::Description-->
@@ -810,7 +703,7 @@
                                             <!--end::Input group-->
 
                                             <!--begin::Input group-->
-                                            <div class="mb-10 fv-row">
+                                            {{-- <div class="mb-10 fv-row">
                                                 <!--begin::Label-->
                                                 <label class="required form-label">Barcode</label>
                                                 <!--end::Label-->
@@ -823,7 +716,7 @@
                                                 <!--begin::Description-->
                                                 <div class="text-muted fs-7">Enter the product barcode number.</div>
                                                 <!--end::Description-->
-                                            </div>
+                                            </div> --}}
                                             <!--end::Input group-->
 
                                             <!--begin::Input group-->
@@ -834,10 +727,10 @@
 
                                                 <!--begin::Input-->
                                                 <div class="d-flex gap-3">
-                                                    <input type="number" name="shelf" class="form-control mb-2"
-                                                        placeholder="On shelf" value="24" />
-                                                    <input type="number" name="warehouse" class="form-control mb-2"
-                                                        placeholder="In warehouse" />
+                                                    <input type="number" name="quantity" class="form-control mb-2"
+                                                        placeholder="On shelf" value="{{ $product->quantity }}" />
+                                                    {{-- <input type="number" name="warehouse" class="form-control mb-2"
+                                                        placeholder="In warehouse" /> --}}
                                                 </div>
                                                 <!--end::Input-->
 
@@ -848,7 +741,7 @@
                                             <!--end::Input group-->
 
                                             <!--begin::Input group-->
-                                            <div class="fv-row">
+                                            {{-- <div class="fv-row">
                                                 <!--begin::Label-->
                                                 <label class="form-label">Allow Backorders</label>
                                                 <!--end::Label-->
@@ -866,7 +759,7 @@
                                                 <div class="text-muted fs-7">Allow customers to purchase products that are
                                                     out of stock.</div>
                                                 <!--end::Description-->
-                                            </div>
+                                            </div> --}}
                                             <!--end::Input group-->
                                         </div>
                                         <!--end::Card header-->
@@ -897,7 +790,16 @@
                                                     <div class="form-group">
                                                         <div data-repeater-list="kt_ecommerce_add_product_options"
                                                             class="d-flex flex-column gap-3">
-                                                            <div data-repeater-item
+                                                            @php
+                                                                $vars = json_decode($product->variantions);
+                                                            @endphp
+
+                                                            @forelse ($vars as $variant)
+                                                                <x-product.variantion :item="$variant" />
+                                                            @empty
+                                                                <x-product.variantion />
+                                                            @endforelse
+                                                            {{-- <div data-repeater-item
                                                                 class="form-group d-flex flex-wrap align-items-center gap-5">
                                                                 <!--begin::Select2-->
                                                                 <div class="w-100 w-md-200px">
@@ -923,7 +825,7 @@
                                                                     <i class="ki-duotone ki-cross fs-1"><span
                                                                             class="path1"></span><span
                                                                             class="path2"></span></i> </button>
-                                                            </div>
+                                                            </div> --}}
                                                         </div>
                                                     </div>
                                                     <!--end::Form group-->
@@ -946,7 +848,7 @@
                                     <!--end::Variations-->
 
                                     <!--begin::Shipping-->
-                                    <div class="card card-flush py-4">
+                                    {{-- <div class="card card-flush py-4">
                                         <!--begin::Card header-->
                                         <div class="card-header">
                                             <div class="card-title">
@@ -1024,7 +926,7 @@
                                             <!--end::Shipping form-->
                                         </div>
                                         <!--end::Card header-->
-                                    </div>
+                                    </div> --}}
                                     <!--end::Shipping-->
                                     <!--begin::Meta options-->
                                     <div class="card card-flush py-4">
@@ -1037,6 +939,10 @@
                                         <!--end::Card header-->
 
                                         <!--begin::Card body-->
+
+                                        @php
+                                            $meta = json_decode($product->meta_tag);
+                                        @endphp
                                         <div class="card-body pt-0">
                                             <!--begin::Input group-->
                                             <div class="mb-10">
@@ -1046,7 +952,7 @@
 
                                                 <!--begin::Input-->
                                                 <input type="text" class="form-control mb-2" name="meta_title"
-                                                    placeholder="Meta tag name" />
+                                                    placeholder="Meta tag name" value="{{ $meta->title ?? '' }}" />
                                                 <!--end::Input-->
 
                                                 <!--begin::Description-->
@@ -1065,7 +971,9 @@
                                                 <!--begin::Editor-->
                                                 <div id="kt_ecommerce_add_product_meta_description"
                                                     name="kt_ecommerce_add_product_meta_description"
-                                                    class="min-h-100px mb-2"></div>
+                                                    class="min-h-100px mb-2">
+                                                    {{ $meta->description ?? '' }}
+                                                </div>
                                                 <!--end::Editor-->
 
                                                 <!--begin::Description-->
@@ -1084,7 +992,7 @@
                                                 <!--begin::Editor-->
                                                 <input id="kt_ecommerce_add_product_meta_keywords"
                                                     name="kt_ecommerce_add_product_meta_keywords"
-                                                    class="form-control mb-2" />
+                                                    class="form-control mb-2" value="{{ $meta->keywords ?? '' }}" />
                                                 <!--end::Editor-->
 
                                                 <!--begin::Description-->
@@ -1903,18 +1811,11 @@
 @section('custom-js')
 
     <!--begin::Vendors Javascript(used for this page only)-->
-    <script src="{{ asset('assets/plugins/custom/datatables/datatables.bundle.js') }}')}}"></script>
     <script src="{{ asset('assets/plugins/custom/formrepeater/formrepeater.bundle.js') }}"></script>
     <!--end::Vendors Javascript-->
 
     <!--begin::Custom Javascript(used for this page only)-->
     <script src="{{ asset('assets/js/custom/apps/ecommerce/catalog/save-product.js') }}"></script>
-    <script src="{{ asset('assets/js/widgets.bundle.js') }}"></script>
-    <script src="{{ asset('assets/js/custom/widgets.js') }}"></script>
-    <script src="{{ asset('assets/js/custom/apps/chat/chat.js') }}"></script>
-    <script src="{{ asset('assets/js/custom/utilities/modals/upgrade-plan.js') }}"></script>
-    <script src="{{ asset('assets/js/custom/utilities/modals/create-app.js') }}"></script>
-    <script src="{{ asset('assets/js/custom/utilities/modals/users-search.js') }}"></script>
     <!--end::Custom Javascript-->
     <!--end::Javascript-->
 @endsection

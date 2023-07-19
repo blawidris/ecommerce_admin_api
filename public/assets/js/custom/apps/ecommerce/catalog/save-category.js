@@ -244,6 +244,7 @@ var KTAppEcommerceSaveCategory = (function () {
                         submitButton.disabled = true;
 
                         const post_id = form.id.value ?? "";
+                    // console.log(post_id);
                         const method = post_id ? "PUT" : "POST";
                         const url = post_id
                             ? "/category/update"
@@ -255,7 +256,10 @@ var KTAppEcommerceSaveCategory = (function () {
                             method,
                             submitButton
                         );
+
                     } else {
+
+                        
                         Swal.fire({
                             text: "Sorry, looks like there are some errors detected, please try again.",
                             icon: "error",

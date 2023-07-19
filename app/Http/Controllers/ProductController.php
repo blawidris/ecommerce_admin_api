@@ -59,13 +59,15 @@ class ProductController extends Controller
             'sku' => 'unique:products',
             'avatar' => 'image|mimes:jpeg,png,jpg,gif,svg|max:2048',
             'description' => 'max:2000',
-            'publish_date' => ['date']
+            'publish_date' => ['date'],
         ]);
 
         if ($validator->fails()) {
             return response()->json(['message' => $validator->messages()->first(), 'type' => 'error', 'success' => false], 400);
         }
 
+
+        // return response()->json($request->media);
 
         try {
 
@@ -77,6 +79,8 @@ class ProductController extends Controller
             // if (!$thumbnail['success']) {
             //     return response()->json($this->sendMessage($thumbnail['message'], 'error', false));
             // }
+
+            $sku = $request->sku ?? $this->random_number(10);
 
             //upload images
 
@@ -93,14 +97,15 @@ class ProductController extends Controller
                 'variantions' => json_encode(
                     $request->product_options
                 ),
-                'sku' => $request->sku,
+                'sku' => $sku,
                 'slug' => str_replace(' ', '-', strtolower($name)),
                 'meta_tag' => json_encode([
                     'title' => $request->meta_title,
                     'description' => $request->meta_description,
                     'keywords' => $request->meta_keyword,
                 ]),
-                'publish_date' => $request->publish_date
+                'publish_date' => $request->publish_date,
+                'media' => json_encode($request->media)
             ];
 
             if (!Product::create($data)) {
@@ -119,31 +124,113 @@ class ProductController extends Controller
     {
 
 
+        $product = Product::findOrFail($id);
+        $categories = Category::orderBy('id', 'desc');
+
         $data = [
-            'pageTitle' => 'Show Product'
+            'pageTitle' => 'Show Product',
+            'product' => $product,
+            'categories' => $categories
         ];
 
         return view('pages.products.view', $data);
     }
 
 
-    public function edit(string $id)
+    public function edit(string $slug, int $id)
     {
 
-        if ($id) {
-        }
+        // dd($id);
+
+        $product = Product::findOrFail($id);
+        $categories = Category::orderBy('id', 'desc')->get();
 
         $data = [
-            'pageTitle' => 'Edit Product'
+            'pageTitle' => 'Edit Product',
+            'product' => $product,
+            'categories' => $categories
         ];
 
         return view('pages.products.edit', $data);
     }
 
 
-    public function update(Request $request, string $id)
+    public function update(Request $request)
     {
-        //
+
+        return response()->json($request);
+
+        $validator = Validator::make($request->all(), [
+            'product_name' => 'required|max:300',
+            'category' => 'required|integer',
+            'status' => 'required',
+            'quantity' => 'integer',
+            'price' => 'decimal:2',
+            // 'tags' => 'json',
+            // 'sku' => 'unique:products',
+            'avatar' => 'image|mimes:jpeg,png,jpg,gif,svg|max:2048',
+            'description' => 'max:2000',
+            'publish_date' => ['date'],
+        ]);
+
+        $prod_id = $request->id;
+
+
+        if ($validator->fails()) {
+            return response()->json(['message' => $validator->messages()->first(), 'type' => 'error', 'success' => false], 400);
+        }
+
+
+        try {
+
+            // get exising product
+            $product = Product::FindOrFail($prod_id);
+
+            // upload image to db
+            $name = $request->product_name;
+            $file = $request->file('avatar');
+            $oldFile = $product->thumbnail;
+
+            //  upload image
+            $thumbnail = $request->hasFile('avatar') ? $this->upload($file, $name, 'product/', $oldFile) : '';
+
+            $data = [
+                'title' => $request->product_name,
+                'category_id' => $request->category,
+                'status' => $request->status,
+                'price' => $request->price,
+                'quantity' => $request->quantity,
+                'description' => $request->description,
+                'thumbnail' => $thumbnail,
+                'discount' => json_encode(['value' => $request->discount_option, 'name' => $this->discount[$request->discount_option]]),
+                'tags' => json_encode($request->product_tags),
+                'variantions' => json_encode(
+                    $request->product_options
+                ),
+                'sku' => $request->sku,
+                'slug' => str_replace(
+                    ' ',
+                    '-',
+                    strtolower($name)
+                ),
+                'meta_tag' => json_encode([
+                    'title' => $request->meta_title,
+                    'description' => $request->meta_description,
+                    'keywords' => $request->meta_keyword,
+                ]),
+                'publish_date' => $request->publish_date,
+                'media' => json_encode($request->media)
+            ];
+
+            if (!Product::where('id', $prod_id)->update($data)) {
+                throw new Exception('Sorry, looks like there are some errors detected, please try again');
+            }
+
+
+            return response()->json($this->sendMessage('Product added successfully', 'success', true));
+        } catch (Exception $e) {
+            return response()->json($this->sendMessage($e->getMessage(), 'error', false), 400);
+        }
     }
 
 
@@ -167,5 +254,38 @@ class ProductController extends Controller
         } catch (Exception $e) {
             response()->json($this->sendMessage($e->getMessage(), 'error', false), 400);
         }
+    }
+
+    public function uploadMedia(Request $req)
+    {
+
+        // $validator = Validator::make($request)
+
+
+        $media = array();
+
+        if (!$req->hasFile('file')) {
+            return response()->json($this->sendMessage('Media item is required', 'error', false), 400);
+        }
+
+
+        $files = $req->file('file');
+
+        $media['name'] = array();
+
+        foreach ($files as $file) {
+
+
+            if (!$thumbnail =  $this->upload($file, 'media', 'product/')) {
+                return response()->json($this->sendMessage('Unable to upload image', 'error', false), 400);
+            }
+
+            array_push(
+                $media['name'],
+                $thumbnail
+            );
+        }
+
+        return response()->json(['media' => $media], 200);
     }
 }

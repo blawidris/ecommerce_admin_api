@@ -3,8 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\Models\Category;
+use Exception;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Validator;
 
 class CategoriesController extends Controller
@@ -64,30 +64,32 @@ class CategoriesController extends Controller
         $thumbnail = $request->hasFile('avatar') ? $this->upload($file, $name, 'category/') : '';
 
 
-        // if (!$thumbnail) {
-        //     return response()->json(['message' => 'Unable to upload image', 'success' => false, 'type' => 'error'], 400);
-        // }
-
-
         // set form data
-        $data = [
-            'name' => $name,
-            'status' => $request->status,
-            'publish_date' => $request->publish_date,
-            'description' => $request->description,
-            'meta_tag' => json_encode([
-                'title' => $request->meta_title,
-                'description' => $request->meta_description,
-                'keywords' => $request->meta_keywords,
-            ]),
-            'thumbnail' => $thumbnail,
-        ];
+        try {
 
-        // save to database
-        Category::create($data);
+            $data = [
+                'name' => $name,
+                'status' => $request->status,
+                'publish_date' => $request->publish_date,
+                'description' => $request->description,
+                'meta_tag' => json_encode([
+                    'title' => $request->meta_title,
+                    'description' => $request->meta_description,
+                    'keywords' => $request->meta_keywords,
+                ]),
+                'thumbnail' => $thumbnail,
+            ];
 
+            // save to database
+            if (!Category::create($data)) {
+                throw new Exception('Sorry, an error occur while trying to add data to database');
+            }
 
-        return response()->json(['message' => 'Category created successfully', 'success' => true, 'type' => 'success'], 200);
+            return response()->json($this->sendMessage('Category created successfully', 'success', true), 200);
+        } catch (\Throwable $th) {
+
+            return response()->json($this->sendMessage($th->getMessage(), 'error', false), 400);
+        }
     }
 
 
@@ -120,6 +122,11 @@ class CategoriesController extends Controller
 
         $id = $request->id;
 
+        return response()->json(['id' => $request->method()]);
+
+        // dd($request);
+
+
         if ($id) {
 
             $validator = Validator::make($request->all(), [
@@ -146,13 +153,9 @@ class CategoriesController extends Controller
             // upload file
             $file = $request->file('avatar');
             $name = $request->category_name;
-            $oldFile = $currentData->thumbnail;
-            $thumbnail = $request->hasFile('avatar') ? $this->upload($file, $name, 'category/', $oldFile) : '';
+            $oldFile = $currentData->thumbnail ?? '';
+            $thumbnail = $request->hasFile('avatar') ? $this->upload($file, $name, 'category/', $oldFile) : $oldFile;
 
-
-            if (!$thumbnail['success']) {
-                return response()->json(['message' => 'Error uploading your image', 'success' => false, 'type' => 'error'], 400);
-            }
 
             // set form data
             $data = [
@@ -165,17 +168,23 @@ class CategoriesController extends Controller
                     'description' => $request->meta_description,
                     'keywords' => $request->meta_keywords,
                 ]),
-                'thumbnail' => $thumbnail['name'],
+                'thumbnail' => $thumbnail,
             ];
-            Category::where('id', $id)->update($data);
 
-            return response()->json(['message' => 'Your updated has been implemented', 'type']);
+            if (!Category::where('id', $id)->update($data)) {
+
+                return response()->json($this->sendMessage('An error occur', 'error', false), 400);
+            }
+
+            return response()->json($this->sendMessage('Your updated has been implemented', 'success', true));
         }
     }
 
 
     public function destroy(Request $request)
     {
+
+
         $id = $request->id;
 
         if ($id) {
@@ -211,5 +220,6 @@ class CategoriesController extends Controller
 
     //         return ['success' => true, 'name' => $fileName];
     //     }
+
     // }
 }

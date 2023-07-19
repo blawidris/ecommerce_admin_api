@@ -12,12 +12,12 @@ class Controller extends BaseController
 {
     use AuthorizesRequests, ValidatesRequests;
 
-    public function upload($file, string $name, string $dir, string $oldFile = '')
+    public function upload($file, string $name, string $dir, string $oldFile = ''): string
     {
         $ext = $file->getClientOriginalExtension();
 
         $fileDir = $dir . str_replace(' ', '_', strtolower($name));
-        $newFile = time() . '.' . $ext;
+        $newFile = $this->random_text(10) . '_' . time() . '.' . $ext;
 
         // set new name
         $fileName = $fileDir . '/' . $newFile;
@@ -35,13 +35,39 @@ class Controller extends BaseController
         return $fileName;
     }
 
-    public function sendMessage($message, $type, $success, $entity = '')
+    public function sendMessage(string $message, string $type, bool $success, array $entity = []): array
     {
         return [
             'message' => $message,
             'type' => $type,
             'success' => $success,
-
+            'data' => json_encode($entity)
         ];
+    }
+
+    public function random_text($l = 6)
+    {
+        $charaters = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
+        $newChar  = '';
+        $length = strlen($charaters);
+
+        for ($i = 0; $i < $l; $i++) {
+            $newChar .= $charaters[rand(0, $length - 1)];
+        }
+
+        return $newChar;
+    }
+
+    public function random_number($l = 6)
+    {
+        $charaters = '0123456789';
+        $newChar  = '';
+        $length = strlen($charaters);
+
+        for ($i = 0; $i < $l; $i++) {
+            $newChar .= $charaters[rand(0, $length - 1)];
+        }
+
+        return $newChar;
     }
 }

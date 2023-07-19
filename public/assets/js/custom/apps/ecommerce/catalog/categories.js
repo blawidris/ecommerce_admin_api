@@ -78,8 +78,16 @@ var KTAppEcommerceCategories = (function () {
                             token: _token,
                         };
 
-                        await handles.delete("/category/delete", data);
-                        
+                        const response = await handles.delete(
+                            "/category/delete",
+                            data,
+                            e,
+                            datatable
+                        );
+
+                        // if (response) {
+                        //     datatable.row($(parent)).remove().draw();
+                        // }
                     } else if (result.dismiss === "cancel") {
                         Swal.fire({
                             text: categoryName + " was not deleted.",

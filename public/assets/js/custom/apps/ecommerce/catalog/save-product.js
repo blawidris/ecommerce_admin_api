@@ -151,20 +151,136 @@ var KTAppEcommerceSaveProduct = (function () {
 
     // Init DropzoneJS --- more info:
     const initDropzone = () => {
+        const form = document.getElementById("kt_ecommerce_add_product_form");
+        let uploadedImage = {};
+
         var myDropzone = new Dropzone("#kt_ecommerce_add_product_media", {
-            url: "https://keenthemes.com/scripts/void.php", // Set the url for your upload script location
-            paramName: "file", // The name that will be used to transfer the file
+            url: hostUrl + "/product/media/upload", // Set the url for your upload script location
+            // paramName: "file", // The name that will be used to transfer the file
             maxFiles: 10,
+            autoProcessQueue: true,
+            uploadMultiple: true,
             maxFilesize: 10, // MB
             addRemoveLinks: true,
+            acceptedFiles: "image/*, video/*",
+            parallelUploads: 10,
+            headers: {
+                "X-CSRF-TOKEN": document
+                    .querySelector('meta[name="csrf-token"]')
+                    .getAttribute("content"),
+            },
+            method: "POST",
             accept: function (file, done) {
-                if (file.name == "wow.jpg") {
+                if (file.name == "justinbieber.jpg") {
                     done("Naha, you don't.");
                 } else {
                     done();
                 }
             },
+            successmultiple: (file, response) => {
+                const data = response.media.name;
+
+                data.map((val, key) => {
+                    // create new form input
+                    const createInput = document.createElement("input");
+                    // set attribute
+                    createInput.setAttribute("type", "hidden");
+                    createInput.setAttribute("name", "media[]");
+                    createInput.setAttribute("value", val);
+
+                    form.append(createInput);
+
+                    uploadedImage[file.name] = val;
+                });
+            },
+            removedfile: function (file) {
+                // file review
+                file.previewElement.remove();
+                let name = "";
+
+                if (typeof file.name !== "undefined") {
+                    name = file.name;
+                } else {
+                    name = uploadedImage[file.name];
+                }
+
+                console.log(name);
+
+                // Remove input field from the form
+
+                var inputField = form.querySelectorAll(
+                    `input[name="media[]"][value="${name}"]`
+                );
+
+                inputField.forEach((el) => {
+                    if (el.value === name) {
+                        el.remove();
+                    }
+                });
+
+                // if (inputField) {
+                //     inputField.remove();
+                // }
+            },
+            init: function () {
+                const medias = document.querySelectorAll(".medias");
+
+                if (medias) {
+                    medias.forEach((val, key) => {
+                        const imageUrl = val.value;
+
+                        var mockFile = { name: imageUrl, size: 12345 };
+                        this.emit("addedfile", mockFile);
+                        this.emit("thumbnail", mockFile, imageUrl);
+                        this.emit("complete", mockFile);
+                    });
+
+                    var thumbnailElement = document.querySelectorAll(
+                        "img[data-dz-thumbnail]"
+                    );
+
+                    thumbnailElement.forEach((e, i) => {
+                        //   e.setAttribute('width', '100');
+                        e.style.width = "120px";
+                        e.style.height = "120px";
+                        e.style.objectFit = "cover";
+                    });
+                }
+
+                // this.on("addedfile", function (file) {
+
+                // Perform actions when a file is added
+                // const medias = document.querySelectorAll(".medias");
+
+                // if (medias) {
+                //     medias.forEach((val, key) => {
+                //         console.log(this);
+
+                //         const imageUrl = val.value;
+
+                //         this.emit("thumbnail", file, imageUrl); // Replace 'imageUrl' with the actual URL
+                //         this.emit("complete", file);
+                //     });
+                // }
+                // });
+            },
+            // init: () => {
+            // const medias = document.querySelectorAll(".medias");
+
+            // if (medias) {
+            //     medias.forEach((val, key) => {
+            //         console.log(val.value);
+
+            //         const pathUrl = val.value
+
+            //         val.previewElement.classList.add('dz-complete')
+            //     });
+
+            // }
+            // },
         });
+
+        // myDropzone.success();
     };
 
     // Handle discount options
@@ -384,9 +500,14 @@ var KTAppEcommerceSaveProduct = (function () {
                         // Disable submit button whilst loading
                         submitButton.disabled = true;
 
-                        const method = "POST";
-                        const link = "/product/add";
+                        let product_id = document.querySelector("#product_id");
 
+                        const method = product_id.value ? "PUT" : "POST";
+                        const link = product_id.value
+                            ? "/product/update"
+                            : "/product/add";
+
+                        // console.log(form)
                         await handles.formRequest(
                             link,
                             form,
