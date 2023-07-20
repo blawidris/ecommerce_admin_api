@@ -1,17 +1,20 @@
-@php
-    $total = 5;
-@endphp
-
-
-@for ($i = 1; $i <= $total; $i++)
-
-    <div class="rating-label checked">
+@foreach (range(1, 5) as $item)
+    {{-- <div class="rating-label">
         <i class="ki-duotone ki-star fs-6"></i>
-    </div>
+    </div> --}}
 
-    @if ($i > $rating)
-        <div class="rating-label">
-            <i class="ki-duotone ki-star fs-6"></i>
-        </div>
+    @if ($rating > 0)
+        @if ($rating > 0.5)
+            <div class="rating-label checked">
+                <i class="ki-duotone ki-star fs-6"></i>
+            </div>
+        @else
+            <div class="rating-label checked">
+                <i class="ki-duotone ki-star-half fs-6"></i>
+            </div>
+        @endif
     @endif
-@endfor
+
+    @php $rating--; @endphp
+    
+@endforeach

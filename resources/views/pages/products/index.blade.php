@@ -136,7 +136,10 @@
                             </thead>
                             <tbody class="fw-semibold text-gray-600">
 
+
                                 @foreach ($products as $product)
+
+                                    {{-- @dd($product->ratings()->average('rate')) --}}
                                     <x-product.item :item="$product" />
                                 @endforeach
 

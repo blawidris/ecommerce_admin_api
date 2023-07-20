@@ -268,7 +268,8 @@
                                         <!--end::Currency-->
 
                                         <!--begin::Amount-->
-                                        <span class="fs-2hx fw-bold text-dark me-2 lh-1 ls-n2">2,420</span>
+                                        <span
+                                            class="fs-2hx fw-bold text-dark me-2 lh-1 ls-n2">{{ $product->orders()->average('total_price') ?? 0 }}</span>
                                         <!--end::Amount-->
 
                                         <!--begin::Badge-->

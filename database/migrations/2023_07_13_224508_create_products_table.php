@@ -26,6 +26,8 @@ return new class extends Migration
             $table->jsonb('discount')->nullable();
             $table->jsonb('variantions')->nullable();
             $table->decimal('price', 10, 2);
+            $table->string('status', 45)->nullable();
+            $table->integer('is_published')->nullable();
             $table->jsonb('meta_tag')->nullable();
             $table->timestamps();
             $table->dateTime('publish_date')->nullable();
