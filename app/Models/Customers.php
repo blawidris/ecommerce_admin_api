@@ -19,4 +19,9 @@ class Customers extends Model
     {
         return $this->belongsTo(Rating::class);
     }
+
+    public function order()
+    {
+        return $this->belongsTo(Order::class);
+    }
 }

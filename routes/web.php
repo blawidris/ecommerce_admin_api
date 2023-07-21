@@ -68,8 +68,8 @@ Route::group(['prefix' => 'order'], function () {
     // GETS
     Route::get('/', [OrderController::class, 'index'])->name('orders');
     Route::get('/add', [OrderController::class, 'create'])->name('order.add');
-    Route::get('/edit/{id}', [OrderController::class, 'edit'])->name('order.edit');
-    Route::get('/view/{id}', [OrderController::class, 'show'])->name('order.view');
+    Route::get('/edit/{order_code}/{id}', [OrderController::class, 'edit'])->name('order.edit');
+    Route::get('/view/{order_code}/{id}', [OrderController::class, 'show'])->name('order.view');
 });
 
 Route::group(['prefix' => 'report'], function () {
