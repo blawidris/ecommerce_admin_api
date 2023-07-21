@@ -8,4 +8,15 @@ use Illuminate\Database\Eloquent\Model;
 class Customers extends Model
 {
     use HasFactory;
+
+
+    public function ratings()
+    {
+        return $this->hasMany(Rating::class);
+    }
+
+    public function rating()
+    {
+        return $this->belongsTo(Rating::class);
+    }
 }

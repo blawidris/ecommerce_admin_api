@@ -16,8 +16,8 @@ class Controller extends BaseController
     {
         $ext = $file->getClientOriginalExtension();
 
-        $fileDir = $dir . str_replace(' ', '_', strtolower($name));
-        $newFile = $this->random_text(10) . '_' . time() . '.' . $ext;
+        $fileDir = $dir . time();
+        $newFile = $this->random_text(10) . '.' . $ext;
 
         // set new name
         $fileName = $fileDir . '/' . $newFile;

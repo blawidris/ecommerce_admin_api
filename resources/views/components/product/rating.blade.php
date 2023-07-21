@@ -1,20 +1,21 @@
-@foreach (range(1, 5) as $item)
-    {{-- <div class="rating-label">
-        <i class="ki-duotone ki-star fs-6"></i>
-    </div> --}}
+@php
+    $roundedRating = round($rating * 2) / 2;
+    $hasHalfStar = fmod($roundedRating, 1) !== 0;
+    $fullStars = floor($roundedRating);
+@endphp
 
-    @if ($rating > 0)
-        @if ($rating > 0.5)
-            <div class="rating-label checked">
-                <i class="ki-duotone ki-star fs-6"></i>
-            </div>
-        @else
-            <div class="rating-label checked">
-                <i class="ki-duotone ki-star-half fs-6"></i>
-            </div>
-        @endif
+@for ($i = 1; $i <= 5; $i++)
+    @if ($i <= $fullStars)
+        <div class="rating-label checked">
+            <i class="fas fa-star fs-6"></i>
+        </div>
+    @elseif ($hasHalfStar && $i === ($fullStars + 1))
+        <div class="rating-label checked">
+            <i class="fas fa-star-half fs-6"></i>
+        </div>
+    @else
+        <div class="rating-label">
+            <i class="fas fa-star fs-6"></i>
+        </div>
     @endif
-
-    @php $rating--; @endphp
-    
-@endforeach
+@endfor

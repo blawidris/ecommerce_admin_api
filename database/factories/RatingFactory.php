@@ -20,8 +20,10 @@ class RatingFactory extends Factory
     {
         return [
             'customer_id' => Customers::factory(),
-            'product_id' => Product::factory(),
-            'rate' => $this->faker->numberBetween(1,5),
+            'product_id' => function () {
+                return Product::inRandomOrder()->first()->id;
+            },
+            'rate' => $this->faker->numberBetween(1, 5),
             'comment' => $this->faker->text('30')
         ];
     }

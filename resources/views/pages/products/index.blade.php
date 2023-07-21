@@ -50,7 +50,8 @@
 
                         <!--begin::Item-->
                         <li class="breadcrumb-item text-muted">
-                            Catalog </li>
+                            Products
+                        </li>
                         <!--end::Item-->
 
                     </ul>
@@ -91,7 +92,7 @@
                             <div class="w-100 mw-150px">
                                 <!--begin::Select2-->
                                 <select class="form-select form-select-solid" data-control="select2" data-hide-search="true"
-                                    data-placeholder="Status" data-kt-ecommerce-product-filter="status">
+                                    data-placeholder="Status" data-kt-ecommerce-product-filter="status" name="status">
                                     <option></option>
                                     <option value="all">All</option>
                                     <option value="published">Published</option>
@@ -138,7 +139,6 @@
 
 
                                 @foreach ($products as $product)
-
                                     {{-- @dd($product->ratings()->average('rate')) --}}
                                     <x-product.item :item="$product" />
                                 @endforeach

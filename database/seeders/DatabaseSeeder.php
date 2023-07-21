@@ -8,6 +8,7 @@ use App\Models\Category;
 use App\Models\Country;
 use App\Models\Customers;
 use App\Models\Order;
+use App\Models\OrderItem;
 use App\Models\Product;
 use App\Models\Rating;
 use App\Models\Shipping;
@@ -32,9 +33,10 @@ class DatabaseSeeder extends Seeder
         User::factory(10)->create();
         Category::factory(5)->create();
         Product::factory(20)->create();
-        Rating::factory(10)->for(Product::factory())->create();
+        Rating::factory(40)->create();
         Customers::factory(10)->create();
         Order::factory(20)->create();
+        OrderItem::factory(50)->create();
         Shipping::factory(10)->create();
     }
 }

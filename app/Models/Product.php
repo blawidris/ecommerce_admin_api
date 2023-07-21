@@ -36,13 +36,18 @@ class Product extends Model
         'deleted_by',
     ];
 
-    // public function orders()
-    // {
-    //     return $this->hasMany(Order::class);
-    // }
+    public function orderItems()
+    {
+        return $this->hasMany(OrderItem::class);
+    }
 
     public function ratings()
     {
         return $this->hasMany(Rating::class);
+    }
+
+    public function rating()
+    {
+        return $this->hasOne(Rating::class);
     }
 }

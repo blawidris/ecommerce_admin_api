@@ -31,13 +31,13 @@
      <td class="text-end pe-0">
          {{ $item->price }}
      </td>
-     <td class="text-end pe-0" data-order="rating-{{ $item->ratings()->average('rate') ?? 5 }}">
-        {{-- {{round($item->ratings()->average('rate'))}} --}}
+     <td class="text-end pe-0" data-order="rating-{{ $item->ratings()->avg('rate') ?? 0 }}">
+         {{-- {{round($item->ratings()->average('rate'))}} --}}
          <div class="rating justify-content-end">
-             @if ($item->ratings()->average('rate'))
-                 <x-product.rating :rating="$item->ratings()->average('rate')" />
+             @if ($item->ratings()->avg('rate'))
+                 <x-product.rating :rating="$item->ratings()->avg('rate')" />
              @else
-                 <x-product.rating :rating="5" />
+                 <x-product.rating :rating="0" />
              @endif
          </div>
      </td>

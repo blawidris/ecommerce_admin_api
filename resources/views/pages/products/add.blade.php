@@ -193,7 +193,7 @@
                                     <label for="kt_ecommerce_add_product_status_datepicker" class="form-label">Select
                                         publishing date and time</label>
                                     <input class="form-control" id="kt_ecommerce_add_product_status_datepicker"
-                                        placeholder="Pick date & time" />
+                                        placeholder="Pick date & time" name="published_date" />
                                 </div>
                                 <!--end::Datepicker-->
                             </div>
@@ -243,16 +243,16 @@
 
                                 <!--begin::Input group-->
                                 <!--begin::Label-->
-                                <label class="form-label d-block">Tags</label>
+                                {{-- <label class="form-label d-block">Tags</label> --}}
                                 <!--end::Label-->
 
                                 <!--begin::Input-->
-                                <input id="kt_ecommerce_add_product_tags" name="product_tags" class="form-control mb-2"
-                                    value="" />
+                                {{-- <input id="kt_ecommerce_add_product_tags" name="product_tags" class="form-control mb-2"
+                                    value="" /> --}}
                                 <!--end::Input-->
 
                                 <!--begin::Description-->
-                                <div class="text-muted fs-7">Add tags to a product.</div>
+                                {{-- <div class="text-muted fs-7">Add tags to a product.</div> --}}
                                 <!--end::Description-->
                                 <!--end::Input group-->
                             </div>

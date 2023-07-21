@@ -7,7 +7,7 @@
      <td>
          <div class="d-flex">
              <!--begin::Thumbnail-->
-             <a href="{{ route('category.edit', ['slug' => Str::slug(strtolower($item->name))]) }}"
+             <a href="{{ route('category.edit', ['slug' => Str::slug(strtolower($item->name)), 'id' => $item->id]) }}"
                  class="symbol symbol-50px">
                  <span class="symbol-label"
                      style="background-image:url({{ asset('storage/' . $item->thumbnail) ?? '' }});"></span>
@@ -16,7 +16,7 @@
 
              <div class="ms-5">
                  <!--begin::Title-->
-                 <a href="{{ route('category.edit', ['slug' => Str::slug(strtolower($item->name))]) }}"
+                 <a href="{{ route('category.edit', ['slug' => Str::slug(strtolower($item->name)), 'id' => $item->id]) }}"
                      class="text-gray-800 text-hover-primary fs-5 fw-bold mb-1"
                      data-kt-ecommerce-category-filter="category_name"
                      data-kt-ecommerce-category-id="{{ $item->id }}">{{ $item->name }}</a>
@@ -46,7 +46,7 @@
              data-kt-menu="true">
              <!--begin::Menu item-->
              <div class="menu-item px-3">
-                 <a href="{{ route('category.edit', ['slug' => Str::slug(strtolower($item->name))]) }}"
+                 <a href="{{ route('category.edit', ['slug' => Str::slug(strtolower($item->name)), 'id' => $item->id]) }}"
                      class="menu-link px-3">
                      Edit
                  </a>

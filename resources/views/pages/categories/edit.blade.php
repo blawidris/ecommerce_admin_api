@@ -1,5 +1,7 @@
 @extends('layouts.master')
 
+@section('pageTitle', $pageTitle)
+
 @section('content')
     <!--begin::Content wrapper-->
     <div class="d-flex flex-column flex-column-fluid">
@@ -71,6 +73,8 @@
 
                     @csrf
                     @method('PUT')
+
+                    {{-- @dd($category) --}}
                     <input type="hidden" name="id" value="{{ $category->id }}">
 
 
@@ -186,12 +190,13 @@
                                 <!--end::Description-->
 
                                 <!--begin::Datepicker-->
-                                <div class="d-none mt-10">
+                                <div class="{{ $category->status == 'scheduled' ? 'd-block' : 'd-none' }}  mt-10">
                                     <label for="kt_ecommerce_add_category_status_datepicker" class="form-label">Select
                                         publishing date and time</label>
+
                                     <input class="form-control" id="kt_ecommerce_add_category_status_datepicker"
                                         placeholder="Pick date & time" value="{{ $category->published_date ?? '' }}"
-                                        name="published_date" />
+                                        name="published_date" data-kt-date="{{ $category->published_date ?? '' }}" />
                                 </div>
                                 <!--end::Datepicker-->
                             </div>
@@ -242,8 +247,11 @@
                                     <!--begin::Editor-->
                                     <div id="kt_ecommerce_add_category_description"
                                         name="kt_ecommerce_add_category_description" class="min-h-200px mb-2">
+                                        {{ $category->description }}
                                     </div>
-                                    <input type="hidden" name="descritpion" id="kt_ecommerce_add_category_description_input">
+                                    <input type="hidden" name="description"
+                                        id="kt_ecommerce_add_category_description_input"
+                                        value="{{ $category->description }}">
 
                                     <!--end::Editor-->
 
@@ -293,7 +301,7 @@
                                     <label class="form-label">Meta Tag Description</label>
                                     <!--end::Label-->
 
-                                   <input type="hidden" name="meta_description"
+                                    <input type="hidden" name="meta_description"
                                         id="kt_ecommerce_add_category_meta_description_input">
 
                                     <!--begin::Editor-->

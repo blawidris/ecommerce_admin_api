@@ -19,9 +19,9 @@ return new class extends Migration
             $table->string('slug', 2000);
             $table->string('sku', 45)->nullable();
             $table->foreignIdFor(Category::class, 'category_id');
-            $table->longText('description');
+            $table->longText('description')->nullable();
             $table->integer('quantity');
-            $table->string('thumbnail');
+            $table->string('thumbnail')->nullable();
             $table->jsonb('media')->nullable();
             $table->jsonb('discount')->nullable();
             $table->jsonb('variantions')->nullable();

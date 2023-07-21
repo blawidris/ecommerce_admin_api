@@ -74,6 +74,7 @@
 
                     @csrf
                     @method('PUT')
+
                     <input type="hidden" name="id" value="{{ $product->id }}" id="product_id">
                     <!--begin::Aside column-->
                     <div class="d-flex flex-column gap-7 gap-lg-10 w-100 w-lg-300px mb-7 me-lg-10">
@@ -97,7 +98,7 @@
                                     data-kt-image-input="true">
                                     <!--begin::Preview existing avatar-->
                                     <div class="image-input-wrapper w-150px h-150px"
-                                        style="background-image: url({{ asset($product->thumbnail ? $product->thumbnail : 'assets/media/svg/files/blank-image.svg') }})">
+                                        style="background-image: url({{ asset($product->thumbnail ? $product->thumbnail : 'assets/media/svg/files/blank-image.svg') }}); object-fit:cover;">
                                     </div>
                                     <!--end::Preview existing avatar-->
 
@@ -239,16 +240,16 @@
 
                                 <!--begin::Input group-->
                                 <!--begin::Label-->
-                                <label class="form-label d-block">Tags</label>
+                                {{-- <label class="form-label d-block">Tags</label> --}}
                                 <!--end::Label-->
 
                                 <!--begin::Input-->
-                                <input id="kt_ecommerce_add_product_tags" name="tags" class="form-control mb-2"
-                                    value="new, trending, sale" />
+                                {{-- <input id="kt_ecommerce_add_product_tags" name="tags" class="form-control mb-2"
+                                    value="new, trending, sale" /> --}}
                                 <!--end::Input-->
 
                                 <!--begin::Description-->
-                                <div class="text-muted fs-7">Add tags to a product.</div>
+                                {{-- <div class="text-muted fs-7">Add tags to a product.</div> --}}
                                 <!--end::Description-->
                                 <!--end::Input group-->
                             </div>
@@ -268,8 +269,14 @@
                                         <!--end::Currency-->
 
                                         <!--begin::Amount-->
+                                        @php
+                                            $orderItemAvg = $product->orderItems()->avg('order_id');
+                                            $unitPriceAvg = $product->orderItems()->avg('unit_price');
+                                            
+                                            $totalPriceAvg = $orderItemAvg * $unitPriceAvg;
+                                        @endphp
                                         <span
-                                            class="fs-2hx fw-bold text-dark me-2 lh-1 ls-n2">{{ $product->orders()->average('total_price') ?? 0 }}</span>
+                                            class="fs-2hx fw-bold text-dark me-2 lh-1 ls-n2">{{ $totalPriceAvg ?? 0 }}</span>
                                         <!--end::Amount-->
 
                                         <!--begin::Badge-->
@@ -374,6 +381,9 @@
                                                 <!--end::Label-->
 
                                                 <!--begin::Editor-->
+                                                <input type="hidden" name="description"
+                                                    id="kt_ecommerce_add_product_description_input"
+                                                    value="$product->description ?? ''">
                                                 <div id="kt_ecommerce_add_product_description"
                                                     name="kt_ecommerce_add_product_description" class="min-h-200px mb-2">
                                                     {{ $product->description ?? '' }}
@@ -407,10 +417,14 @@
                                                 $medias = json_decode($product->media);
                                             @endphp
 
-                                            @foreach ($medias as $media)
-                                                <input type="hidden" name="media[]"
-                                                    value="{{ asset('storage/' . $media) }}" class="medias">
-                                            @endforeach
+
+                                            @if ($medias)
+
+                                                @foreach ($medias as $media)
+                                                    <input type="hidden" name="media[]"
+                                                        value="{{ asset('storage/' . $media) }}" class="medias">
+                                                @endforeach
+                                            @endif
                                             <!--begin::Input group-->
                                             <div class="fv-row mb-2">
                                                 <!--begin::Dropzone-->
@@ -800,33 +814,6 @@
                                                             @empty
                                                                 <x-product.variantion />
                                                             @endforelse
-                                                            {{-- <div data-repeater-item
-                                                                class="form-group d-flex flex-wrap align-items-center gap-5">
-                                                                <!--begin::Select2-->
-                                                                <div class="w-100 w-md-200px">
-                                                                    <select class="form-select" name="product_option"
-                                                                        data-placeholder="Select a variation"
-                                                                        data-kt-ecommerce-catalog-add-product="product_option">
-                                                                        <option></option>
-                                                                        <option value="color">Color</option>
-                                                                        <option value="size">Size</option>
-                                                                        <option value="material">Material</option>
-                                                                        <option value="style">Style</option>
-                                                                    </select>
-                                                                </div>
-                                                                <!--end::Select2-->
-
-                                                                <!--begin::Input-->
-                                                                <input type="text" class="form-control mw-100 w-200px"
-                                                                    name="product_option_value" placeholder="Variation" />
-                                                                <!--end::Input-->
-
-                                                                <button type="button" data-repeater-delete
-                                                                    class="btn btn-sm btn-icon btn-light-danger">
-                                                                    <i class="ki-duotone ki-cross fs-1"><span
-                                                                            class="path1"></span><span
-                                                                            class="path2"></span></i> </button>
-                                                            </div> --}}
                                                         </div>
                                                     </div>
                                                     <!--end::Form group-->
@@ -970,6 +957,10 @@
                                                 <!--end::Label-->
 
                                                 <!--begin::Editor-->
+                                                <input type="hidden" name="meta_description"
+                                                    id="kt_ecommerce_add_product_meta_description_input"
+                                                    value="{{ $meta->description ?? '' }}">
+
                                                 <div id="kt_ecommerce_add_product_meta_description"
                                                     name="kt_ecommerce_add_product_meta_description"
                                                     class="min-h-100px mb-2">
@@ -1033,21 +1024,10 @@
 
                                                 <!--begin::Overall rating-->
                                                 <div class="rating">
-                                                    <div class="rating-label checked">
-                                                        <i class="ki-duotone ki-star fs-2"></i>
-                                                    </div>
-                                                    <div class="rating-label checked">
-                                                        <i class="ki-duotone ki-star fs-2"></i>
-                                                    </div>
-                                                    <div class="rating-label checked">
-                                                        <i class="ki-duotone ki-star fs-2"></i>
-                                                    </div>
-                                                    <div class="rating-label checked">
-                                                        <i class="ki-duotone ki-star fs-2"></i>
-                                                    </div>
-                                                    <div class="rating-label">
-                                                        <i class="ki-duotone ki-star fs-2"></i>
-                                                    </div>
+
+                                                    @if ($avgRate = $product->ratings->avg('rate'))
+                                                        <x-product.rating :rating="$avgRate" />
+                                                    @endif
                                                 </div>
                                                 <!--end::Overall rating-->
                                             </div>
@@ -1078,9 +1058,19 @@
                                                     </tr>
                                                 </thead>
                                                 <tbody>
-                                                    @foreach ($product->rating() as $item)
-                                                        <x-product.rating-item :item='$item' />
-                                                    @endforeach
+
+                                                    @forelse ($ratings as $rating)
+                                                        <x-product.rating-item :item="$rating" />
+                                                    @empty
+                                                        <tr>
+                                                            <td colspan="4">
+                                                                <div class="text-center text-muted">No reviews available
+                                                                </div>
+                                                            </td>
+                                                        </tr>
+                                                    @endforelse
+
+
                                                 </tbody>
                                             </table>
                                             <!--end::Table-->
@@ -1134,6 +1124,7 @@
 
     <!--begin::Custom Javascript(used for this page only)-->
     <script src="{{ asset('assets/js/custom/apps/ecommerce/catalog/save-product.js') }}"></script>
+    {{-- <script src="{{ asset('assets/js/custom/apps/ecommerce/catalog/product-review.js') }}"></script> --}}
     <!--end::Custom Javascript-->
     <!--end::Javascript-->
 @endsection

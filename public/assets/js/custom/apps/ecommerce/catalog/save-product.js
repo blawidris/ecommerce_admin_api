@@ -4,6 +4,27 @@
 var KTAppEcommerceSaveProduct = (function () {
     // Private functions
 
+    // datatable
+    const handleDate = () => {
+        const tableRow = document.querySelectorAll(
+            "table tbody tr[data-kt-row]"
+        );
+
+        tableRow.forEach((e) => {
+            const tableData = e.lastElementChild;
+
+            const reviewDate = tableData.getAttribute("data-kt-review-date");
+
+            const newDate = new Date(reviewDate);
+
+            const dateCount = moment(newDate).fromNow();
+
+            tableData.firstElementChild.textContent = dateCount;
+        });
+
+        // console.log(dayjs().format());
+    };
+
     // Init quill editor
     const initQuill = () => {
         // Define all elements for quill editor
@@ -67,12 +88,7 @@ var KTAppEcommerceSaveProduct = (function () {
             // Init tagify --- more info: https://yaireo.github.io/tagify/
             new Tagify(tagify, {
                 whitelist: [
-                    "new",
-                    "trending",
-                    "sale",
-                    "discounted",
-                    "selling fast",
-                    "last 10",
+                   
                 ],
                 dropdown: {
                     maxItems: 20, // <- mixumum allowed rendered suggestions
@@ -217,10 +233,6 @@ var KTAppEcommerceSaveProduct = (function () {
                         el.remove();
                     }
                 });
-
-                // if (inputField) {
-                //     inputField.remove();
-                // }
             },
             init: function () {
                 const medias = document.querySelectorAll(".medias");
@@ -246,38 +258,7 @@ var KTAppEcommerceSaveProduct = (function () {
                         e.style.objectFit = "cover";
                     });
                 }
-
-                // this.on("addedfile", function (file) {
-
-                // Perform actions when a file is added
-                // const medias = document.querySelectorAll(".medias");
-
-                // if (medias) {
-                //     medias.forEach((val, key) => {
-                //         console.log(this);
-
-                //         const imageUrl = val.value;
-
-                //         this.emit("thumbnail", file, imageUrl); // Replace 'imageUrl' with the actual URL
-                //         this.emit("complete", file);
-                //     });
-                // }
-                // });
             },
-            // init: () => {
-            // const medias = document.querySelectorAll(".medias");
-
-            // if (medias) {
-            //     medias.forEach((val, key) => {
-            //         console.log(val.value);
-
-            //         const pathUrl = val.value
-
-            //         val.previewElement.classList.add('dz-complete')
-            //     });
-
-            // }
-            // },
         });
 
         // myDropzone.success();
@@ -502,7 +483,7 @@ var KTAppEcommerceSaveProduct = (function () {
 
                         let product_id = document.querySelector("#product_id");
 
-                        const method = product_id.value ? "PUT" : "POST";
+                        const method = "POST";
                         const link = product_id.value
                             ? "/product/update"
                             : "/product/add";
@@ -547,6 +528,9 @@ var KTAppEcommerceSaveProduct = (function () {
             handleDiscount();
             // handleShipping();
             handleSubmit();
+
+            // handle date
+            handleDate();
         },
     };
 })();

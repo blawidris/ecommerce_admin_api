@@ -70,7 +70,7 @@ class CategoriesController extends Controller
             $data = [
                 'name' => $name,
                 'status' => $request->status,
-                'publish_date' => $request->publish_date,
+                'published_date' => $request->published_date,
                 'description' => $request->description,
                 'meta_tag' => json_encode([
                     'title' => $request->meta_title,
@@ -102,12 +102,15 @@ class CategoriesController extends Controller
         return view('pages.categories.view', $data);
     }
 
-    public function edit(string $slug)
+    public function edit(string $slug, $id)
     {
+
 
         $category_name =  str_replace('-', ' ', $slug);
 
-        $category =  Category::where('name', $category_name)->first();
+        // dd($id);
+
+        $category =  Category::findOrFail($id);
 
         $this->data = [
             'pageTitle' => 'Edit Category',
@@ -121,8 +124,6 @@ class CategoriesController extends Controller
     {
 
         $id = $request->id;
-
-        return response()->json(['id' => $request->method()]);
 
         // dd($request);
 
@@ -161,7 +162,7 @@ class CategoriesController extends Controller
             $data = [
                 'name' => $name,
                 'status' => $request->status,
-                'publish_date' => $request->publish_date,
+                'published_date' => $request->published_date,
                 'description' => $request->description,
                 'meta_tag' => json_encode([
                     'title' => $request->meta_title,

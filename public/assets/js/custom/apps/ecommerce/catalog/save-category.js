@@ -166,6 +166,12 @@ var KTAppEcommerceSaveCategory = (function () {
         $("#kt_ecommerce_add_category_status_datepicker").flatpickr({
             enableTime: true,
             dateFormat: "Y-m-d H:i",
+            allowInput: true,
+            onChange: function (selectedDates, dateStr, instance) {
+                console.log(dateStr);
+
+                // datepicker.value = 
+            },
         });
 
         const showDatepicker = () => {
@@ -244,8 +250,8 @@ var KTAppEcommerceSaveCategory = (function () {
                         submitButton.disabled = true;
 
                         const post_id = form.id.value ?? "";
-                    // console.log(post_id);
-                        const method = post_id ? "PUT" : "POST";
+                        // console.log(post_id);
+                        const method = "POST";
                         const url = post_id
                             ? "/category/update"
                             : "/category/create";
@@ -256,10 +262,7 @@ var KTAppEcommerceSaveCategory = (function () {
                             method,
                             submitButton
                         );
-
                     } else {
-
-                        
                         Swal.fire({
                             text: "Sorry, looks like there are some errors detected, please try again.",
                             icon: "error",

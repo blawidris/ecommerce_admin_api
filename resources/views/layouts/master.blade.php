@@ -149,9 +149,15 @@
     <script src="https://cdn.amcharts.com/lib/5/geodata/usaLow.js"></script>
     <script src="https://cdn.amcharts.com/lib/5/geodata/worldTimeZonesLow.js"></script>
     <script src="https://cdn.amcharts.com/lib/5/geodata/worldTimeZoneAreasLow.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.4/moment.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/dayjs@1/dayjs.min.js"></script>
     <script src="{{ asset('assets/plugins/custom/datatables/datatables.bundle.js') }}"></script>
-    <!--end::Vendors Javascript-->
 
+    <!--end::Vendors Javascript-->
+    {{-- <script>
+        var relativeTime = require('dayjs/plugin/relativeTime')
+        dayjs.extend(relativeTime)
+    </script> --}}
 
     <!--begin::Custom Javascript(used for this page only)-->
     <script src="{{ asset('assets/js/custom/utilities/js-handle-request.js') }}"></script>

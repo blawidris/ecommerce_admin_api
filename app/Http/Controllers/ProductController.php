@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Enum\DiscountEnum;
 use App\Models\Category;
 use App\Models\Product;
+use App\Models\Rating;
 use Exception;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
@@ -144,11 +145,15 @@ class ProductController extends Controller
 
         $product = Product::findOrFail($id);
         $categories = Category::orderBy('id', 'desc')->get();
+        $rating = Rating::where(['product_id' => $id])->orderBy('id', 'DESC')->get();
+
+        // dd($rating);
 
         $data = [
             'pageTitle' => 'Edit Product',
             'product' => $product,
-            'categories' => $categories
+            'categories' => $categories,
+            'ratings' => $rating
         ];
 
         return view('pages.products.edit', $data);
@@ -158,7 +163,7 @@ class ProductController extends Controller
     public function update(Request $request)
     {
 
-        return response()->json($request);
+        // return response()->json($request->all());
 
         $validator = Validator::make($request->all(), [
             'product_name' => 'required|max:300',
@@ -287,5 +292,13 @@ class ProductController extends Controller
         }
 
         return response()->json(['media' => $media], 200);
+    }
+
+    public function reviewProduct()
+    {
+
+        $id = 20;
+
+        return response()->json();
     }
 }
