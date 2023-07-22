@@ -28,7 +28,7 @@ class CountryFactory extends Factory
     {
 
         return [
-            'country_code' => $this->faker->unique->countryISOAlpha3(),
+            'code' => $this->faker->unique->countryISOAlpha3(),
             'name' => $this->faker->country(),
             'states' => json_encode(['state' => $this->faker->state(), 'city' => $this->faker->city()])
         ];

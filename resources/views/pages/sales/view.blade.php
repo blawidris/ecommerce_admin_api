@@ -28,7 +28,7 @@
                     <ul class="breadcrumb breadcrumb-separatorless fw-semibold fs-7 my-0 pt-1">
                         <!--begin::Item-->
                         <li class="breadcrumb-item text-muted">
-                            <a href="../../../index.html" class="text-muted text-hover-primary">
+                            <a href="{{ route('dashboard') }}" class="text-muted text-hover-primary">
                                 Home </a>
                         </li>
                         <!--end::Item-->
@@ -130,7 +130,8 @@
                                                         Date Added
                                                     </div>
                                                 </td>
-                                                <td class="fw-bold text-end">02/07/2023</td>
+                                                <td class="fw-bold text-end">
+                                                    {{ date('d/m/Y', strtotime($customerOrder->created_at)) }}</td>
                                             </tr>
                                             <tr>
                                                 <td class="text-muted">
@@ -141,9 +142,9 @@
                                                         Payment Method
                                                     </div>
                                                 </td>
-                                                <td class="fw-bold text-end">
-                                                    Online
-                                                    <img src="../../../assets/media/svg/card-logos/visa.svg"
+                                                <td class="fw-bold text-end text-capitalize">
+                                                    {{ $customerOrder->payment->payment_type }}
+                                                    <img src="{{ asset('assets/media/svg/card-logos/' . $customerOrder->payment->card_type . '.svg') }}"
                                                         class="w-50px ms-2" />
                                                 </td>
                                             </tr>
@@ -156,7 +157,9 @@
                                                                 class="path5"></span></i> Shipping Method
                                                     </div>
                                                 </td>
-                                                <td class="fw-bold text-end">Flat Shipping Rate</td>
+                                                <td class="fw-bold text-end text-capitalize">
+                                                    {{ $customerOrder->shipping->shipping_method }}
+                                                </td>
                                             </tr>
                                         </tbody>
                                     </table>
@@ -196,10 +199,17 @@
                                                     <div class="d-flex align-items-center justify-content-end">
                                                         <!--begin:: Avatar -->
                                                         <div class="symbol symbol-circle symbol-25px overflow-hidden me-3">
-                                                            <a href="../customers/details.html">
-                                                                <div class="symbol-label">
-                                                                    <img src="../../../assets/media/avatars/300-23.jpg"
-                                                                        alt="Dan Wilson" class="w-100" />
+                                                            <a
+                                                                href="{{ route('customer.view', ['id' => $customerOrder->customer_id]) }}">
+                                                                @php
+
+                                                                    $avatarStatus = $customerOrder->id / 2 !== 0 ? 'danger' : 'success';
+                                                                    $name = "{$customerOrder->customer->first_name} {$customerOrder->customer->last_name}";
+
+                                                                @endphp
+                                                                <div
+                                                                    class="symbol-label fs-3 bg-light-{{ $avatarStatus }} text-{{ $avatarStatus }}">
+                                                                    {{ $name[0] }}
                                                                 </div>
                                                             </a>
                                                         </div>
@@ -222,9 +232,9 @@
                                                     </div>
                                                 </td>
                                                 <td class="fw-bold text-end">
-                                                    <a href="../../user-management/users/view.html"
+                                                    <a href="{{ route('customer.view', ['id' => $customerOrder->customer_id]) }}"
                                                         class="text-gray-600 text-hover-primary">
-                                                        dam@consilting.com </a>
+                                                        {{ $customerOrder->customer->user->email }} </a>
                                                 </td>
                                             </tr>
                                             <tr>
@@ -235,7 +245,8 @@
                                                         Phone
                                                     </div>
                                                 </td>
-                                                <td class="fw-bold text-end">+6141 234 567</td>
+                                                <td class="fw-bold text-end">{{ $customerOrder->customer->phone }}
+                                                </td>
                                             </tr>
                                         </tbody>
                                     </table>
@@ -279,7 +290,8 @@
                                                     </div>
                                                 </td>
                                                 <td class="fw-bold text-end"><a href="../../invoices/view/invoice-3.html"
-                                                        class="text-gray-600 text-hover-primary">#INV-000414</a></td>
+                                                        class="text-gray-600 text-hover-primary">#INV-{{ $customerOrder->order_code }}</a>
+                                                </td>
                                             </tr>
                                             <tr>
                                                 <td class="text-muted">
@@ -299,9 +311,10 @@
                                                     </div>
                                                 </td>
                                                 <td class="fw-bold text-end"><a href="#"
-                                                        class="text-gray-600 text-hover-primary">#SHP-0025410</a></td>
+                                                        class="text-gray-600 text-hover-primary">#SHP-{{ $customerOrder->shipping->track_code }}</a>
+                                                </td>
                                             </tr>
-                                            <tr>
+                                            {{-- <tr>
                                                 <td class="text-muted">
                                                     <div class="d-flex align-items-center">
                                                         <i class="ki-duotone ki-discount fs-2 me-2"><span
@@ -318,7 +331,7 @@
                                                     </div>
                                                 </td>
                                                 <td class="fw-bold text-end">600</td>
-                                            </tr>
+                                            </tr> --}}
                                         </tbody>
                                     </table>
                                     <!--end::Table-->
@@ -357,10 +370,14 @@
 
                                         <!--begin::Card body-->
                                         <div class="card-body pt-0">
-                                            Unit 1/23 Hastings Road,<br />
-                                            Melbourne 3000,<br />
-                                            Victoria,<br />
-                                            Australia.
+
+                                            {{-- @dd($customerOrder->customer->location); --}}
+
+                                            {{ $customerOrder->customer->location->address1 ?? $customerOrder->shipping->address }},<br />
+                                            {{ $customerOrder->customer->location->city ?? $customerOrder->shipping->city }}
+                                            {{ $customerOrder->shipping->zipcode }},<br />
+                                            {{ $customerOrder->customer->location->state ?? $customerOrder->shipping->state }},<br />
+                                            {{ $customerOrder->customer->location->country_code->name ?? $customerOrder->shipping->country->name }}.
                                         </div>
                                         <!--end::Card body-->
                                     </div>
@@ -385,10 +402,11 @@
 
                                         <!--begin::Card body-->
                                         <div class="card-body pt-0">
-                                            Unit 1/23 Hastings Road,<br />
-                                            Melbourne 3000,<br />
-                                            Victoria,<br />
-                                            Australia.
+                                            {{ $customerOrder->shipping->address }},<br />
+                                            {{ $customerOrder->shipping->city }}
+                                            {{ $customerOrder->shipping->zipcode }},<br />
+                                            {{ $customerOrder->shipping->state }},<br />
+                                            {{ $customerOrder->shipping->country->name }}.
                                         </div>
                                         <!--end::Card body-->
                                     </div>
@@ -420,105 +438,87 @@
                                                     </tr>
                                                 </thead>
                                                 <tbody class="fw-semibold text-gray-600">
-                                                    <tr>
-                                                        <td>
-                                                            <div class="d-flex align-items-center">
-                                                                <!--begin::Thumbnail-->
-                                                                <a href="../catalog/edit-product.html"
-                                                                    class="symbol symbol-50px">
-                                                                    <span class="symbol-label"
-                                                                        style="background-image:url(../../../assets/media/stock/ecommerce/1.gif);"></span>
-                                                                </a>
-                                                                <!--end::Thumbnail-->
 
-                                                                <!--begin::Title-->
-                                                                <div class="ms-5">
-                                                                    <a href="../catalog/edit-product.html"
-                                                                        class="fw-bold text-gray-600 text-hover-primary">Product
-                                                                        1</a>
-                                                                    <div class="fs-7 text-muted">Delivery Date: 02/07/2023
-                                                                    </div>
-                                                                </div>
-                                                                <!--end::Title-->
-                                                            </div>
-                                                        </td>
-                                                        <td class="text-end">
-                                                            02840005 </td>
-                                                        <td class="text-end">
-                                                            2
-                                                        </td>
-                                                        <td class="text-end">
-                                                            $120.00
-                                                        </td>
-                                                        <td class="text-end">
-                                                            $240.00
-                                                        </td>
-                                                    </tr>
-                                                    <tr>
-                                                        <td>
-                                                            <div class="d-flex align-items-center">
-                                                                <!--begin::Thumbnail-->
-                                                                <a href="../catalog/edit-product.html"
-                                                                    class="symbol symbol-50px">
-                                                                    <span class="symbol-label"
-                                                                        style="background-image:url(../../../assets/media/stock/ecommerce/100.gif);"></span>
-                                                                </a>
-                                                                <!--end::Thumbnail-->
+                                                    @php
+                                                        $orders = $customerOrder->items;
 
-                                                                <!--begin::Title-->
-                                                                <div class="ms-5">
-                                                                    <a href="../catalog/edit-product.html"
-                                                                        class="fw-bold text-gray-600 text-hover-primary">Footwear</a>
-                                                                    <div class="fs-7 text-muted">Delivery Date: 02/07/2023
-                                                                    </div>
+                                                        $orderTotal = 0;
+
+                                                        $subtotal = 0;
+                                                        $vat = 0;
+                                                        $shipping_rate = 0;
+
+                                                        foreach ($orders as $order) {
+                                                            $orderTotal = $order->quantity * $order->unit_price;
+                                                            $subtotal += $orderTotal;
+                                                        }
+
+                                                        $total = $subtotal + $vat;
+                                                    @endphp
+
+                                                    {{-- @dd($orders) --}}
+
+                                                    @if ($orders)
+
+                                                        @foreach ($orders as $order)
+                                                            <x-sales.product-item :order="$order" />
+                                                        @endforeach
+
+
+                                                        <tr>
+                                                            <td colspan="4" class="text-end">
+                                                                Subtotal
+                                                            </td>
+                                                            <td class="text-end">
+                                                                <div class="d-inline-flex">
+                                                                    <span class="currency" data-currency="">&#163;</span>
+                                                                    <span class="price">
+                                                                        {{ $subtotal }}
+                                                                    </span>
                                                                 </div>
-                                                                <!--end::Title-->
-                                                            </div>
-                                                        </td>
-                                                        <td class="text-end">
-                                                            03513005 </td>
-                                                        <td class="text-end">
-                                                            1
-                                                        </td>
-                                                        <td class="text-end">
-                                                            $24.00
-                                                        </td>
-                                                        <td class="text-end">
-                                                            $24.00
-                                                        </td>
-                                                    </tr>
-                                                    <tr>
-                                                        <td colspan="4" class="text-end">
-                                                            Subtotal
-                                                        </td>
-                                                        <td class="text-end">
-                                                            $264.00
-                                                        </td>
-                                                    </tr>
-                                                    <tr>
-                                                        <td colspan="4" class="text-end">
-                                                            VAT (0%)
-                                                        </td>
-                                                        <td class="text-end">
-                                                            $0.00
-                                                        </td>
-                                                    </tr>
-                                                    <tr>
-                                                        <td colspan="4" class="text-end">
-                                                            Shipping Rate
-                                                        </td>
-                                                        <td class="text-end">
-                                                            $5.00
-                                                        </td>
-                                                    </tr>
-                                                    <tr>
-                                                        <td colspan="4" class="fs-3 text-dark text-end">
-                                                            Grand Total
-                                                        </td>
-                                                        <td class="text-dark fs-3 fw-bolder text-end">
-                                                            $269.00
-                                                        </td>
-                                                    </tr>
+                                                            </td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td colspan="4" class="text-end">
+                                                                VAT (0%)
+                                                            </td>
+                                                            <td class="text-end">
+
+                                                                <div class="d-inline-flex">
+                                                                    <span class="currency" data-currency="">&#163;</span>
+                                                                    <span class="price">
+                                                                        {{ $vat }}
+                                                                    </span>
+                                                                </div>
+                                                            </td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td colspan="4" class="text-end">
+                                                                Shipping Rate
+                                                            </td>
+                                                            <td class="text-end">
+                                                                <div class="d-inline-flex">
+                                                                    <span class="currency" data-currency="">&#163;</span>
+                                                                    <span class="price">
+                                                                        {{ $shipping_rate }}
+                                                                    </span>
+                                                                </div>
+                                                            </td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td colspan="4" class="fs-3 text-dark text-end">
+                                                                Grand Total
+                                                            </td>
+                                                            <td class="text-dark fs-3 fw-bolder text-end">
+                                                                <div class="d-inline-flex">
+                                                                    <span class="currency" data-currency="">&#163;</span>
+                                                                    <span class="price">
+                                                                        {{ $total }}
+                                                                    </span>
+                                                                </div>
+                                                            </td>
+                                                        </tr>
+                                                    @endif
                                                 </tbody>
                                             </table>
                                             <!--end::Table-->

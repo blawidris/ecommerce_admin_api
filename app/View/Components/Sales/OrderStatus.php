@@ -6,12 +6,12 @@ use Closure;
 use Illuminate\Contracts\View\View;
 use Illuminate\View\Component;
 
-class SaleItem extends Component
+class OrderStatus extends Component
 {
     /**
      * Create a new component instance.
      */
-    public function __construct(public $order)
+    public function __construct()
     {
         //
     }
@@ -21,6 +21,6 @@ class SaleItem extends Component
      */
     public function render(): View|Closure|string
     {
-        return view('components.sales.sale-item');
+        return view('components.sales.order-status');
     }
 }

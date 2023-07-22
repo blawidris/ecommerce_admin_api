@@ -12,9 +12,9 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('countries', function (Blueprint $table) {
-            $table->string('country_code')->primary();
-            $table->string('name');
-            $table->jsonb('states');
+            $table->string('code', 3)->primary();
+            $table->string('name', 255);
+            $table->jsonb('states')->nullable();
         });
     }
 

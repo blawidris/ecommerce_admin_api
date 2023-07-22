@@ -1,6 +1,5 @@
 <?php
 
-use App\Models\Country;
 use App\Models\Order;
 use App\Models\User;
 use Illuminate\Database\Migrations\Migration;
@@ -20,12 +19,15 @@ return new class extends Migration
             $table->string('address');
             $table->string('city');
             $table->string('state');
+            $table->string('phone_number', 45);
             $table->string('zipcode');
-            $table->foreignIdFor(Country::class, 'country_code');
+            $table->string('country_code', 3);
             $table->foreignIdFor(Order::class, 'order_id');
+            $table->string('shipping_method', 45);
             $table->string('status', 45);
-            $table->string('type', 45);
+            $table->string('track_code', 45);
             $table->timestamps();
+            $table->foreign('country_code')->references('code')->on('countries');
         });
     }
 

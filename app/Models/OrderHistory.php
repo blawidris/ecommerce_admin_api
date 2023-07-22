@@ -5,13 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class CustomerAddresses extends Model
+class OrderHistory extends Model
 {
     use HasFactory;
-
-
-    public function customer()
-    {
-        return $this->belongsTo(Customers::class);
-    }
 }

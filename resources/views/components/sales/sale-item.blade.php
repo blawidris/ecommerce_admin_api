@@ -5,18 +5,27 @@
           </div>
       </td>
       <td data-kt-ecommerce-order-filter="order_id">
-          <a href="{{ route('order.view', ['order_code' => $order->order_code]) }}"
-              class="text-gray-800 text-hover-primary fw-bold">
+          <a href="{{ route('order.view', ['order_code' => $order->order_code, 'id' => $order->id]) }}"
+              class="text-gray-800 text-hover-primary fw-bold text-uppercase">
               {{ $order->order_code }}
           </a>
       </td>
       <td>
-          <div class="d-flex align-s-center">
+          <div class="d-flex align-items-center">
+
+              @php
+                  $name = "{$order->customer->first_name} {$order->customer->last_name}";
+              @endphp
               <!--begin:: Avatar -->
               <div class="symbol symbol-circle symbol-50px overflow-hidden me-3">
-                  <a href="{{ route('order.view', 1) }}">
-                      <div class="symbol-label fs-3 bg-light-danger text-danger">
-                          {{ $order->user_id }}
+                  <a href="{{ route('order.view', ['order_code' => $order->order_code, 'id' => $order->id]) }}">
+                      @php
+                          
+                          $avatarStatus = $order->id / 2 !== 0 ? 'danger' : 'success';
+                          
+                      @endphp
+                      <div class="symbol-label fs-3 bg-light-{{ $avatarStatus }} text-{{ $avatarStatus }}">
+                          {{ $name[0] }}
                       </div>
                   </a>
               </div>
@@ -24,27 +33,40 @@
 
               <div class="ms-5">
                   <!--begin::Title-->
-                  <a href="{{ route('order.view', ['order_code' => $order->order_code]) }}"
-                      class="text-gray-800 text-hover-primary fs-5 fw-bold">Dan
-                      {{ $order->user_id->first_name }} {{ $Order->order->user_id->last_name }}
+                  <a href="{{ route('order.view', ['order_code' => $order->order_code, 'id' => $order->id]) }}"
+                      class="text-gray-800 text-hover-primary fs-5 fw-bold">
+                      {{ $name }}
                   </a>
                   <!--end::Title-->
               </div>
           </div>
       </td>
-      <td class="text-end pe-0" data-order="Completed">
+      <td class="text-end pe-0" data-order="{{ $order->status }}">
+
+          @php
+              $status = [
+                  'processing' => 'primary',
+                  'cancelled' => 'danger',
+                  'refunded' => 'danger',
+                  'delivered' => 'success',
+                  'shipping' => 'warning',
+                  'shipped' => 'primary',
+              ];
+              
+              $orderStatus = $status[$order->shipping->status];
+          @endphp
           <!--begin::Badges-->
-          <div class="badge badge-light-{{ $order->status }}">Completed</div>
+          <div class="text-capitalize badge badge-light-{{ $orderStatus }}">{{ $order->shipping->status }}</div>
           <!--end::Badges-->
       </td>
       <td class="text-end pe-0">
           <span class="fw-bold">${{ $order->total_price }}</span>
       </td>
       <td class="text-end" data-order="2023-06-29">
-          <span class="fw-bold">{{ date('d/m/Y', $order->created_at) }}</span>
+          <span class="fw-bold">{{ date('d/m/Y', strtotime($order->created_at)) }}</span>
       </td>
       <td class="text-end" data-order="2023-07-01">
-          <span class="fw-bold">{{ date('d/m/Y', $order->updated_at) }}</span>
+          <span class="fw-bold">{{ date('d/m/Y', strtotime($order->updated_at)) }}</span>
       </td>
       <td class="text-end">
           <a href="#" class="btn btn-sm btn-light btn-flex btn-center btn-active-light-primary"
@@ -56,7 +78,8 @@
               data-kt-menu="true">
               <!--begin::Menu -->
               <div class="menu- px-3">
-                  <a href="{{ route('order.view', ['order_code' => $order->order_code]) }}" class="menu-link px-3">
+                  <a href="{{ route('order.view', ['order_code' => $order->order_code, 'id' => $order->id]) }}"
+                      class="menu-link px-3">
                       View
                   </a>
               </div>
@@ -73,7 +96,8 @@
 
               <!--begin::Menu -->
               <div class="menu- px-3">
-                  <a href="javascript:void(0)" class="menu-link px-3" data-kt-ecommerce-order-filter="delete_row">
+                  <a href="javascript:void(0)" class="menu-link px-3" data-kt-ecommerce-order-filter="delete_row"
+                      data-order-id="{{ $order->id }}">
                       Delete
                   </a>
               </div>

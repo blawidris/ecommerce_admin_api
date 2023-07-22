@@ -20,12 +20,12 @@ class OrderItemFactory extends Factory
     {
         return [
             'order_id' => function () {
-                return Product::inRandomOrder()->first()->id;
+                return Order::inRandomOrder()->first()->id;
             },
             'product_id' => function () {
                 return Product::inRandomOrder()->first()->id;
             },
-            'quantity' => $this->faker->numberBetween(1, 100),
+            'quantity' => $this->faker->numberBetween(1, 10),
             'unit_price' => function (array $attributes) {
                 return Product::inRandomOrder()->first()->price;
             }

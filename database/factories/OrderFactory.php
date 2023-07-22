@@ -2,6 +2,7 @@
 
 namespace Database\Factories;
 
+use App\Models\Customers;
 use App\Models\Payment;
 use App\Models\Shipping;
 use App\Models\User;
@@ -20,14 +21,18 @@ class OrderFactory extends Factory
     public function definition(): array
     {
         return [
-            'order_code' => $this->faker->numerify('ord-####'),
-            'user_id' => User::factory(),
-            'payment_id' => Payment::factory(),
-            'shipping_id' => Shipping::factory(),
+            'order_code' => $this->faker->numerify('#######'),
+            'customer_id' => function () {
+                return Customers::inRandomOrder()->first()->id;
+            },
+            'payment_id' => function () {
+                return Payment::inRandomOrder()->first()->id;
+            },
+            'shipping_id' => function () {
+                return Shipping::inRandomOrder()->first()->id;
+            },
             'total_price' => $this->faker->randomFloat(2, 20, 45),
-
-            'status' => 'shipped',
-            'updated_by'=> User::factory()
+            'updated_by' => User::factory()
         ];
     }
 }

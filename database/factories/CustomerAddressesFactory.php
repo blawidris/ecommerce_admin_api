@@ -4,13 +4,12 @@ namespace Database\Factories;
 
 use App\Models\Country;
 use App\Models\Customers;
-use App\Models\Order;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
- * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\Shipping>
+ * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\CustomerAddresses>
  */
-class ShippingFactory extends Factory
+class CustomerAddressesFactory extends Factory
 {
     /**
      * Define the model's default state.
@@ -20,22 +19,16 @@ class ShippingFactory extends Factory
     public function definition(): array
     {
         return [
-            'customer_id' => function () {
+            'customer_id'=>function(){
                 return Customers::inRandomOrder()->first()->id;
             },
-            'address' =>  $this->faker->streetName(),
+            'address1' => $this->faker->streetAddress(),
             'city' => $this->faker->city(),
             'state' => $this->faker->state(),
-            'phone_number' => $this->faker->phoneNumber(),
             'zipcode' => $this->faker->postcode(),
             'country_code' => function () {
                 return Country::inRandomOrder()->first()->code;
             },
-            'order_id' => $this->faker->numberBetween(1,10),
-            'shipping_method' => 'express',
-            'status' => 'shipped',
-            'track_code' => $this->faker->numerify('##########')
-
         ];
     }
 }

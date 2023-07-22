@@ -19,6 +19,7 @@ return new class extends Migration
             $table->string('last_name', 255);
             $table->string('phone', 45);
             $table->string('status', 22);
+
             $table->timestamps();
             $table->foreignIdFor(User::class, 'created_by')->nullable();
             $table->foreignIdFor(User::class, 'updated_by')->nullable();

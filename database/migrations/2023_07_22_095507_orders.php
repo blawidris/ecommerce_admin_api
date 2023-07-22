@@ -18,11 +18,11 @@ return new class extends Migration
         Schema::create('orders', function (Blueprint $table) {
             $table->id();
             $table->string('order_code');
-            $table->foreignIdFor(Customers::class, 'user_id');
+            $table->foreignIdFor(Customers::class, 'customer_id');
             $table->foreignIdFor(Payment::class, 'payment_id');
             $table->foreignIdFor(Shipping::class, 'shipping_id');
             $table->decimal('total_price', 10, 2);
-            $table->string('status', 45)->default('pending');
+            // $table->string('status', 45)->default('pending');
             $table->timestamps();
             $table->foreignIdFor(User::class, 'updated_by');
         });

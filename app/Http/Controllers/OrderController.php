@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Order;
+use App\Models\OrderItem;
 use Illuminate\Http\Request;
 
 class OrderController extends Controller
@@ -11,8 +13,14 @@ class OrderController extends Controller
      */
     public function index()
     {
+
+        $orders = Order::orderBy('id', 'desc')->get();
+
+        // dd($orders);
+
         $data = [
-            'pageTitle' => 'Orders'
+            'pageTitle' => 'Orders',
+            'orders' => $orders
         ];
 
         return view('pages.sales.index', $data);
@@ -38,10 +46,19 @@ class OrderController extends Controller
 
 
 
-    public function show(string $id)
+    public function show(string $order_code, int $id)
     {
+
+        $customerOrder = Order::findOrFail($id);
+
+        $orderItems = OrderItem::where('order_id', $id)->get();
+
+        // dd($customerOrder->items);
+
         $data = [
-            'pageTitle' => 'Order'
+            'pageTitle' => 'Order',
+            'customerOrder' => $customerOrder,
+            'orderItems' => $orderItems
         ];
 
         return view('pages.sales.view', $data);
