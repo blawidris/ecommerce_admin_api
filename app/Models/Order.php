@@ -15,6 +15,11 @@ class Order extends Model
         return $this->hasOne(Customers::class, 'id', 'customer_id');
     }
 
+    public function location()
+    {
+        return $this->hasOne(CustomerAddresses::class, 'customer_id', 'customer_id');
+    }
+
     public function shipping()
     {
         return $this->hasOne(Shipping::class, 'id', 'shipping_id');
@@ -28,5 +33,10 @@ class Order extends Model
     public function items()
     {
         return $this->hasMany(OrderItem::class);
+    }
+
+    public function histories()
+    {
+        return $this->hasMany(OrderHistory::class);
     }
 }

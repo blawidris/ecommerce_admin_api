@@ -31,13 +31,13 @@ class Customers extends Model
         return $this->hasOne(User::class, 'id', 'user_id');
     }
 
-    public function location(): HasOne
+    public function customerAddress()
     {
-        return $this->hasOne(CustomerAddresses::class, 'id', 'customer_id');
+        return $this->hasOne(CustomerAddresses::class, 'customer_id', 'id');
     }
 
 
-    private function _getAddress(): HasOne
+    private function _getAddress()
     {
         return $this->hasOne(CustomerAddresses::class, 'customer_id', 'user_id');
     }

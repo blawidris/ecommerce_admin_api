@@ -12,8 +12,8 @@
              <!--begin::Title-->
              <div class="ms-5">
                  <a href="{{ route('product.edit', ['slug' => $order->product->slug, 'id' => $order->product->id]) }}"
-                     class="fw-bold text-gray-600 text-hover-primary">Product
-                     {{ $order->quantity }}
+                     class="fw-bold text-gray-600 text-hover-primary">
+                     {{ $order->product->title }}
                  </a>
                  {{-- <div class="fs-7 text-muted">Delivery Date: {{02/07/2023}} --}}
              </div>
@@ -28,23 +28,23 @@
          {{ $order->quantity }}
      </td>
      <td class="text-end">
-        <div class="d-inline-flex">
-            <span class="currency" data-currency="">&#163;</span>
-            <span class="price">
-                {{ $order->unit_price }}
-            </span>
-        </div>
+         <div class="d-inline-flex">
+             <span class="currency" data-currency="">&#163;</span>
+             <span class="price">
+                 {{ $order->unit_price }}
+             </span>
+         </div>
      </td>
      @php
          $total = $order->unit_price * $order->quantity;
      @endphp
      <td class="text-end">
 
-        <div class="d-inline-flex">
-            <span class="currency" data-currency="">&#163;</span>
-            <span class="price">
-                {{ $total }}
-            </span>
-        </div>
+         <div class="d-inline-flex">
+             <span class="currency" data-currency="">&#163;</span>
+             <span class="price">
+                 {{ $total }}
+             </span>
+         </div>
      </td>
  </tr>

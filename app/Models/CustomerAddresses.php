@@ -10,6 +10,9 @@ class CustomerAddresses extends Model
     use HasFactory;
 
 
+    protected $table = 'customer_addresses';
+
+
     public function customer()
     {
         return $this->belongsTo(Customers::class);

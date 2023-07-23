@@ -34,7 +34,7 @@ class ShippingFactory extends Factory
             'order_id' => $this->faker->numberBetween(1,10),
             'shipping_method' => 'express',
             'status' => 'shipped',
-            'track_code' => $this->faker->numerify('##########')
+            'track_code' => $this->faker->numerify('######')
 
         ];
     }

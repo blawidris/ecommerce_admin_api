@@ -251,7 +251,7 @@ class ProductController extends Controller
                 return response()->json($this->sendMessage('Product id is missing', 'error', false), 400);
             }
 
-            if (!Product::where('id', $id)->delete($id)) {
+            if (!Product::where('id', $id)->delete()) {
                 throw new Exception('Sorry, looks like there are some errors detected, please try again');
             }
 

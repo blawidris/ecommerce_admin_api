@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Order;
 use App\Models\OrderItem;
+use App\Models\Product;
 use Illuminate\Http\Request;
 
 class OrderController extends Controller
@@ -51,14 +52,11 @@ class OrderController extends Controller
 
         $customerOrder = Order::findOrFail($id);
 
-        $orderItems = OrderItem::where('order_id', $id)->get();
-
         // dd($customerOrder->items);
 
         $data = [
             'pageTitle' => 'Order',
-            'customerOrder' => $customerOrder,
-            'orderItems' => $orderItems
+            'customerOrder' => $customerOrder
         ];
 
         return view('pages.sales.view', $data);
@@ -66,10 +64,21 @@ class OrderController extends Controller
 
 
 
-    public function edit(string $id)
+    public function edit(string $order_code, int $id)
     {
+
+        $orderId = $id;
+
+        $order = Order::findOrFail($id);
+        $products = Product::orderBy('created_at', 'desc')->get();
+
+        // dd($order->items());
+
         $data = [
-            'pageTitle' => 'Edit Order'
+            'pageTitle' => 'Edit Order',
+            'products' => $products,
+            'order' => $order,
+            'orderItems' => $order->items
         ];
 
         return view('pages.sales.edit', $data);
@@ -83,8 +92,18 @@ class OrderController extends Controller
     }
 
 
-    public function destroy(string $id)
+    public function destroy(Request $request)
     {
-        //
+        $id = $request->id;
+
+        if (!$id) {
+            return response()->json($this->sendMessage('Order ID not found', 'error', false), 400);
+        }
+
+        if (!Order::where('id', $id)->delete()) {
+            return response()->json($this->sendMessage('Sorry, looks like there are some errors detected, please try again', 'error', false));
+        }
+
+        return response()->json($this->sendMessage('Order Deleted successfully', 'success', true), 200);
     }
 }

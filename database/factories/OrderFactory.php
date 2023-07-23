@@ -32,6 +32,7 @@ class OrderFactory extends Factory
                 return Shipping::inRandomOrder()->first()->id;
             },
             'total_price' => $this->faker->randomFloat(2, 20, 45),
+            'status' => $this->faker->numberBetween(0, 5),
             'updated_by' => User::factory()
         ];
     }

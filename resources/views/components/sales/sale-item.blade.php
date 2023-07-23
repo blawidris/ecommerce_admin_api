@@ -20,9 +20,9 @@
               <div class="symbol symbol-circle symbol-50px overflow-hidden me-3">
                   <a href="{{ route('order.view', ['order_code' => $order->order_code, 'id' => $order->id]) }}">
                       @php
-                          
+
                           $avatarStatus = $order->id / 2 !== 0 ? 'danger' : 'success';
-                          
+
                       @endphp
                       <div class="symbol-label fs-3 bg-light-{{ $avatarStatus }} text-{{ $avatarStatus }}">
                           {{ $name[0] }}
@@ -41,22 +41,26 @@
               </div>
           </div>
       </td>
+
+      {{-- @dd($order->histories) --}}
+
+
       <td class="text-end pe-0" data-order="{{ $order->status }}">
 
           @php
               $status = [
-                  'processing' => 'primary',
-                  'cancelled' => 'danger',
-                  'refunded' => 'danger',
-                  'delivered' => 'success',
-                  'shipping' => 'warning',
-                  'shipped' => 'primary',
+                  2 => ['color' => 'primary', 'status' => 'Processing'],
+                  1 => ['color' => 'danger', 'status' => 'Failed'],
+                  3 => ['color' => 'primary', 'status' => 'Delivering'],
+                  4 => ['color' => 'success', 'status' => 'Delivered'],
+                  0 => ['color' => 'warning', 'status' => 'Pending'],
+                  5 => ['color'=>'success', 'status' => 'Completed'],
               ];
-              
-              $orderStatus = $status[$order->shipping->status];
+
+              $orderStatus = $status[$order->status];
           @endphp
           <!--begin::Badges-->
-          <div class="text-capitalize badge badge-light-{{ $orderStatus }}">{{ $order->shipping->status }}</div>
+          <div class="text-capitalize badge badge-light-{{ $orderStatus['color'] }}">{{ $orderStatus['status'] }}</div>
           <!--end::Badges-->
       </td>
       <td class="text-end pe-0">

@@ -97,11 +97,12 @@
                         <!--end::Button-->
 
                         <!--begin::Button-->
-                        <a href="edit-order.html" class="btn btn-success btn-sm me-lg-n7">Edit Order</a>
+                        <a href="{{ route('order.edit', ['order_code' => $customerOrder->order_code, 'id' => $customerOrder->id]) }}"
+                            class="btn btn-success btn-sm me-lg-n7">Edit Order</a>
                         <!--end::Button-->
 
                         <!--begin::Button-->
-                        <a href="add-order.html" class="btn btn-primary btn-sm">Add New Order</a>
+                        {{-- <a href="add-order.html" class="btn btn-primary btn-sm">Add New Order</a> --}}
                         <!--end::Button-->
                     </div>
                     <!--begin::Order summary-->
@@ -216,9 +217,10 @@
                                                         <!--end::Avatar-->
 
                                                         <!--begin::Name-->
-                                                        <a href="../customers/details.html"
+                                                        <a href="{{ route('customer.view', ['id' => $customerOrder->customer->id]) }}"
                                                             class="text-gray-600 text-hover-primary">
-                                                            Dan Wilson </a>
+                                                            {{ $name }}
+                                                        </a>
                                                         <!--end::Name-->
                                                     </div>
                                                 </td>
@@ -560,114 +562,16 @@
                                                     </tr>
                                                 </thead>
                                                 <tbody class="fw-semibold text-gray-600">
-                                                    <tr>
-                                                        <td>02/07/2023</td>
-                                                        <td>
-                                                            Order completed </td>
-                                                        <td>
-                                                            <!--begin::Badges-->
-                                                            <div class="badge badge-light-success">Completed</div>
-                                                            <!--end::Badges-->
-                                                        </td>
-                                                        <td>
-                                                            No </td>
-                                                    </tr>
-                                                    <tr>
-                                                        <td>01/07/2023</td>
-                                                        <td>
-                                                            Order received by customer </td>
-                                                        <td>
-                                                            <!--begin::Badges-->
-                                                            <div class="badge badge-light-success">Delivered</div>
-                                                            <!--end::Badges-->
-                                                        </td>
-                                                        <td>
-                                                            Yes </td>
-                                                    </tr>
-                                                    <tr>
-                                                        <td>30/06/2023</td>
-                                                        <td>
-                                                            Order shipped from warehouse </td>
-                                                        <td>
-                                                            <!--begin::Badges-->
-                                                            <div class="badge badge-light-primary">Delivering</div>
-                                                            <!--end::Badges-->
-                                                        </td>
-                                                        <td>
-                                                            Yes </td>
-                                                    </tr>
-                                                    <tr>
-                                                        <td>29/06/2023</td>
-                                                        <td>
-                                                            Payment received </td>
-                                                        <td>
-                                                            <!--begin::Badges-->
-                                                            <div class="badge badge-light-primary">Processing</div>
-                                                            <!--end::Badges-->
-                                                        </td>
-                                                        <td>
-                                                            No </td>
-                                                    </tr>
-                                                    <tr>
-                                                        <td>28/06/2023</td>
-                                                        <td>
-                                                            Pending payment </td>
-                                                        <td>
-                                                            <!--begin::Badges-->
-                                                            <div class="badge badge-light-warning">Pending</div>
-                                                            <!--end::Badges-->
-                                                        </td>
-                                                        <td>
-                                                            No </td>
-                                                    </tr>
-                                                    <tr>
-                                                        <td>27/06/2023</td>
-                                                        <td>
-                                                            Payment method updated </td>
-                                                        <td>
-                                                            <!--begin::Badges-->
-                                                            <div class="badge badge-light-warning">Pending</div>
-                                                            <!--end::Badges-->
-                                                        </td>
-                                                        <td>
-                                                            No </td>
-                                                    </tr>
-                                                    <tr>
-                                                        <td>26/06/2023</td>
-                                                        <td>
-                                                            Payment method expired </td>
-                                                        <td>
-                                                            <!--begin::Badges-->
-                                                            <div class="badge badge-light-danger">Failed</div>
-                                                            <!--end::Badges-->
-                                                        </td>
-                                                        <td>
-                                                            Yes </td>
-                                                    </tr>
-                                                    <tr>
-                                                        <td>25/06/2023</td>
-                                                        <td>
-                                                            Pending payment </td>
-                                                        <td>
-                                                            <!--begin::Badges-->
-                                                            <div class="badge badge-light-warning">Pending</div>
-                                                            <!--end::Badges-->
-                                                        </td>
-                                                        <td>
-                                                            No </td>
-                                                    </tr>
-                                                    <tr>
-                                                        <td>24/06/2023</td>
-                                                        <td>
-                                                            Order received </td>
-                                                        <td>
-                                                            <!--begin::Badges-->
-                                                            <div class="badge badge-light-warning">Pending</div>
-                                                            <!--end::Badges-->
-                                                        </td>
-                                                        <td>
-                                                            Yes </td>
-                                                    </tr>
+
+                                                    @php
+                                                        $ordersStatus = $customerOrder->histories;
+                                                    @endphp
+
+                                                    {{-- @dd($customerOrder->histories); --}}
+
+                                                    @foreach ($ordersStatus as $item)
+                                                        <x-sales.order-status :status="$item" />
+                                                    @endforeach
                                                 </tbody>
                                             </table>
                                             <!--end::Table-->

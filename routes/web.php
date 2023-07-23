@@ -70,6 +70,12 @@ Route::group(['prefix' => 'order'], function () {
     Route::get('/add', [OrderController::class, 'create'])->name('order.add');
     Route::get('/edit/{order_code}/{id}', [OrderController::class, 'edit'])->name('order.edit');
     Route::get('/view/{order_code}/{id}', [OrderController::class, 'show'])->where(['order_code' => '([A-Za-z0-9\-]+)', 'id' => '[0-9]+'])->name('order.view');
+
+
+    // POSTS
+
+    // DELETE
+    Route::delete('/delete', [OrderController::class, 'destroy']);
 });
 
 Route::group(['prefix' => 'report'], function () {
