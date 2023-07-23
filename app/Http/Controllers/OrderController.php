@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Country;
 use App\Models\Order;
 use App\Models\OrderItem;
 use App\Models\Product;
@@ -71,6 +72,7 @@ class OrderController extends Controller
 
         $order = Order::findOrFail($id);
         $products = Product::orderBy('created_at', 'desc')->get();
+        $countries = Country::orderBy('code', 'asc')->get();
 
         // dd($order->items());
 
@@ -78,7 +80,8 @@ class OrderController extends Controller
             'pageTitle' => 'Edit Order',
             'products' => $products,
             'order' => $order,
-            'orderItems' => $order->items
+            'orderItems' => $order->items,
+            'countries' => $countries
         ];
 
         return view('pages.sales.edit', $data);
@@ -86,9 +89,9 @@ class OrderController extends Controller
 
 
 
-    public function update(Request $request, string $id)
+    public function update(Request $request)
     {
-        //
+        dd($request);
     }
 
 

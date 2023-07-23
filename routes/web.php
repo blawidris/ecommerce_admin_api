@@ -73,6 +73,8 @@ Route::group(['prefix' => 'order'], function () {
 
 
     // POSTS
+    Route::post('add', [OrderController::class, 'store'])->name('order.store');
+    Route::put('/update', [OrderController::class, 'update'])->name('order.update');
 
     // DELETE
     Route::delete('/delete', [OrderController::class, 'destroy']);

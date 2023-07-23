@@ -21,6 +21,6 @@ class Cartitem extends Component
      */
     public function render(): View|Closure|string
     {
-        return view('components.sales.cartitem');
+        return view('components.sales.order-product-item');
     }
 }
