@@ -31,8 +31,14 @@ class OrderController extends Controller
 
     public function create()
     {
+
+        $invoice = $this->random_number(5);
+        $products = Product::all();
+
         $data = [
-            'pageTitle' => 'Add Order'
+            'pageTitle' => 'Add Order',
+            'invoice' => $invoice,
+            'products' => $products
         ];
 
         return view('pages.sales.add', $data);
@@ -43,7 +49,21 @@ class OrderController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $order_code = $$request->invoice;
+        $total_amount = 0;
+        $subtotal = 0;
+
+        $orderIds = $request->product;
+
+        // calculate subtotal
+        foreach ($orderIds as $orderItem) {
+
+            $prod = Product::findorFail('id', $orderItem);
+
+            $subtotal += $prod->price * 1;
+        } 
+
+
     }
 
 
@@ -91,7 +111,31 @@ class OrderController extends Controller
 
     public function update(Request $request)
     {
-        dd($request);
+        $orderId = $request->id;
+        $order = Order::findOrFail($orderId);
+
+        // sub total
+        $subtotal = 0;
+
+        // existing order items
+        $existingOrderItems = $order->items;
+
+        dd($existingOrderItems);
+
+        // has old and new order product ids
+        $newOrderItems = $request->product;
+
+        // store all items
+        $orders =  [];
+
+        foreach ($newOrderItems as $orderItem) {
+
+            if (in_array($orderItem, $existingOrderItems->product_id)) {
+
+                dd('found');
+            } else {
+            }
+        }
     }
 
 

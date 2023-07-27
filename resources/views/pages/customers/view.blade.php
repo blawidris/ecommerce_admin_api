@@ -28,7 +28,7 @@
                     <ul class="breadcrumb breadcrumb-separatorless fw-semibold fs-7 my-0 pt-1">
                         <!--begin::Item-->
                         <li class="breadcrumb-item text-muted">
-                            <a href="../../../index.html" class="text-muted text-hover-primary">
+                            <a href="{{ route('dashboard') }}" class="text-muted text-hover-primary">
                                 Home </a>
                         </li>
                         <!--end::Item-->
@@ -57,135 +57,7 @@
                     <!--end::Breadcrumb-->
                 </div>
                 <!--end::Page title-->
-                <!--begin::Actions-->
-                <div class="d-flex align-items-center gap-2 gap-lg-3">
-                    <!--begin::Filter menu-->
-                    <div class="m-0">
-                        <!--begin::Menu toggle-->
-                        <a href="#"
-                            class="btn btn-sm btn-flex bg-body btn-color-gray-700 btn-active-color-primary fw-bold"
-                            data-kt-menu-trigger="click" data-kt-menu-placement="bottom-end">
-                            <i class="ki-duotone ki-filter fs-6 text-muted me-1"><span class="path1"></span><span
-                                    class="path2"></span></i>
-                            Filter
-                        </a>
-                        <!--end::Menu toggle-->
 
-
-
-                        <!--begin::Menu 1-->
-                        <div class="menu menu-sub menu-sub-dropdown w-250px w-md-300px" data-kt-menu="true"
-                            id="kt_menu_64a0c28918353">
-                            <!--begin::Header-->
-                            <div class="px-7 py-5">
-                                <div class="fs-5 text-dark fw-bold">Filter Options</div>
-                            </div>
-                            <!--end::Header-->
-
-                            <!--begin::Menu separator-->
-                            <div class="separator border-gray-200"></div>
-                            <!--end::Menu separator-->
-
-                            <!--begin::Form-->
-                            <div class="px-7 py-5">
-                                <!--begin::Input group-->
-                                <div class="mb-10">
-                                    <!--begin::Label-->
-                                    <label class="form-label fw-semibold">Status:</label>
-                                    <!--end::Label-->
-
-                                    <!--begin::Input-->
-                                    <div>
-                                        <select class="form-select form-select-solid" data-kt-select2="true"
-                                            data-placeholder="Select option" data-dropdown-parent="#kt_menu_64a0c28918353"
-                                            data-allow-clear="true">
-                                            <option></option>
-                                            <option value="1">Approved</option>
-                                            <option value="2">Pending</option>
-                                            <option value="2">In Process</option>
-                                            <option value="2">Rejected</option>
-                                        </select>
-                                    </div>
-                                    <!--end::Input-->
-                                </div>
-                                <!--end::Input group-->
-
-                                <!--begin::Input group-->
-                                <div class="mb-10">
-                                    <!--begin::Label-->
-                                    <label class="form-label fw-semibold">Member Type:</label>
-                                    <!--end::Label-->
-
-                                    <!--begin::Options-->
-                                    <div class="d-flex">
-                                        <!--begin::Options-->
-                                        <label class="form-check form-check-sm form-check-custom form-check-solid me-5">
-                                            <input class="form-check-input" type="checkbox" value="1" />
-                                            <span class="form-check-label">
-                                                Author
-                                            </span>
-                                        </label>
-                                        <!--end::Options-->
-
-                                        <!--begin::Options-->
-                                        <label class="form-check form-check-sm form-check-custom form-check-solid">
-                                            <input class="form-check-input" type="checkbox" value="2"
-                                                checked="checked" />
-                                            <span class="form-check-label">
-                                                Customer
-                                            </span>
-                                        </label>
-                                        <!--end::Options-->
-                                    </div>
-                                    <!--end::Options-->
-                                </div>
-                                <!--end::Input group-->
-
-                                <!--begin::Input group-->
-                                <div class="mb-10">
-                                    <!--begin::Label-->
-                                    <label class="form-label fw-semibold">Notifications:</label>
-                                    <!--end::Label-->
-
-                                    <!--begin::Switch-->
-                                    <div class="form-check form-switch form-switch-sm form-check-custom form-check-solid">
-                                        <input class="form-check-input" type="checkbox" value="" name="notifications"
-                                            checked />
-                                        <label class="form-check-label">
-                                            Enabled
-                                        </label>
-                                    </div>
-                                    <!--end::Switch-->
-                                </div>
-                                <!--end::Input group-->
-
-                                <!--begin::Actions-->
-                                <div class="d-flex justify-content-end">
-                                    <button type="reset" class="btn btn-sm btn-light btn-active-light-primary me-2"
-                                        data-kt-menu-dismiss="true">Reset</button>
-
-                                    <button type="submit" class="btn btn-sm btn-primary"
-                                        data-kt-menu-dismiss="true">Apply</button>
-                                </div>
-                                <!--end::Actions-->
-                            </div>
-                            <!--end::Form-->
-                        </div>
-                        <!--end::Menu 1-->
-                    </div>
-                    <!--end::Filter menu-->
-
-
-                    <!--begin::Secondary button-->
-                    <!--end::Secondary button-->
-
-                    <!--begin::Primary button-->
-                    <a href="#" class="btn btn-sm fw-bold btn-primary" data-bs-toggle="modal"
-                        data-bs-target="#kt_modal_create_app">
-                        Create </a>
-                    <!--end::Primary button-->
-                </div>
-                <!--end::Actions-->
             </div>
             <!--end::Toolbar container-->
         </div>
@@ -210,18 +82,20 @@
                                 <div class="d-flex flex-center flex-column mb-5">
                                     <!--begin::Avatar-->
                                     <div class="symbol symbol-150px symbol-circle mb-7">
-                                        <img src="../../../assets/media/avatars/300-1.jpg" alt="image" />
+                                        <img src="{{ asset('assets/media/svg/files/blank-image.svg') }}" alt="image" />
                                     </div>
                                     <!--end::Avatar-->
 
                                     <!--begin::Name-->
                                     <a href="#" class="fs-3 text-gray-800 text-hover-primary fw-bold mb-1">
-                                        Max Smith </a>
+                                        {{ $customer->first_name }} {{ $customer->last_name }}
+                                    </a>
                                     <!--end::Name-->
 
                                     <!--begin::Email-->
                                     <a href="#" class="fs-5 fw-semibold text-muted text-hover-primary mb-6">
-                                        max@kt.com </a>
+                                        {{ $customer->user->email }}
+                                    </a>
                                     <!--end::Email-->
                                 </div>
                                 <!--end::Summary-->
@@ -233,7 +107,7 @@
                                     </div>
 
                                     <!--begin::Badge-->
-                                    <div class="badge badge-light-info d-inline">Premium user</div>
+                                    {{-- <div class="badge badge-light-info d-inline">Premium user</div> --}}
                                     <!--begin::Badge-->
                                 </div>
                                 <!--end::Details toggle-->
@@ -244,26 +118,31 @@
                                 <div class="pb-5 fs-6">
                                     <!--begin::Details item-->
                                     <div class="fw-bold mt-5">Account ID</div>
-                                    <div class="text-gray-600">ID-45453423</div>
+                                    <div class="text-gray-600">ID-{{ $customer->id }}</div>
                                     <!--begin::Details item-->
                                     <!--begin::Details item-->
-                                    <div class="fw-bold mt-5">Billing Email</div>
+                                    <div class="fw-bold mt-5">Email</div>
                                     <div class="text-gray-600"><a href="#"
-                                            class="text-gray-600 text-hover-primary">info@keenthemes.com</a></div>
+                                            class="text-gray-600 text-hover-primary">{{ $customer->user->email }}</a></div>
                                     <!--begin::Details item-->
                                     <!--begin::Details item-->
-                                    <div class="fw-bold mt-5">Delivery Address</div>
-                                    <div class="text-gray-600">101 Collin Street, <br />Melbourne 3000 VIC<br />Australia
+                                    <div class="fw-bold mt-5">Customer Address</div>
+                                    <div class="text-gray-600">
+                                        {{ $customer->customerAddress->address1 ?? '' }}, <br />
+                                        {{ $customer->customerAddress->city ?? '' }}
+                                        {{ $customer->customerAddress->zipcode ?? '' }}
+                                        {{ $customer->customerAddress->state ?? '' }}<br />
+                                        {{ $customer->customerAddress->country->name ?? '' }}
                                     </div>
                                     <!--begin::Details item-->
                                     <!--begin::Details item-->
-                                    <div class="fw-bold mt-5">Language</div>
-                                    <div class="text-gray-600">English</div>
+                                    {{-- <div class="fw-bold mt-5">Language</div>
+                                    <div class="text-gray-600">English</div> --}}
                                     <!--begin::Details item-->
                                     <!--begin::Details item-->
-                                    <div class="fw-bold mt-5">Latest Transaction</div>
+                                    {{-- <div class="fw-bold mt-5">Latest Transaction</div>
                                     <div class="text-gray-600"><a href="../sales/details.html"
-                                            class="text-gray-600 text-hover-primary">#14534</a> </div>
+                                            class="text-gray-600 text-hover-primary">#14534</a> </div> --}}
                                     <!--begin::Details item-->
                                 </div>
                                 <!--end::Details content-->
@@ -305,7 +184,8 @@
                         <div class="tab-content" id="myTabContent">
                             <!--begin:::Tab pane-->
                             <div class="tab-pane fade show active" id="kt_ecommerce_customer_overview" role="tabpanel">
-                                <div class="row row-cols-1 row-cols-md-2 mb-6 mb-xl-9">
+
+                                {{-- <div class="row row-cols-1 row-cols-md-2 mb-6 mb-xl-9">
                                     <div class="col">
                                         <!--begin::Card-->
                                         <div class="card pt-4 h-md-100 mb-6 mb-md-0">
@@ -359,7 +239,7 @@
                                         </a>
                                         <!--end::Reward Tier-->
                                     </div>
-                                </div>
+                                </div> --}}
 
 
                                 <!--begin::Card-->
@@ -384,146 +264,57 @@
                                                     <th class="min-w-100px">order No.</th>
                                                     <th>Status</th>
                                                     <th>Amount</th>
-                                                    <th class="min-w-100px">Rewards</th>
+                                                    <th class="min-w-100px">Quantity</th>
                                                     <th class="min-w-100px">Date</th>
                                                 </tr>
                                             </thead>
                                             <tbody class="fs-6 fw-semibold text-gray-600">
-                                                <tr>
-                                                    <td>
-                                                        <a href="../sales/details.html"
-                                                            class="text-gray-600 text-hover-primary mb-1">#14792</a>
-                                                    </td>
-                                                    <td>
-                                                        <span class="badge badge-light-success">Successful</span>
-                                                    </td>
-                                                    <td>
-                                                        $1,200.00 </td>
-                                                    <td>
-                                                        120 </td>
-                                                    <td>
-                                                        14 Dec 2020, 8:43 pm </td>
-                                                </tr>
-                                                <tr>
-                                                    <td>
-                                                        <a href="../sales/details.html"
-                                                            class="text-gray-600 text-hover-primary mb-1">#15171</a>
-                                                    </td>
-                                                    <td>
-                                                        <span class="badge badge-light-success">Successful</span>
-                                                    </td>
-                                                    <td>
-                                                        $79.00 </td>
-                                                    <td>
-                                                        7 </td>
-                                                    <td>
-                                                        01 Dec 2020, 10:12 am </td>
-                                                </tr>
-                                                <tr>
-                                                    <td>
-                                                        <a href="../sales/details.html"
-                                                            class="text-gray-600 text-hover-primary mb-1">#15016</a>
-                                                    </td>
-                                                    <td>
-                                                        <span class="badge badge-light-success">Successful</span>
-                                                    </td>
-                                                    <td>
-                                                        $5,500.00 </td>
-                                                    <td>
-                                                        550 </td>
-                                                    <td>
-                                                        12 Nov 2020, 2:01 pm </td>
-                                                </tr>
-                                                <tr>
-                                                    <td>
-                                                        <a href="../sales/details.html"
-                                                            class="text-gray-600 text-hover-primary mb-1">#14993</a>
-                                                    </td>
-                                                    <td>
-                                                        <span class="badge badge-light-warning">Pending</span>
-                                                    </td>
-                                                    <td>
-                                                        $880.00 </td>
-                                                    <td>
-                                                        88 </td>
-                                                    <td>
-                                                        21 Oct 2020, 5:54 pm </td>
-                                                </tr>
-                                                <tr>
-                                                    <td>
-                                                        <a href="../sales/details.html"
-                                                            class="text-gray-600 text-hover-primary mb-1">#15556</a>
-                                                    </td>
-                                                    <td>
-                                                        <span class="badge badge-light-success">Successful</span>
-                                                    </td>
-                                                    <td>
-                                                        $7,650.00 </td>
-                                                    <td>
-                                                        765 </td>
-                                                    <td>
-                                                        19 Oct 2020, 7:32 am </td>
-                                                </tr>
-                                                <tr>
-                                                    <td>
-                                                        <a href="../sales/details.html"
-                                                            class="text-gray-600 text-hover-primary mb-1">#15887</a>
-                                                    </td>
-                                                    <td>
-                                                        <span class="badge badge-light-success">Successful</span>
-                                                    </td>
-                                                    <td>
-                                                        $375.00 </td>
-                                                    <td>
-                                                        37 </td>
-                                                    <td>
-                                                        23 Sep 2020, 12:38 am </td>
-                                                </tr>
-                                                <tr>
-                                                    <td>
-                                                        <a href="../sales/details.html"
-                                                            class="text-gray-600 text-hover-primary mb-1">#15372</a>
-                                                    </td>
-                                                    <td>
-                                                        <span class="badge badge-light-success">Successful</span>
-                                                    </td>
-                                                    <td>
-                                                        $129.00 </td>
-                                                    <td>
-                                                        12 </td>
-                                                    <td>
-                                                        11 Sep 2020, 3:18 pm </td>
-                                                </tr>
-                                                <tr>
-                                                    <td>
-                                                        <a href="../sales/details.html"
-                                                            class="text-gray-600 text-hover-primary mb-1">#15555</a>
-                                                    </td>
-                                                    <td>
-                                                        <span class="badge badge-light-danger">Rejected</span>
-                                                    </td>
-                                                    <td>
-                                                        $450.00 </td>
-                                                    <td>
-                                                        45 </td>
-                                                    <td>
-                                                        03 Sep 2020, 1:08 am </td>
-                                                </tr>
-                                                <tr>
-                                                    <td>
-                                                        <a href="../sales/details.html"
-                                                            class="text-gray-600 text-hover-primary mb-1">#15052</a>
-                                                    </td>
-                                                    <td>
-                                                        <span class="badge badge-light-warning">Pending</span>
-                                                    </td>
-                                                    <td>
-                                                        $8,700.00 </td>
-                                                    <td>
-                                                        870 </td>
-                                                    <td>
-                                                        01 Sep 2020, 4:58 pm </td>
-                                                </tr>
+
+                                                {{-- @dd($customer->orders) --}}
+
+                                                @foreach ($customer->orders as $order)
+                                                    <tr>
+                                                        <td>
+                                                            <a href="{{ route('order.view', ['order_code' => $order->order_code, 'id' => $order->id]) }}"
+                                                                class="text-gray-600 text-hover-primary mb-1">#{{ $order->order_code }}</a>
+                                                        </td>
+                                                        <td>
+                                                            @php
+                                                                $status = [
+                                                                    0 => ['color' => 'warning', 'status' => 'Pending'],
+                                                                    1 => ['color' => 'danger', 'status' => 'Failed'],
+                                                                    2 => ['color' => 'primary', 'status' => 'Processing'],
+                                                                    3 => ['color' => 'primary', 'status' => 'Delivering'],
+                                                                    4 => ['color' => 'success', 'status' => 'Delivered'],
+                                                                    5 => ['color' => 'success', 'status' => 'Completed'],
+                                                                ];
+
+                                                                $orderStatus = $status[$order->status];
+                                                            @endphp
+                                                            <span
+                                                                class="badge badge-light-{{ $orderStatus['color'] }}">{{ $orderStatus['status'] }}</span>
+                                                        </td>
+                                                        <td>
+                                                            <div class="d-inline-flex">
+                                                                <span class="currency">
+                                                                    &#163;
+                                                                </span>
+                                                                <span class="price">
+
+                                                                    {{ $order->total_price }}
+                                                                </span>
+                                                            </div>
+                                                        </td>
+                                                        <td>
+                                                            {{ $order->quantity }}
+                                                        </td>
+                                                        <td>
+                                                            {{ date('j M Y, H:i:s a', strtotime($order->created_at)) }}
+                                                        </td>
+                                                    </tr>
+                                                @endforeach
+
+
                                             </tbody>
                                         </table>
                                         <!--end::Table-->
@@ -552,8 +343,14 @@
                                     <div class="card-body pt-0 pb-5">
                                         <!--begin::Form-->
                                         <form class="form" action="#" id="kt_ecommerce_customer_profile">
+
+                                            @method('PUT')
+                                            @csrf
+
+                                            <input type="hidden" name="customer_id" value="{{ $customer->id }}">
+
                                             <!--begin::Input group-->
-                                            <div class="mb-7">
+                                            {{-- <div class="mb-7">
                                                 <!--begin::Label-->
                                                 <label class="fs-6 fw-semibold mb-2">
                                                     <span>Update Avatar</span>
@@ -571,11 +368,11 @@
                                                     <!--begin::Image input placeholder-->
                                                     <style>
                                                         .image-input-placeholder {
-                                                            background-image: url('../../../assets/media/svg/files/blank-image.svg');
+                                                            background-image: url({{ asset('assets/media/svg/files/blank-image.svg') }});
                                                         }
 
                                                         [data-bs-theme="dark"] .image-input-placeholder {
-                                                            background-image: url('../../../assets/media/svg/files/blank-image-dark.svg');
+                                                            background-image: url({{ asset('assets/media/svg/files/blank-image-dark.svg') }});
                                                         }
                                                     </style>
                                                     <!--end::Image input placeholder-->
@@ -585,7 +382,7 @@
                                                         data-kt-image-input="true">
                                                         <!--begin::Preview existing avatar-->
                                                         <div class="image-input-wrapper w-125px h-125px"
-                                                            style="background-image: url(../../../assets/media/avatars/300-1.jpg)">
+                                                            style="background-image: url({{ asset('assets/media/svg/files/blank-image.svg') }})">
                                                         </div>
                                                         <!--end::Preview existing avatar-->
 
@@ -627,31 +424,47 @@
                                                     <!--end::Image input-->
                                                 </div>
                                                 <!--end::Image input wrapper-->
-                                            </div>
+                                            </div> --}}
                                             <!--end::Input group-->
 
                                             <!--begin::Input group-->
-                                            <div class="fv-row mb-7">
-                                                <!--begin::Label-->
-                                                <label class="fs-6 fw-semibold mb-2 required">Name</label>
-                                                <!--end::Label-->
+                                            <div class="row">
 
-                                                <!--begin::Input-->
-                                                <input type="text" class="form-control form-control-solid"
-                                                    placeholder="" name="name" value="Max Smith" />
-                                                <!--end::Input-->
+                                                <div class="fv-row mb-7 col">
+                                                    <!--begin::Label-->
+                                                    <label class="fs-6 fw-semibold mb-2 required">First Name</label>
+                                                    <!--end::Label-->
+
+                                                    <!--begin::Input-->
+                                                    <input type="text" class="form-control form-control-solid"
+                                                        placeholder="" name="f_name"
+                                                        value="{{ $customer->first_name }}" />
+                                                    <!--end::Input-->
+                                                </div>
+
+                                                <div class="fv-row mb-7 col">
+                                                    <!--begin::Label-->
+                                                    <label class="fs-6 fw-semibold mb-2 required">Last Name</label>
+                                                    <!--end::Label-->
+
+                                                    <!--begin::Input-->
+                                                    <input type="text" class="form-control form-control-solid "
+                                                        placeholder="" name="l_name"
+                                                        value="{{ $customer->last_name }}" />
+                                                    <!--end::Input-->
+                                                </div>
                                             </div>
                                             <!--end::Input group-->
 
                                             <!--begin::Row-->
-                                            <div class="row row-cols-1 row-cols-md-2">
+                                            <div class="row">
                                                 <!--begin::Col-->
-                                                <div class="col">
+                                                <div class="col-12">
                                                     <!--begin::Input group-->
                                                     <div class="fv-row mb-7">
                                                         <!--begin::Label-->
                                                         <label class="fs-6 fw-semibold mb-2">
-                                                            <span class="required">General Email</span>
+                                                            <span class="required">Email</span>
 
                                                             <span class="ms-1" data-bs-toggle="tooltip"
                                                                 title="Email address must be active">
@@ -664,7 +477,8 @@
 
                                                         <!--begin::Input-->
                                                         <input type="email" class="form-control form-control-solid"
-                                                            placeholder="" name="gen_email" value="max@kt.com" />
+                                                            placeholder="" name="email"
+                                                            value="{{ $customer->user->email }}" />
                                                         <!--end::Input-->
                                                     </div>
                                                     <!--end::Input group-->
@@ -672,7 +486,7 @@
                                                 <!--end::Col-->
 
                                                 <!--begin::Col-->
-                                                <div class="col">
+                                                {{-- <div class="col">
                                                     <!--begin::Input group-->
                                                     <div class="fv-row mb-7">
                                                         <!--begin::Label-->
@@ -695,7 +509,7 @@
                                                         <!--end::Input-->
                                                     </div>
                                                     <!--end::Input group-->
-                                                </div>
+                                                </div> --}}
                                                 <!--end::Col-->
                                             </div>
                                             <!--end::Row-->
@@ -752,13 +566,15 @@
                                         <div class="py-0">
                                             <!--begin::Header-->
                                             <div class="py-3 d-flex flex-stack flex-wrap">
+
                                                 <!--begin::Toggle-->
                                                 <div class="d-flex align-items-center collapsible collapsed rotate"
                                                     data-bs-toggle="collapse" href="#kt_ecommerce_customer_addresses_1"
                                                     role="button" aria-expanded="false"
                                                     aria-controls="kt_customer_view_payment_method_1">
                                                     <!--begin::Arrow-->
-                                                    <div class="me-3 rotate-90"><i class="ki-duotone ki-right fs-3"></i>
+                                                    <div class="me-3 rotate-90">
+                                                        <i class="ki-duotone ki-right fs-3"></i>
                                                     </div>
                                                     <!--end::Arrow-->
 
@@ -766,14 +582,18 @@
                                                     <div class="me-3">
                                                         <div class="d-flex align-items-center">
                                                             <div class="fs-4 fw-bold">
-                                                                Home </div>
+                                                                Home
+                                                            </div>
 
                                                             <div class="badge badge-light-primary ms-5">Default Address
                                                             </div>
                                                         </div>
-                                                        <div class="text-muted">101 Collin Street</div>
+                                                        <div class="text-muted">
+                                                            {{ $customer->customerAddress->address1 ?? '' }}
+                                                        </div>
                                                     </div>
                                                     <!--end::Summary-->
+
                                                 </div>
                                                 <!--end::Toggle-->
 
@@ -836,19 +656,23 @@
                                                 <!--begin::Details-->
                                                 <div class="d-flex flex-column pb-5">
                                                     <div class="fw-bold text-gray-600">
-                                                        Max Smith </div>
+                                                        {{ $customer->first_name }} {{ $customer->last_name }}
+                                                    </div>
                                                     <div class="text-muted">
-                                                        101 Collin Street,<br />
-                                                        Melbourne, VIC 3000,<br />
-                                                        Australia </div>
+                                                        {{ $customer->customerAddress->address1 ?? '' }},<br />
+                                                        {{ $customer->customerAddress->city ?? '' }},
+                                                        {{ $customer->customerAddress->state ?? '' }}
+                                                        {{ $customer->customerAddress->zipcode ?? '' }},<br />
+                                                        {{ $customer->customerAddress->country->name ?? '' }} </div>
                                                 </div>
                                                 <!--end::Details-->
                                             </div>
                                             <!--end::Body-->
                                         </div>
                                         <!--end::Address-->
+
                                         <!--begin::Address-->
-                                        <div class="py-0">
+                                        {{-- <div class="py-0">
                                             <!--begin::Header-->
                                             <div class="py-3 d-flex flex-stack flex-wrap">
                                                 <!--begin::Toggle-->
@@ -942,10 +766,11 @@
                                                 <!--end::Details-->
                                             </div>
                                             <!--end::Body-->
-                                        </div>
+                                        </div> --}}
                                         <!--end::Address-->
+
                                         <!--begin::Address-->
-                                        <div class="py-0">
+                                        {{-- <div class="py-0">
                                             <!--begin::Header-->
                                             <div class="py-3 d-flex flex-stack flex-wrap">
                                                 <!--begin::Toggle-->
@@ -1040,7 +865,7 @@
                                                 <!--end::Details-->
                                             </div>
                                             <!--end::Body-->
-                                        </div>
+                                        </div> --}}
                                         <!--end::Address-->
                                         <!--end::Addresses-->
                                     </div>
@@ -1075,7 +900,7 @@
                                                 <tbody class="fs-6 fw-semibold text-gray-600">
                                                     <tr>
                                                         <td>Phone</td>
-                                                        <td>+6141 234 567</td>
+                                                        <td>{{ $customer->phone }}</td>
                                                         <td class="text-end">
                                                             <button type="button"
                                                                 class="btn btn-icon btn-active-light-primary w-30px h-30px ms-auto"
@@ -1168,7 +993,7 @@
                                             <!--begin::Content-->
                                             <div class="d-flex flex-column">
                                                 <span>SMS</span>
-                                                <span class="text-muted fs-6">+6141 234 567</span>
+                                                <span class="text-muted fs-6">{{ $customer->phone }}</span>
                                             </div>
                                             <!--end::Content-->
 
@@ -1213,7 +1038,7 @@
                                 <!--end::Card-->
 
                                 <!--begin::Card-->
-                                <div class="card pt-4 mb-6 mb-xl-9">
+                                {{-- <div class="card pt-4 mb-6 mb-xl-9">
                                     <!--begin::Card header-->
                                     <div class="card-header border-0">
                                         <!--begin::Card title-->
@@ -1731,7 +1556,7 @@
 
                                     </div>
                                     <!--end::Card body-->
-                                </div>
+                                </div> --}}
                                 <!--end::Card-->
                             </div>
                             <!--end:::Tab pane-->
@@ -1750,7 +1575,13 @@
                         <!--begin::Modal content-->
                         <div class="modal-content">
                             <!--begin::Form-->
-                            <form class="form" action="#" id="kt_modal_update_address_form">
+                            <form class="form" id="kt_modal_update_address_form">
+
+
+                                @csrf
+                                @method('PUT')
+
+                                <input type="hidden" name="custome_id" value="{{ $customer->id }}">
                                 <!--begin::Modal header-->
                                 <div class="modal-header" id="kt_modal_update_address_header">
                                     <!--begin::Modal title-->
@@ -1798,7 +1629,8 @@
 
                                                 <!--begin::Input-->
                                                 <input class="form-control form-control-solid" placeholder=""
-                                                    name="address1" value="101, Collins Street" />
+                                                    name="address1"
+                                                    value="{{ $customer->customerAddress->address1 ?? '' }}" />
                                                 <!--end::Input-->
                                             </div>
                                             <!--end::Input group-->
@@ -1811,7 +1643,8 @@
 
                                                 <!--begin::Input-->
                                                 <input class="form-control form-control-solid" placeholder=""
-                                                    name="address2" />
+                                                    name="address2"
+                                                    value="{{ $customer->customerAddress->address2 ?? '' }}" />
                                                 <!--end::Input-->
                                             </div>
                                             <!--end::Input group-->
@@ -1824,7 +1657,8 @@
 
                                                 <!--begin::Input-->
                                                 <input class="form-control form-control-solid" placeholder=""
-                                                    name="city" value="Melbourne" />
+                                                    name="city"
+                                                    value="{{ $customer->customerAddress->city ?? '' }}" />
                                                 <!--end::Input-->
                                             </div>
                                             <!--end::Input group-->
@@ -1839,7 +1673,8 @@
 
                                                     <!--begin::Input-->
                                                     <input class="form-control form-control-solid" placeholder=""
-                                                        name="state" value="Victoria" />
+                                                        name="state"
+                                                        value="{{ $customer->customerAddress->state ?? '' }}" />
                                                     <!--end::Input-->
                                                 </div>
                                                 <!--end::Col-->
@@ -1852,7 +1687,8 @@
 
                                                     <!--begin::Input-->
                                                     <input class="form-control form-control-solid" placeholder=""
-                                                        name="postcode" value="3000" />
+                                                        name="postcode"
+                                                        value="{{ $customer->customerAddress->zipcode ?? '' }}" />
                                                     <!--end::Input-->
                                                 </div>
                                                 <!--end::Col-->
@@ -1879,230 +1715,13 @@
                                                     data-dropdown-parent="#kt_modal_update_address"
                                                     class="form-select form-select-solid fw-bold">
                                                     <option value="">Select a Country...</option>
-                                                    <option value="AF">Afghanistan</option>
-                                                    <option value="AX">Aland Islands</option>
-                                                    <option value="AL">Albania</option>
-                                                    <option value="DZ">Algeria</option>
-                                                    <option value="AS">American Samoa</option>
-                                                    <option value="AD">Andorra</option>
-                                                    <option value="AO">Angola</option>
-                                                    <option value="AI">Anguilla</option>
-                                                    <option value="AG">Antigua and Barbuda</option>
-                                                    <option value="AR">Argentina</option>
-                                                    <option value="AM">Armenia</option>
-                                                    <option value="AW">Aruba</option>
-                                                    <option value="AU" selected>Australia</option>
-                                                    <option value="AT">Austria</option>
-                                                    <option value="AZ">Azerbaijan</option>
-                                                    <option value="BS">Bahamas</option>
-                                                    <option value="BH">Bahrain</option>
-                                                    <option value="BD">Bangladesh</option>
-                                                    <option value="BB">Barbados</option>
-                                                    <option value="BY">Belarus</option>
-                                                    <option value="BE">Belgium</option>
-                                                    <option value="BZ">Belize</option>
-                                                    <option value="BJ">Benin</option>
-                                                    <option value="BM">Bermuda</option>
-                                                    <option value="BT">Bhutan</option>
-                                                    <option value="BO">Bolivia, Plurinational State of</option>
-                                                    <option value="BQ">Bonaire, Sint Eustatius and Saba</option>
-                                                    <option value="BA">Bosnia and Herzegovina</option>
-                                                    <option value="BW">Botswana</option>
-                                                    <option value="BR">Brazil</option>
-                                                    <option value="IO">British Indian Ocean Territory</option>
-                                                    <option value="BN">Brunei Darussalam</option>
-                                                    <option value="BG">Bulgaria</option>
-                                                    <option value="BF">Burkina Faso</option>
-                                                    <option value="BI">Burundi</option>
-                                                    <option value="KH">Cambodia</option>
-                                                    <option value="CM">Cameroon</option>
-                                                    <option value="CA">Canada</option>
-                                                    <option value="CV">Cape Verde</option>
-                                                    <option value="KY">Cayman Islands</option>
-                                                    <option value="CF">Central African Republic</option>
-                                                    <option value="TD">Chad</option>
-                                                    <option value="CL">Chile</option>
-                                                    <option value="CN">China</option>
-                                                    <option value="CX">Christmas Island</option>
-                                                    <option value="CC">Cocos (Keeling) Islands</option>
-                                                    <option value="CO">Colombia</option>
-                                                    <option value="KM">Comoros</option>
-                                                    <option value="CK">Cook Islands</option>
-                                                    <option value="CR">Costa Rica</option>
-                                                    <option value="CI">Côte d'Ivoire</option>
-                                                    <option value="HR">Croatia</option>
-                                                    <option value="CU">Cuba</option>
-                                                    <option value="CW">Curaçao</option>
-                                                    <option value="CZ">Czech Republic</option>
-                                                    <option value="DK">Denmark</option>
-                                                    <option value="DJ">Djibouti</option>
-                                                    <option value="DM">Dominica</option>
-                                                    <option value="DO">Dominican Republic</option>
-                                                    <option value="EC">Ecuador</option>
-                                                    <option value="EG">Egypt</option>
-                                                    <option value="SV">El Salvador</option>
-                                                    <option value="GQ">Equatorial Guinea</option>
-                                                    <option value="ER">Eritrea</option>
-                                                    <option value="EE">Estonia</option>
-                                                    <option value="ET">Ethiopia</option>
-                                                    <option value="FK">Falkland Islands (Malvinas)</option>
-                                                    <option value="FJ">Fiji</option>
-                                                    <option value="FI">Finland</option>
-                                                    <option value="FR">France</option>
-                                                    <option value="PF">French Polynesia</option>
-                                                    <option value="GA">Gabon</option>
-                                                    <option value="GM">Gambia</option>
-                                                    <option value="GE">Georgia</option>
-                                                    <option value="DE">Germany</option>
-                                                    <option value="GH">Ghana</option>
-                                                    <option value="GI">Gibraltar</option>
-                                                    <option value="GR">Greece</option>
-                                                    <option value="GL">Greenland</option>
-                                                    <option value="GD">Grenada</option>
-                                                    <option value="GU">Guam</option>
-                                                    <option value="GT">Guatemala</option>
-                                                    <option value="GG">Guernsey</option>
-                                                    <option value="GN">Guinea</option>
-                                                    <option value="GW">Guinea-Bissau</option>
-                                                    <option value="HT">Haiti</option>
-                                                    <option value="VA">Holy See (Vatican City State)</option>
-                                                    <option value="HN">Honduras</option>
-                                                    <option value="HK">Hong Kong</option>
-                                                    <option value="HU">Hungary</option>
-                                                    <option value="IS">Iceland</option>
-                                                    <option value="IN">India</option>
-                                                    <option value="ID">Indonesia</option>
-                                                    <option value="IR">Iran, Islamic Republic of</option>
-                                                    <option value="IQ">Iraq</option>
-                                                    <option value="IE">Ireland</option>
-                                                    <option value="IM">Isle of Man</option>
-                                                    <option value="IL">Israel</option>
-                                                    <option value="IT">Italy</option>
-                                                    <option value="JM">Jamaica</option>
-                                                    <option value="JP">Japan</option>
-                                                    <option value="JE">Jersey</option>
-                                                    <option value="JO">Jordan</option>
-                                                    <option value="KZ">Kazakhstan</option>
-                                                    <option value="KE">Kenya</option>
-                                                    <option value="KI">Kiribati</option>
-                                                    <option value="KP">Korea, Democratic People's Republic of</option>
-                                                    <option value="KW">Kuwait</option>
-                                                    <option value="KG">Kyrgyzstan</option>
-                                                    <option value="LA">Lao People's Democratic Republic</option>
-                                                    <option value="LV">Latvia</option>
-                                                    <option value="LB">Lebanon</option>
-                                                    <option value="LS">Lesotho</option>
-                                                    <option value="LR">Liberia</option>
-                                                    <option value="LY">Libya</option>
-                                                    <option value="LI">Liechtenstein</option>
-                                                    <option value="LT">Lithuania</option>
-                                                    <option value="LU">Luxembourg</option>
-                                                    <option value="MO">Macao</option>
-                                                    <option value="MG">Madagascar</option>
-                                                    <option value="MW">Malawi</option>
-                                                    <option value="MY">Malaysia</option>
-                                                    <option value="MV">Maldives</option>
-                                                    <option value="ML">Mali</option>
-                                                    <option value="MT">Malta</option>
-                                                    <option value="MH">Marshall Islands</option>
-                                                    <option value="MQ">Martinique</option>
-                                                    <option value="MR">Mauritania</option>
-                                                    <option value="MU">Mauritius</option>
-                                                    <option value="MX">Mexico</option>
-                                                    <option value="FM">Micronesia, Federated States of</option>
-                                                    <option value="MD">Moldova, Republic of</option>
-                                                    <option value="MC">Monaco</option>
-                                                    <option value="MN">Mongolia</option>
-                                                    <option value="ME">Montenegro</option>
-                                                    <option value="MS">Montserrat</option>
-                                                    <option value="MA">Morocco</option>
-                                                    <option value="MZ">Mozambique</option>
-                                                    <option value="MM">Myanmar</option>
-                                                    <option value="NA">Namibia</option>
-                                                    <option value="NR">Nauru</option>
-                                                    <option value="NP">Nepal</option>
-                                                    <option value="NL">Netherlands</option>
-                                                    <option value="NZ">New Zealand</option>
-                                                    <option value="NI">Nicaragua</option>
-                                                    <option value="NE">Niger</option>
-                                                    <option value="NG">Nigeria</option>
-                                                    <option value="NU">Niue</option>
-                                                    <option value="NF">Norfolk Island</option>
-                                                    <option value="MP">Northern Mariana Islands</option>
-                                                    <option value="NO">Norway</option>
-                                                    <option value="OM">Oman</option>
-                                                    <option value="PK">Pakistan</option>
-                                                    <option value="PW">Palau</option>
-                                                    <option value="PS">Palestinian Territory, Occupied</option>
-                                                    <option value="PA">Panama</option>
-                                                    <option value="PG">Papua New Guinea</option>
-                                                    <option value="PY">Paraguay</option>
-                                                    <option value="PE">Peru</option>
-                                                    <option value="PH">Philippines</option>
-                                                    <option value="PL">Poland</option>
-                                                    <option value="PT">Portugal</option>
-                                                    <option value="PR">Puerto Rico</option>
-                                                    <option value="QA">Qatar</option>
-                                                    <option value="RO">Romania</option>
-                                                    <option value="RU">Russian Federation</option>
-                                                    <option value="RW">Rwanda</option>
-                                                    <option value="BL">Saint Barthélemy</option>
-                                                    <option value="KN">Saint Kitts and Nevis</option>
-                                                    <option value="LC">Saint Lucia</option>
-                                                    <option value="MF">Saint Martin (French part)</option>
-                                                    <option value="VC">Saint Vincent and the Grenadines</option>
-                                                    <option value="WS">Samoa</option>
-                                                    <option value="SM">San Marino</option>
-                                                    <option value="ST">Sao Tome and Principe</option>
-                                                    <option value="SA">Saudi Arabia</option>
-                                                    <option value="SN">Senegal</option>
-                                                    <option value="RS">Serbia</option>
-                                                    <option value="SC">Seychelles</option>
-                                                    <option value="SL">Sierra Leone</option>
-                                                    <option value="SG">Singapore</option>
-                                                    <option value="SX">Sint Maarten (Dutch part)</option>
-                                                    <option value="SK">Slovakia</option>
-                                                    <option value="SI">Slovenia</option>
-                                                    <option value="SB">Solomon Islands</option>
-                                                    <option value="SO">Somalia</option>
-                                                    <option value="ZA">South Africa</option>
-                                                    <option value="KR">South Korea</option>
-                                                    <option value="SS">South Sudan</option>
-                                                    <option value="ES">Spain</option>
-                                                    <option value="LK">Sri Lanka</option>
-                                                    <option value="SD">Sudan</option>
-                                                    <option value="SR">Suriname</option>
-                                                    <option value="SZ">Swaziland</option>
-                                                    <option value="SE">Sweden</option>
-                                                    <option value="CH">Switzerland</option>
-                                                    <option value="SY">Syrian Arab Republic</option>
-                                                    <option value="TW">Taiwan, Province of China</option>
-                                                    <option value="TJ">Tajikistan</option>
-                                                    <option value="TZ">Tanzania, United Republic of</option>
-                                                    <option value="TH">Thailand</option>
-                                                    <option value="TG">Togo</option>
-                                                    <option value="TK">Tokelau</option>
-                                                    <option value="TO">Tonga</option>
-                                                    <option value="TT">Trinidad and Tobago</option>
-                                                    <option value="TN">Tunisia</option>
-                                                    <option value="TR">Turkey</option>
-                                                    <option value="TM">Turkmenistan</option>
-                                                    <option value="TC">Turks and Caicos Islands</option>
-                                                    <option value="TV">Tuvalu</option>
-                                                    <option value="UG">Uganda</option>
-                                                    <option value="UA">Ukraine</option>
-                                                    <option value="AE">United Arab Emirates</option>
-                                                    <option value="GB">United Kingdom</option>
-                                                    <option value="US">United States</option>
-                                                    <option value="UY">Uruguay</option>
-                                                    <option value="UZ">Uzbekistan</option>
-                                                    <option value="VU">Vanuatu</option>
-                                                    <option value="VE">Venezuela, Bolivarian Republic of</option>
-                                                    <option value="VN">Vietnam</option>
-                                                    <option value="VI">Virgin Islands</option>
-                                                    <option value="YE">Yemen</option>
-                                                    <option value="ZM">Zambia</option>
-                                                    <option value="ZW">Zimbabwe</option>
+
+                                                    @foreach ($countries as $country)
+                                                        <option value="{{ $country->code }}"
+                                                            {{ $customer->country_code === $country->code ? 'selected' : '' }}>
+                                                            {{ $country->name }}
+                                                        </option>
+                                                    @endforeach
                                                 </select>
                                                 <!--end::Input-->
                                             </div>
@@ -2115,7 +1734,7 @@
                                                     <!--begin::Label-->
                                                     <div class="me-5">
                                                         <!--begin::Label-->
-                                                        <label class="fs-6 fw-semibold">Use as a billing address?</label>
+                                                        <label class="fs-6 fw-semibold">Use as a shipping address?</label>
                                                         <!--end::Label-->
 
                                                         <!--begin::Input-->
@@ -2129,9 +1748,10 @@
                                                     <label
                                                         class="form-check form-switch form-check-custom form-check-solid">
                                                         <!--begin::Input-->
-                                                        <input class="form-check-input" name="billing" type="checkbox"
-                                                            value="1" id="kt_modal_update_address_billing"
-                                                            checked="checked" />
+                                                        <input class="form-check-input" name="shipping" type="checkbox"
+                                                            value="{{ $customer->customerAddress->is_shipping ?? 0 }}"
+                                                            id="kt_modal_update_address_billing"
+                                                            {{ $customer->customerAddress->is_shipping?? '' ? 'checked' : '' }} />
                                                         <!--end::Input-->
 
                                                         <!--begin::Label-->
@@ -2163,8 +1783,7 @@
                                     <!--end::Button-->
 
                                     <!--begin::Button-->
-                                    <button type="submit" id="kt_modal_update_address_submit"
-                                        class="btn btn-primary">
+                                    <button type="submit" id="kt_modal_update_address_submit" class="btn btn-primary">
                                         <span class="indicator-label">
                                             Submit
                                         </span>
@@ -2249,14 +1868,11 @@
                                             <!--begin::Meter-->
                                             <div class="d-flex align-items-center mb-3"
                                                 data-kt-password-meter-control="highlight">
-                                                <div
-                                                    class="flex-grow-1 bg-secondary bg-active-success rounded h-5px me-2">
+                                                <div class="flex-grow-1 bg-secondary bg-active-success rounded h-5px me-2">
                                                 </div>
-                                                <div
-                                                    class="flex-grow-1 bg-secondary bg-active-success rounded h-5px me-2">
+                                                <div class="flex-grow-1 bg-secondary bg-active-success rounded h-5px me-2">
                                                 </div>
-                                                <div
-                                                    class="flex-grow-1 bg-secondary bg-active-success rounded h-5px me-2">
+                                                <div class="flex-grow-1 bg-secondary bg-active-success rounded h-5px me-2">
                                                 </div>
                                                 <div class="flex-grow-1 bg-secondary bg-active-success rounded h-5px">
                                                 </div>
@@ -2833,8 +2449,7 @@
                                 <!--begin::Modal footer-->
                                 <div class="modal-footer flex-center">
                                     <!--begin::Button-->
-                                    <button type="reset" id="kt_modal_add_address_cancel"
-                                        class="btn btn-light me-3">
+                                    <button type="reset" id="kt_modal_add_address_cancel" class="btn btn-light me-3">
                                         Discard
                                     </button>
                                     <!--end::Button-->
@@ -2858,6 +2473,7 @@
                     </div>
                 </div>
                 <!--end::Modal - New Address-->
+
                 <!--begin::Modal - Add task-->
                 <div class="modal fade" id="kt_modal_add_auth_app" tabindex="-1" aria-hidden="true">
                     <!--begin::Modal dialog-->
@@ -3053,25 +2669,18 @@
 
 @section('custom-js')
     <!--begin::Vendors Javascript(used for this page only)-->
-    <script src="../../../assets/plugins/custom/datatables/datatables.bundle.js"></script>
+    {{-- <script src="../../../assets/plugins/custom/datatables/datatables.bundle.js"></script> --}}
     <!--end::Vendors Javascript-->
 
     <!--begin::Custom Javascript(used for this page only)-->
-    <script src="../../../assets/js/custom/apps/ecommerce/customers/details/transaction-history.js"></script>
-    <script src="../../../assets/js/custom/apps/ecommerce/customers/details/add-auth-app.js"></script>
-    <script src="../../../assets/js/custom/apps/ecommerce/customers/details/add-address.js"></script>
-    <script src="../../../assets/js/custom/apps/ecommerce/customers/details/add-one-time-password.js"></script>
-    <script src="../../../assets/js/custom/apps/ecommerce/customers/details/update-password.js"></script>
-    <script src="../../../assets/js/custom/apps/ecommerce/customers/details/update-phone.js"></script>
-    <script src="../../../assets/js/custom/apps/ecommerce/customers/details/update-address.js"></script>
-    <script src="../../../assets/js/custom/apps/ecommerce/customers/details/update-profile.js"></script>
-    <script src="../../../assets/js/widgets.bundle.js"></script>
-    <script src="../../../assets/js/custom/widgets.js"></script>
-    <script src="../../../assets/js/custom/apps/chat/chat.js"></script>
-    <script src="../../../assets/js/custom/utilities/modals/upgrade-plan.js"></script>
-    <script src="../../../assets/js/custom/utilities/modals/create-app.js"></script>
-    <script src="../../../assets/js/custom/utilities/modals/new-card.js"></script>
-    <script src="../../../assets/js/custom/utilities/modals/users-search.js"></script>
+    <script src="{{ asset('assets/js/custom/apps/ecommerce/customers/details/transaction-history.js') }}"></script>
+    <script src="{{ asset('assets/js/custom/apps/ecommerce/customers/details/add-auth-app.js') }}"></script>
+    <script src="{{ asset('assets/js/custom/apps/ecommerce/customers/details/add-address.js') }}"></script>
+    <script src="{{ asset('assets/js/custom/apps/ecommerce/customers/details/add-one-time-password.js') }}"></script>
+    <script src="{{ asset('assets/js/custom/apps/ecommerce/customers/details/update-password.js') }}"></script>
+    <script src="{{ asset('assets/js/custom/apps/ecommerce/customers/details/update-phone.js') }}"></script>
+    <script src="{{ asset('assets/js/custom/apps/ecommerce/customers/details/update-address.js') }}"></script>
+    <script src="{{ asset('assets/js/custom/apps/ecommerce/customers/details/update-profile.js') }}"></script>
     <!--end::Custom Javascript-->
     <!--end::Javascript-->
 @endsection

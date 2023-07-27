@@ -1,5 +1,7 @@
 <div class="col my-2" data-kt-ecommerce-edit-order-filter="product"
-    data-kt-ecommerce-edit-order-id="product_{{ $orderItem->id }}">
+    data-kt-ecommerce-edit-order-id="{{ $orderItem->id }}"
+    data-kt-ecommerce-edit-product-id="{{ $orderItem->product->id }}"  data-kt-ecommerce-edit-selected="true">
+
     <div class="d-flex align-items-center border border-dashed p-3 rounded bg-white">
         <!--begin::Thumbnail-->
         <a href="{{ route('product.edit', ['slug' => $orderItem->product->slug, 'id' => $orderItem->product_id]) }}"
@@ -8,7 +10,7 @@
                 style="background-image:url({{ asset('storage/' . $orderItem->product->thumbnail ?? 'assets/media/stock/ecommerce/25.gif') }});"></span>
         </a>
         <!--end::Thumbnail-->
- 
+
         <div class="ms-5">
             <!--begin::Title-->
             <a href="{{ route('product.edit', ['slug' => $orderItem->product->slug, 'id' => $orderItem->product_id]) }}"

@@ -1,17 +1,17 @@
 <?php
 
-namespace App\View\Components\Sales;
+namespace App\View\Components\Users;
 
 use Closure;
 use Illuminate\Contracts\View\View;
 use Illuminate\View\Component;
 
-class Cartitem extends Component
+class UserItem extends Component
 {
     /**
      * Create a new component instance.
      */
-    public function __construct(public $product, $orderItem = '')
+    public function __construct(public $user)
     {
         //
     }
@@ -21,6 +21,6 @@ class Cartitem extends Component
      */
     public function render(): View|Closure|string
     {
-        return view('components.sales.order-product-item');
+        return view('components.users.user-item');
     }
 }

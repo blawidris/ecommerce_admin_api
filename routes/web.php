@@ -5,6 +5,7 @@ use App\Http\Controllers\CustomerController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\OrderController;
 use App\Http\Controllers\ProductController;
+use App\Http\Controllers\SettingController;
 use App\Http\Controllers\SiteReportController;
 use Illuminate\Support\Facades\Artisan;
 use Illuminate\Support\Facades\Route;
@@ -56,12 +57,19 @@ Route::group(['prefix' => 'category'], function () {
 });
 
 
+
 Route::group(['prefix' => 'customer'], function () {
-    // GETS
+    //GETS
     Route::get('/', [CustomerController::class, 'index'])->name('customers');
     Route::get('/add', [CustomerControllerr::class, 'create'])->name('customer.add');
-    Route::get('/edit', [CustomerController::class, 'edit'])->name('customer.edit');
+    Route::get('/edit/{$id}', [CustomerController::class, 'edit'])->name('customer.edit');
     Route::get('/view/{id}', [CustomerController::class, 'show'])->name('customer.view');
+
+    Route::post('/store', [CustomerController::class, 'store'])->name('customer.store');
+    Route::put('/update-profile', [CustomerController::class, 'update'])->name('customer.update-profile');
+    Route::put('/update-address', [CustomerController::class, 'update'])->name('customer.update-address');
+    // Route::put('/update-address', [CuupdatemerController::class, 'update'])->name('customer.updatee');
+    Route::delete('delete', [CustomerController::class, 'destroy'])->name('customer.delete');
 });
 
 Route::group(['prefix' => 'order'], function () {
@@ -73,7 +81,7 @@ Route::group(['prefix' => 'order'], function () {
 
 
     // POSTS
-    Route::post('add', [OrderController::class, 'store'])->name('order.store');
+    Route::post('store', [OrderController::class, 'store'])->name('order.store');
     Route::put('/update', [OrderController::class, 'update'])->name('order.update');
 
     // DELETE
@@ -91,7 +99,7 @@ Route::group(['prefix' => 'report'], function () {
 
 
 
-Route::get('/settings', [HomeController::class, 'settings'])->name('setings');
+Route::get('/settings', [SettingController::class, 'index'])->name('setings');
 
 
 // clear routes

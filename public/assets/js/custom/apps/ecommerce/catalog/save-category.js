@@ -168,9 +168,9 @@ var KTAppEcommerceSaveCategory = (function () {
             dateFormat: "Y-m-d H:i",
             allowInput: true,
             onChange: function (selectedDates, dateStr, instance) {
-                console.log(dateStr);
+                // console.log(dateStr);
 
-                // datepicker.value = 
+                // datepicker.value =
             },
         });
 

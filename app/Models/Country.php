@@ -12,4 +12,10 @@ class Country extends Model
     protected $table = 'countries';
     protected $fillable = ['code', 'name', 'states'];
     public $timestamps = false;
+
+
+    public function customerAddress()
+    {
+        return $this->belongsTo(customerAddress::class, 'country_code', 'code');
+    }
 }

@@ -12,9 +12,25 @@ class CustomerAddresses extends Model
 
     protected $table = 'customer_addresses';
 
+    protected $fillable =  [
+        'address1',
+        'city',
+        'state',
+        'zipcode',
+        'country_code',
+        'customer_id',
+        'is_shipping'
+    ];
 
-    public function customer()
+
+    // public function customer()
+    // {
+    //     return $this->belongsTo(Customers::class);
+    // }
+
+
+    public function country()
     {
-        return $this->belongsTo(Customers::class);
+        return $this->hasOne(Country::class, 'code', 'country_code');
     }
 }

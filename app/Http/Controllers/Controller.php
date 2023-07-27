@@ -35,7 +35,7 @@ class Controller extends BaseController
         return $fileName;
     }
 
-    public function sendMessage(string $message, string $type, bool $success, array $entity = []): array
+    public function sendMessage(string $message, string $type = 'success', bool $success = true, array $entity = []): array
     {
         return [
             'message' => $message,

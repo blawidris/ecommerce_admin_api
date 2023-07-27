@@ -10,6 +10,15 @@ class Customers extends Model
 {
     use HasFactory;
 
+    protected $table = 'customers';
+
+    protected $fillable = [
+        'first_name',
+        'last_name',
+        'phone',
+        'status',
+        'user_id'
+    ];
 
     public function ratings()
     {
@@ -26,6 +35,11 @@ class Customers extends Model
         return $this->belongsTo(Order::class);
     }
 
+    public function orders()
+    {
+        return $this->hasMany(Order::class, 'customer_id', 'id');
+    }
+
     public function user()
     {
         return $this->hasOne(User::class, 'id', 'user_id');
@@ -33,12 +47,12 @@ class Customers extends Model
 
     public function customerAddress()
     {
-        return $this->hasOne(CustomerAddresses::class, 'customer_id', 'id');
+        return $this->hasOne(CustomerAddresses::class, 'customer_id');
     }
 
 
-    private function _getAddress()
+    public function getAddress()
     {
-        return $this->hasOne(CustomerAddresses::class, 'customer_id', 'user_id');
+        return $this->hasOne(CustomerAddresses::class, 'customer_id');
     }
 }

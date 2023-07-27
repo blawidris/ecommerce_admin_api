@@ -69,8 +69,11 @@
             <div id="kt_app_content_container" class="app-container  container-xxl ">
                 <!--begin::Form-->
                 <form id="kt_ecommerce_edit_order_form" class="form d-flex flex-column flex-lg-row"
-                    data-kt-redirect="listing.html">
+                    data-kt-redirect="{{ route('orders') }}">
                     <!--begin::Aside column-->
+
+                    @csrf
+                    @method('PUT')
 
                     <input type="hidden" name="id" value="{{ $order->id }}">
                     <div class="w-100 flex-lg-row-auto w-lg-300px mb-7 me-7 me-lg-10">
@@ -301,23 +304,25 @@
                                             <label class="required form-label">Address Line 1</label>
                                             <!--end::Label-->
 
+
+                                            {{-- @dd($order->location) --}}
                                             <!--begin::Input-->
-                                            <input class="form-control" name="billing_order_address_1"
-                                                placeholder="Address Line 1"
-                                                value="{{ $order->customer->location->address ?? '' }}" />
+                                            <input class="form-control" name="billing_address" placeholder="Address Line 1"
+                                                value="{{ $order->customer->customerAddress->address1 ?? '' }}" />
                                             <!--end::Input-->
                                         </div>
 
-                                        {{-- <div class="flex-row-fluid">
+                                        <div class="flex-row-fluid">
                                             <!--begin::Label-->
                                             <label class="form-label">Address Line 2</label>
                                             <!--end::Label-->
 
                                             <!--begin::Input-->
-                                            <input class="form-control" name="billing_order_address_2"
-                                                placeholder="Address Line 2" />
+                                            <input class="form-control" name="billing_address_2"
+                                                placeholder="Address Line 2"
+                                                value="{{ $order->customer->location->address2 ?? '' }}" />
                                             <!--end::Input-->
-                                        </div> --}}
+                                        </div>
                                     </div>
                                     <!--end::Input group-->
 
@@ -471,7 +476,7 @@
 
                                             <!--begin::Select2-->
                                             <select class="form-select" data-placeholder="Select an option"
-                                                id="shipping_shipping_country" name="shipping_country">
+                                                id="kt_ecommerce_edit_order_shipping_country" name="shipping_country">
                                                 <option value=""></option>
                                                 @foreach ($countries as $country)
                                                     <option value="{{ $country->code }}"
