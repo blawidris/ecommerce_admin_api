@@ -321,7 +321,7 @@
                                         <div class="symbol symbol-35px symbol-circle" data-bs-toggle="tooltip"
                                             title="{{ $customer->first_name }} {{ $customer->last_name }}">
                                             <span
-                                                class="symbol-label bg-warning text-inverse-{{($customer->id % 3) === 0 ? 'danger' : (($customer->id % 3) === 1 ? 'warning' : 'primary')}} fw-bold">{{ $customer->first_name[0] }}</span>
+                                                class="symbol-label bg-warning text-inverse-{{ $customer->id % 3 === 0 ? 'danger' : ($customer->id % 3 === 1 ? 'warning' : 'primary') }} fw-bold">{{ $customer->first_name[0] }}</span>
                                         </div>
                                     @endforeach
 
@@ -414,7 +414,8 @@
                                             data-bs-toggle="pill" href="#kt_stats_widget_2_tab_1">
                                             <!--begin::Icon-->
                                             <div class="nav-icon">
-                                                <img alt="" src="assets/media/svg/products-categories/t-shirt.svg"
+                                                <img alt=""
+                                                    src="{{ asset('assets/media/svg/products-categories/t-shirt.svg') }}"
                                                     class="" />
                                             </div>
                                             <!--end::Icon-->
@@ -441,7 +442,8 @@
                                             data-bs-toggle="pill" href="#kt_stats_widget_2_tab_2">
                                             <!--begin::Icon-->
                                             <div class="nav-icon">
-                                                <img alt="" src="assets/media/svg/products-categories/gaming.svg"
+                                                <img alt=""
+                                                    src="{{ asset('assets/media/svg/products-categories/gaming.svg') }}"
                                                     class="" />
                                             </div>
                                             <!--end::Icon-->
@@ -468,7 +470,8 @@
                                             data-bs-toggle="pill" href="#kt_stats_widget_2_tab_3">
                                             <!--begin::Icon-->
                                             <div class="nav-icon">
-                                                <img alt="" src="assets/media/svg/products-categories/watch.svg"
+                                                <img alt=""
+                                                    src="{{ asset('assets/media/svg/products-categories/watch.svg') }}"
                                                     class="" />
                                             </div>
                                             <!--end::Icon-->
@@ -495,7 +498,8 @@
                                             data-bs-toggle="pill" href="#kt_stats_widget_2_tab_4">
                                             <!--begin::Icon-->
                                             <div class="nav-icon">
-                                                <img alt="" src="assets/media/svg/products-categories/gloves.svg"
+                                                <img alt=""
+                                                    src="{{ asset('assets/media/svg/products-categories/gloves.svg') }}"
                                                     class="nav-icon" />
                                             </div>
                                             <!--end::Icon-->
@@ -522,7 +526,8 @@
                                             data-bs-toggle="pill" href="#kt_stats_widget_2_tab_5">
                                             <!--begin::Icon-->
                                             <div class="nav-icon">
-                                                <img alt="" src="assets/media/svg/products-categories/shoes.svg"
+                                                <img alt=""
+                                                    src="{{ asset('assets/media/svg/products-categories/shoes.svg') }}"
                                                     class="nav-icon" />
                                             </div>
                                             <!--end::Icon-->

@@ -609,7 +609,7 @@
 
 <!--begin::Javascript-->
 <script>
-    var hostUrl = "assets/index.html";
+    var hostUrl = {{!url('/')!}};
 </script>
 
 @section('custom-js')
