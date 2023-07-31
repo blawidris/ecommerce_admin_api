@@ -5,12 +5,20 @@ namespace App\Http\Controllers;
 use App\Models\Category;
 use Exception;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Validator;
 
 class CategoriesController extends Controller
 {
 
+
+
     private $data = [];
+
+    public function __construct()
+    {
+        $this->middleware('auth:admin');
+    }
 
     public function index()
     {
@@ -19,7 +27,8 @@ class CategoriesController extends Controller
 
         $this->data = [
             'pageTitle' => 'Categories',
-            'categories' => $categories
+            'categories' => $categories,
+            'user' => Auth::guard('admin')->user()
         ];
 
 
@@ -31,7 +40,8 @@ class CategoriesController extends Controller
     public function create()
     {
         $data = [
-            'pageTitle' => 'Add Category'
+            'pageTitle' => 'Add Category',
+            'user' => Auth::guard('admin')->user()
         ];
 
         return view('pages.categories.add', $data);
@@ -96,7 +106,8 @@ class CategoriesController extends Controller
     public function show(string $id)
     {
         $data = [
-            'pageTitle' => 'Category'
+            'pageTitle' => 'Category',
+            'user' => Auth::guard('admin')->user()
         ];
 
         return view('pages.categories.view', $data);
@@ -114,7 +125,8 @@ class CategoriesController extends Controller
 
         $this->data = [
             'pageTitle' => 'Edit Category',
-            'category' => $category
+            'category' => $category,
+            'user' => Auth::guard('admin')->user()
         ];
 
         return view('pages.categories.edit', $this->data);

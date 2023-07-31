@@ -345,7 +345,7 @@
                                              <div class="symbol symbol-40px me-4">
                                                  <span class="symbol-label bg-light">
                                                      <img class="w-20px h-20px"
-                                                         src="{{asset('assets/media/svg/brand-logos/tower.svg')}}"
+                                                         src="{{ asset('assets/media/svg/brand-logos/tower.svg') }}"
                                                          alt="" />
                                                  </span>
                                              </div>
@@ -1037,11 +1037,12 @@
                                  <!--begin::Username-->
                                  <div class="d-flex flex-column">
                                      <div class="fw-bold d-flex align-items-center fs-5">
-                                         Max Smith
+                                         {{ $user->name }}
                                      </div>
 
                                      <a href="#" class="fw-semibold text-muted text-hover-primary fs-7">
-                                         max@kt.com </a>
+                                         {{ $user->email }}
+                                     </a>
                                  </div>
                                  <!--end::Username-->
                              </div>
@@ -1054,7 +1055,7 @@
 
                          <!--begin::Menu item-->
                          <div class="menu-item px-5">
-                             <a href="account/overview.html" class="menu-link px-5">
+                             <a href="#" class="menu-link px-5">
                                  My Profile
                              </a>
                          </div>
@@ -1066,7 +1067,7 @@
 
                          <!--begin::Menu item-->
                          <div class="menu-item px-5 my-1">
-                             <a href="account/settings.html" class="menu-link px-5">
+                             <a href="#" class="menu-link px-5">
                                  Account Settings
                              </a>
                          </div>
@@ -1074,7 +1075,7 @@
 
                          <!--begin::Menu item-->
                          <div class="menu-item px-5">
-                             <a href="{{ route('auth.login') }}" class="menu-link px-5">
+                             <a href="{{ route('auth.logout') }}" class="menu-link px-5">
                                  Sign Out
                              </a>
                          </div>

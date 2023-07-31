@@ -70,4 +70,27 @@ class Controller extends BaseController
 
         return $newChar;
     }
+
+    function calculateReadingTime($content, $wordsPerMinute = 200)
+    {
+        // Calculate the number of words in the content
+        $wordCount = str_word_count(strip_tags($content));
+
+        // Calculate the estimated reading time in minutes
+        $readingTime = ceil($wordCount / $wordsPerMinute);
+
+        return $readingTime;
+    }
+
+
+    public function formatNumberToK($number){
+
+        if ($number >= 1000) {
+            $formattedNumber = number_format($number / 1000, 1);
+            return str_pad($formattedNumber, 3, '0', STR_PAD_RIGHT) . 'k';
+        }
+
+        return $number;
+    }
+
 }

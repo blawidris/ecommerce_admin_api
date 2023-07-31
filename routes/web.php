@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\CategoriesController;
 use App\Http\Controllers\CustomerController;
 use App\Http\Controllers\HomeController;
@@ -9,6 +10,7 @@ use App\Http\Controllers\SettingController;
 use App\Http\Controllers\SiteReportController;
 use Illuminate\Support\Facades\Artisan;
 use Illuminate\Support\Facades\Route;
+// use Illuminate\Support\Facades\Auth;
 
 /*
 |--------------------------------------------------------------------------
@@ -21,86 +23,96 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', [HomeController::class, 'login'])->name('auth.login');
-Route::get('/reset-password', [HomeController::class, 'resetPassword'])->name('auth.reset_password');
+// Auth::routes();
 
-Route::get('/dashboard', [HomeController::class, 'index'])->name('dashboard');
 
-//
-Route::group(['prefix' => 'product'], function () {
+Route::group(['prefix' => 'admin'], function () {
 
-    // GETS
-    Route::get('/', [ProductController::class, 'index'])->name('products');
-    Route::get('/add', [ProductController::class, 'create'])->name('product.add');
-    Route::get('/edit/{slug}/{id}', [ProductController::class, 'edit'])->name('product.edit')->where(['slug' => '^([0-9A-Za-z\-]+)', 'id' => '[0-9]+']);
 
-    Route::post('/add', [ProductController::class, 'store'])->name('product.store');
-    Route::put('/update', [ProductController::class, 'update'])->name('product.update');
-    Route::delete('/delete', [ProductController::class, 'destroy'])->name('product.delete');
+    Route::get('/', [LoginController::class, 'login'])->name('auth.login');
+    Route::get('/logout', [LoginController::class, 'logout'])->name('auth.logout');
+    Route::get('/reset-password', [HomeController::class, 'resetPassword'])->name('auth.reset_password');
 
-    // media upload
-    Route::post('/media/upload', [ProductController::class, 'uploadMedia'])->name('product-media.post');
-    // Route::put('/media/upload', [ProductController::class, 'uploadMedia'])->name('product-media.put');
+    // login post
+    Route::post('/login', [LoginController::class, 'adminLogin']);
+
+    Route::get('/dashboard', [HomeController::class, 'dashboard'])->name('dashboard');
+
+    //
+    Route::group(['prefix' => 'product'], function () {
+
+        // GETS
+        Route::get('/', [ProductController::class, 'index'])->name('products');
+        Route::get('/add', [ProductController::class, 'create'])->name('product.add');
+        Route::get('/edit/{slug}/{id}', [ProductController::class, 'edit'])->name('product.edit')->where(['slug' => '^([0-9A-Za-z\-]+)', 'id' => '[0-9]+']);
+
+        Route::post('/add', [ProductController::class, 'store'])->name('product.store');
+        Route::put('/update', [ProductController::class, 'update'])->name('product.update');
+        Route::delete('/delete', [ProductController::class, 'destroy'])->name('product.delete');
+
+        // media upload
+        Route::post('/media/upload', [ProductController::class, 'uploadMedia'])->name('product-media.post');
+        // Route::put('/media/upload', [ProductController::class, 'uploadMedia'])->name('product-media.put');
+    });
+
+    Route::group(['prefix' => 'category'], function () {
+
+        // GETS
+        Route::get('/lists', [CategoriesController::class, 'index'])->name('categories');
+        Route::get('/add', [CategoriesController::class, 'create'])->name('category.add');
+        Route::get('/edit/{slug}/{id}', [CategoriesController::class, 'edit'])->name('category.edit')->where(['slug' => '^([0-9A-Za-z\-]+)', 'id' => '[0-9]+']);
+
+        // POST
+        Route::post('/create', [CategoriesController::class, 'store'])->name('create_category');
+        Route::put('/update', [CategoriesController::class, 'update'])->name('category.update');
+        Route::delete('/delete', [CategoriesController::class, 'destroy'])->name('delete_category');
+    });
+
+
+
+    Route::group(['prefix' => 'customer'], function () {
+        //GETS
+        Route::get('/', [CustomerController::class, 'index'])->name('customers');
+        Route::get('/add', [CustomerControllerr::class, 'create'])->name('customer.add');
+        Route::get('/edit/{$id}', [CustomerController::class, 'edit'])->name('customer.edit');
+        Route::get('/view/{id}', [CustomerController::class, 'show'])->name('customer.view');
+
+        Route::post('/store', [CustomerController::class, 'store'])->name('customer.store');
+        Route::put('/update-profile', [CustomerController::class, 'update'])->name('customer.update-profile');
+        Route::put('/update-address', [CustomerController::class, 'update'])->name('customer.update-address');
+        // Route::put('/update-address', [CuupdatemerController::class, 'update'])->name('customer.updatee');
+        Route::delete('delete', [CustomerController::class, 'destroy'])->name('customer.delete');
+    });
+
+    Route::group(['prefix' => 'order'], function () {
+        // GETS
+        Route::get('/', [OrderController::class, 'index'])->name('orders');
+        Route::get('/add', [OrderController::class, 'create'])->name('order.add');
+        Route::get('/edit/{order_code}/{id}', [OrderController::class, 'edit'])->name('order.edit');
+        Route::get('/view/{order_code}/{id}', [OrderController::class, 'show'])->where(['order_code' => '([A-Za-z0-9\-]+)', 'id' => '[0-9]+'])->name('order.view');
+
+
+        // POSTS
+        Route::post('store', [OrderController::class, 'store'])->name('order.store');
+        Route::put('/update', [OrderController::class, 'update'])->name('order.update');
+
+        // DELETE
+        Route::delete('/delete', [OrderController::class, 'destroy']);
+    });
+
+    Route::group(['prefix' => 'report'], function () {
+        // GETS
+        Route::get('/customer_order', [SiteReportController::class, 'customerOrder'])->name('report.customer');
+        Route::get('/sales', [SiteReportController::class, 'sales'])->name('report.sales');
+        Route::get('/returns', [SiteReportController::class, 'customerReturn'])->name('report.return');
+        Route::get('/shipping', [SiteReportController::class, 'shipping'])->name('report.shipping');
+        Route::get('/product', [SiteReportController::class, 'product'])->name('report.product');
+    });
+
+
+
+    Route::get('/settings', [SettingController::class, 'index'])->name('setings');
 });
-
-Route::group(['prefix' => 'category'], function () {
-
-    // GETS
-    Route::get('/lists', [CategoriesController::class, 'index'])->name('categories');
-    Route::get('/add', [CategoriesController::class, 'create'])->name('category.add');
-    Route::get('/edit/{slug}/{id}', [CategoriesController::class, 'edit'])->name('category.edit')->where(['slug' => '^([0-9A-Za-z\-]+)', 'id' => '[0-9]+']);
-
-    // POST
-    Route::post('/create', [CategoriesController::class, 'store'])->name('create_category');
-    Route::put('/update', [CategoriesController::class, 'update'])->name('category.update');
-    Route::delete('/delete', [CategoriesController::class, 'destroy'])->name('delete_category');
-});
-
-
-
-Route::group(['prefix' => 'customer'], function () {
-    //GETS
-    Route::get('/', [CustomerController::class, 'index'])->name('customers');
-    Route::get('/add', [CustomerControllerr::class, 'create'])->name('customer.add');
-    Route::get('/edit/{$id}', [CustomerController::class, 'edit'])->name('customer.edit');
-    Route::get('/view/{id}', [CustomerController::class, 'show'])->name('customer.view');
-
-    Route::post('/store', [CustomerController::class, 'store'])->name('customer.store');
-    Route::put('/update-profile', [CustomerController::class, 'update'])->name('customer.update-profile');
-    Route::put('/update-address', [CustomerController::class, 'update'])->name('customer.update-address');
-    // Route::put('/update-address', [CuupdatemerController::class, 'update'])->name('customer.updatee');
-    Route::delete('delete', [CustomerController::class, 'destroy'])->name('customer.delete');
-});
-
-Route::group(['prefix' => 'order'], function () {
-    // GETS
-    Route::get('/', [OrderController::class, 'index'])->name('orders');
-    Route::get('/add', [OrderController::class, 'create'])->name('order.add');
-    Route::get('/edit/{order_code}/{id}', [OrderController::class, 'edit'])->name('order.edit');
-    Route::get('/view/{order_code}/{id}', [OrderController::class, 'show'])->where(['order_code' => '([A-Za-z0-9\-]+)', 'id' => '[0-9]+'])->name('order.view');
-
-
-    // POSTS
-    Route::post('store', [OrderController::class, 'store'])->name('order.store');
-    Route::put('/update', [OrderController::class, 'update'])->name('order.update');
-
-    // DELETE
-    Route::delete('/delete', [OrderController::class, 'destroy']);
-});
-
-Route::group(['prefix' => 'report'], function () {
-    // GETS
-    Route::get('/customer_order', [SiteReportController::class, 'customerOrder'])->name('report.customer');
-    Route::get('/sales', [SiteReportController::class, 'sales'])->name('report.sales');
-    Route::get('/returns', [SiteReportController::class, 'customerReturn'])->name('report.return');
-    Route::get('/shipping', [SiteReportController::class, 'shipping'])->name('report.shipping');
-    Route::get('/product', [SiteReportController::class, 'product'])->name('report.product');
-});
-
-
-
-Route::get('/settings', [SettingController::class, 'index'])->name('setings');
-
 
 // clear routes
 Route::get('/clear-config', function () {

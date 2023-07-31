@@ -8,16 +8,23 @@ use App\Models\Product;
 use App\Models\Rating;
 use Exception;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Validator;
 
 class ProductController extends Controller
 {
+
 
     protected $discount = [
         1 => DiscountEnum::NO_DISCOUNT,
         2 => DiscountEnum::PERCENTAGE,
         3 => DiscountEnum::FIXED_PRICE,
     ];
+
+    public function __construct()
+    {
+        $this->middleware('auth:admin');
+    }
 
     public function index()
     {
@@ -40,7 +47,8 @@ class ProductController extends Controller
 
         $data = [
             'pageTitle' => 'Add Product',
-            'categories' => $categories
+            'categories' => $categories,
+            'user' => Auth::guard('admin')->user()
         ];
 
         return view('pages.products.add', $data);
@@ -131,7 +139,8 @@ class ProductController extends Controller
         $data = [
             'pageTitle' => 'Show Product',
             'product' => $product,
-            'categories' => $categories
+            'categories' => $categories,
+            'user' => Auth::guard('admin')->user()
         ];
 
         return view('pages.products.view', $data);
@@ -153,7 +162,8 @@ class ProductController extends Controller
             'pageTitle' => 'Edit Product',
             'product' => $product,
             'categories' => $categories,
-            'ratings' => $rating
+            'ratings' => $rating,
+            'user' => Auth::guard('admin')->user()
         ];
 
         return view('pages.products.edit', $data);

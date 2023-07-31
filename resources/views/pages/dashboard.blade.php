@@ -49,7 +49,7 @@
                 </div>
                 <!--end::Page title-->
                 <!--begin::Actions-->
-                <div class="d-flex align-items-center gap-2 gap-lg-3">
+                {{-- <div class="d-flex align-items-center gap-2 gap-lg-3">
 
 
                     <!--begin::Secondary button-->
@@ -62,7 +62,7 @@
                     <a href="{{ route('product.add') }}" class="btn btn-sm fw-bold btn-primary">
                         Add Product </a>
                     <!--end::Primary button-->
-                </div>
+                </div> --}}
                 <!--end::Actions-->
             </div>
             <!--end::Toolbar container-->
@@ -89,7 +89,7 @@
                                     <!--begin::Info-->
                                     <div class="d-flex align-items-center">
                                         <!--begin::Currency-->
-                                        <span class="fs-4 fw-semibold text-gray-400 me-1 align-self-start">$</span>
+                                        <span class="fs-4 fw-semibold text-gray-400 me-1 align-self-start">&#163;</span>
                                         <!--end::Currency-->
 
                                         <!--begin::Amount-->
@@ -190,14 +190,17 @@
                                     <!--begin::Info-->
                                     <div class="d-flex align-items-center">
                                         <!--begin::Amount-->
-                                        <span class="fs-2hx fw-bold text-dark me-2 lh-1 ls-n2">1,836</span>
+                                        <span
+                                            class="fs-2hx fw-bold text-dark me-2 lh-1 ls-n2">{{ $order['currentMonthOrder'] }}</span>
                                         <!--end::Amount-->
 
                                         <!--begin::Badge-->
-                                        <span class="badge badge-light-danger fs-base">
-                                            <i class="ki-duotone ki-arrow-down fs-5 text-danger ms-n1"><span
+                                        <span
+                                            class="badge badge-light-{{ $order['currentMonthPercentage'] > $order['lastMonthPercentage'] ? 'success' : 'danger' }} fs-base">
+                                            <i
+                                                class="ki-duotone ki-arrow-{{ $order['currentMonthPercentage'] > $order['lastMonthPercentage'] ? 'up' : 'down' }} fs-5 text-{{ $order['currentMonthPercentage'] > $order['lastMonthPercentage'] ? 'success' : 'danger' }} ms-n1"><span
                                                     class="path1"></span><span class="path2"></span></i>
-                                            2.2%
+                                            {{ $order['currentMonthPercentage'] }}%
                                         </span>
                                         <!--end::Badge-->
                                     </div>
@@ -212,7 +215,7 @@
                             <!--end::Header-->
 
                             <!--begin::Card body-->
-                            <div class="card-body d-flex align-items-end pt-0">
+                            {{-- <div class="card-body d-flex align-items-end pt-0">
                                 <!--begin::Progress-->
                                 <div class="d-flex align-items-center flex-column mt-3 w-100">
                                     <div class="d-flex justify-content-between w-100 mt-auto mb-2">
@@ -226,7 +229,7 @@
                                     </div>
                                 </div>
                                 <!--end::Progress-->
-                            </div>
+                            </div> --}}
                             <!--end::Card body-->
                         </div>
                         <!--end::Card widget 5-->
@@ -244,18 +247,21 @@
                                     <!--begin::Info-->
                                     <div class="d-flex align-items-center">
                                         <!--begin::Currency-->
-                                        <span class="fs-4 fw-semibold text-gray-400 me-1 align-self-start">$</span>
+                                        <span class="fs-4 fw-semibold text-gray-400 me-1 align-self-start"> &#163;</span>
                                         <!--end::Currency-->
 
                                         <!--begin::Amount-->
-                                        <span class="fs-2hx fw-bold text-dark me-2 lh-1 ls-n2">2,420</span>
+                                        <span
+                                            class="fs-2hx fw-bold text-dark me-2 lh-1 ls-n2">{{ $order['todayOrderSales'] }}</span>
                                         <!--end::Amount-->
 
                                         <!--begin::Badge-->
-                                        <span class="badge badge-light-success fs-base">
-                                            <i class="ki-duotone ki-arrow-up fs-5 text-success ms-n1"><span
+                                        <span
+                                            class="badge badge-light-{{ $order['todayPerc'] > $order['yesterdayPerc'] ? 'success' : 'danger' }} fs-base">
+                                            <i
+                                                class="ki-duotone ki-arrow-{{ $order['todayPerc'] > $order['yesterdayPerc'] ? 'up' : 'down' }} fs-5 text-{{ $order['todayPerc'] > $order['yesterdayPerc'] ? 'success' : 'danger' }} ms-n1"><span
                                                     class="path1"></span><span class="path2"></span></i>
-                                            2.6%
+                                            {{ $order['todayPerc'] ?? 0 }}%
                                         </span>
                                         <!--end::Badge-->
                                     </div>
@@ -287,7 +293,7 @@
                                 <!--begin::Title-->
                                 <div class="card-title d-flex flex-column">
                                     <!--begin::Amount-->
-                                    <span class="fs-2hx fw-bold text-dark me-2 lh-1 ls-n2">6.3k</span>
+                                    <span class="fs-2hx fw-bold text-dark me-2 lh-1 ls-n2">{{ $customers['total'] }}</span>
                                     <!--end::Amount-->
 
                                     <!--begin::Subtitle-->
@@ -306,33 +312,24 @@
 
                                 <!--begin::Users group-->
                                 <div class="symbol-group symbol-hover flex-nowrap">
-                                    <div class="symbol symbol-35px symbol-circle" data-bs-toggle="tooltip"
-                                        title="Alan Warden">
-                                        <span class="symbol-label bg-warning text-inverse-warning fw-bold">A</span>
-                                    </div>
-                                    <div class="symbol symbol-35px symbol-circle" data-bs-toggle="tooltip"
-                                        title="Michael Eberon">
-                                        <img alt="Pic" src="assets/media/avatars/300-11.jpg" />
-                                    </div>
-                                    <div class="symbol symbol-35px symbol-circle" data-bs-toggle="tooltip"
-                                        title="Susan Redwood">
-                                        <span class="symbol-label bg-primary text-inverse-primary fw-bold">S</span>
-                                    </div>
-                                    <div class="symbol symbol-35px symbol-circle" data-bs-toggle="tooltip"
-                                        title="Melody Macy">
-                                        <img alt="Pic" src="assets/media/avatars/300-2.jpg" />
-                                    </div>
-                                    <div class="symbol symbol-35px symbol-circle" data-bs-toggle="tooltip"
-                                        title="Perry Matthew">
-                                        <span class="symbol-label bg-danger text-inverse-danger fw-bold">P</span>
-                                    </div>
-                                    <div class="symbol symbol-35px symbol-circle" data-bs-toggle="tooltip"
-                                        title="Barry Walter">
-                                        <img alt="Pic" src="assets/media/avatars/300-12.jpg" />
-                                    </div>
+
+                                    @php
+                                        $customerss = $customers['recent'];
+                                    @endphp
+
+                                    @foreach ($customerss as $customer)
+                                        <div class="symbol symbol-35px symbol-circle" data-bs-toggle="tooltip"
+                                            title="{{ $customer->first_name }} {{ $customer->last_name }}">
+                                            <span
+                                                class="symbol-label bg-warning text-inverse-{{($customer->id % 3) === 0 ? 'danger' : (($customer->id % 3) === 1 ? 'warning' : 'primary')}} fw-bold">{{ $customer->first_name[0] }}</span>
+                                        </div>
+                                    @endforeach
+
+
                                     <a href="#" class="symbol symbol-35px symbol-circle" data-bs-toggle="modal"
                                         data-bs-target="#kt_modal_view_users">
-                                        <span class="symbol-label bg-light text-gray-400 fs-8 fw-bold">+42</span>
+                                        <span class="symbol-label bg-light text-gray-400 fs-8 fw-bold">+
+                                            {{ $customers['total'] }}</span>
                                     </a>
                                 </div>
                                 <!--end::Users group-->
@@ -356,117 +353,7 @@
                                 </h3>
                                 <!--end::Title-->
 
-                                <!--begin::Toolbar-->
-                                <div class="card-toolbar">
-                                    <!--begin::Menu-->
-                                    <button
-                                        class="btn btn-icon btn-color-gray-400 btn-active-color-primary justify-content-end"
-                                        data-kt-menu-trigger="click" data-kt-menu-placement="bottom-end"
-                                        data-kt-menu-overflow="true">
 
-                                        <i class="ki-duotone ki-dots-square fs-1"><span class="path1"></span><span
-                                                class="path2"></span><span class="path3"></span><span
-                                                class="path4"></span></i>
-                                    </button>
-
-
-                                    <!--begin::Menu 2-->
-                                    <div class="menu menu-sub menu-sub-dropdown menu-column menu-rounded menu-gray-800 menu-state-bg-light-primary fw-semibold w-200px"
-                                        data-kt-menu="true">
-                                        <!--begin::Menu item-->
-                                        <div class="menu-item px-3">
-                                            <div class="menu-content fs-6 text-dark fw-bold px-3 py-4">Quick Actions
-                                            </div>
-                                        </div>
-                                        <!--end::Menu item-->
-
-                                        <!--begin::Menu separator-->
-                                        <div class="separator mb-3 opacity-75"></div>
-                                        <!--end::Menu separator-->
-
-                                        <!--begin::Menu item-->
-                                        <div class="menu-item px-3">
-                                            <a href="#" class="menu-link px-3">
-                                                New Ticket
-                                            </a>
-                                        </div>
-                                        <!--end::Menu item-->
-
-                                        <!--begin::Menu item-->
-                                        <div class="menu-item px-3">
-                                            <a href="#" class="menu-link px-3">
-                                                New Customer
-                                            </a>
-                                        </div>
-                                        <!--end::Menu item-->
-
-                                        <!--begin::Menu item-->
-                                        <div class="menu-item px-3" data-kt-menu-trigger="hover"
-                                            data-kt-menu-placement="right-start">
-                                            <!--begin::Menu item-->
-                                            <a href="#" class="menu-link px-3">
-                                                <span class="menu-title">New Group</span>
-                                                <span class="menu-arrow"></span>
-                                            </a>
-                                            <!--end::Menu item-->
-
-                                            <!--begin::Menu sub-->
-                                            <div class="menu-sub menu-sub-dropdown w-175px py-4">
-                                                <!--begin::Menu item-->
-                                                <div class="menu-item px-3">
-                                                    <a href="#" class="menu-link px-3">
-                                                        Admin Group
-                                                    </a>
-                                                </div>
-                                                <!--end::Menu item-->
-
-                                                <!--begin::Menu item-->
-                                                <div class="menu-item px-3">
-                                                    <a href="#" class="menu-link px-3">
-                                                        Staff Group
-                                                    </a>
-                                                </div>
-                                                <!--end::Menu item-->
-
-                                                <!--begin::Menu item-->
-                                                <div class="menu-item px-3">
-                                                    <a href="#" class="menu-link px-3">
-                                                        Member Group
-                                                    </a>
-                                                </div>
-                                                <!--end::Menu item-->
-                                            </div>
-                                            <!--end::Menu sub-->
-                                        </div>
-                                        <!--end::Menu item-->
-
-                                        <!--begin::Menu item-->
-                                        <div class="menu-item px-3">
-                                            <a href="#" class="menu-link px-3">
-                                                New Contact
-                                            </a>
-                                        </div>
-                                        <!--end::Menu item-->
-
-                                        <!--begin::Menu separator-->
-                                        <div class="separator mt-3 opacity-75"></div>
-                                        <!--end::Menu separator-->
-
-                                        <!--begin::Menu item-->
-                                        <div class="menu-item px-3">
-                                            <div class="menu-content px-3 py-3">
-                                                <a class="btn btn-primary  btn-sm px-4" href="#">
-                                                    Generate Reports
-                                                </a>
-                                            </div>
-                                        </div>
-                                        <!--end::Menu item-->
-                                    </div>
-                                    <!--end::Menu 2-->
-
-                                    <!--end::Menu-->
-                                </div>
-                                <!--end::Toolbar-->
                             </div>
                             <!--end::Header-->
 
@@ -476,13 +363,14 @@
                                 <div class="px-9 mb-5">
                                     <!--begin::Statistics-->
                                     <div class="d-flex mb-2">
-                                        <span class="fs-4 fw-semibold text-gray-400 me-1">$</span>
-                                        <span class="fs-2hx fw-bold text-gray-800 me-2 lh-1 ls-n2">14,094</span>
+                                        <span class="fs-4 fw-semibold text-gray-400 me-1">&#163;</span>
+                                        <span
+                                            class="fs-2hx fw-bold text-gray-800 me-2 lh-1 ls-n2">{{ $order['currentMonthCompletedSales'] }}</span>
                                     </div>
                                     <!--end::Statistics-->
 
                                     <!--begin::Description-->
-                                    <span class="fs-6 fw-semibold text-gray-400">Another $48,346 to Goal</span>
+                                    {{-- <span class="fs-6 fw-semibold text-gray-400">Another $48,346 to Goal</span> --}}
                                     <!--end::Description-->
                                 </div>
                                 <!--end::Statistics-->
@@ -512,112 +400,6 @@
                                 <!--begin::Title-->
                                 <h3 class="fw-bold text-gray-900 m-0">Recent Orders</h3>
                                 <!--end::Title-->
-
-                                <!--begin::Menu-->
-                                <button
-                                    class="btn btn-icon btn-color-gray-400 btn-active-color-primary justify-content-end"
-                                    data-kt-menu-trigger="click" data-kt-menu-placement="bottom-end"
-                                    data-kt-menu-overflow="true">
-
-                                    <i class="ki-duotone ki-dots-square fs-1"><span class="path1"></span><span
-                                            class="path2"></span><span class="path3"></span><span
-                                            class="path4"></span></i>
-                                </button>
-
-                                <!--begin::Menu 2-->
-                                <div class="menu menu-sub menu-sub-dropdown menu-column menu-rounded menu-gray-800 menu-state-bg-light-primary fw-semibold w-200px"
-                                    data-kt-menu="true">
-                                    <!--begin::Menu item-->
-                                    <div class="menu-item px-3">
-                                        <div class="menu-content fs-6 text-dark fw-bold px-3 py-4">Quick Actions</div>
-                                    </div>
-                                    <!--end::Menu item-->
-
-                                    <!--begin::Menu separator-->
-                                    <div class="separator mb-3 opacity-75"></div>
-                                    <!--end::Menu separator-->
-
-                                    <!--begin::Menu item-->
-                                    <div class="menu-item px-3">
-                                        <a href="#" class="menu-link px-3">
-                                            New Ticket
-                                        </a>
-                                    </div>
-                                    <!--end::Menu item-->
-
-                                    <!--begin::Menu item-->
-                                    <div class="menu-item px-3">
-                                        <a href="#" class="menu-link px-3">
-                                            New Customer
-                                        </a>
-                                    </div>
-                                    <!--end::Menu item-->
-
-                                    <!--begin::Menu item-->
-                                    <div class="menu-item px-3" data-kt-menu-trigger="hover"
-                                        data-kt-menu-placement="right-start">
-                                        <!--begin::Menu item-->
-                                        <a href="#" class="menu-link px-3">
-                                            <span class="menu-title">New Group</span>
-                                            <span class="menu-arrow"></span>
-                                        </a>
-                                        <!--end::Menu item-->
-
-                                        <!--begin::Menu sub-->
-                                        <div class="menu-sub menu-sub-dropdown w-175px py-4">
-                                            <!--begin::Menu item-->
-                                            <div class="menu-item px-3">
-                                                <a href="#" class="menu-link px-3">
-                                                    Admin Group
-                                                </a>
-                                            </div>
-                                            <!--end::Menu item-->
-
-                                            <!--begin::Menu item-->
-                                            <div class="menu-item px-3">
-                                                <a href="#" class="menu-link px-3">
-                                                    Staff Group
-                                                </a>
-                                            </div>
-                                            <!--end::Menu item-->
-
-                                            <!--begin::Menu item-->
-                                            <div class="menu-item px-3">
-                                                <a href="#" class="menu-link px-3">
-                                                    Member Group
-                                                </a>
-                                            </div>
-                                            <!--end::Menu item-->
-                                        </div>
-                                        <!--end::Menu sub-->
-                                    </div>
-                                    <!--end::Menu item-->
-
-                                    <!--begin::Menu item-->
-                                    <div class="menu-item px-3">
-                                        <a href="#" class="menu-link px-3">
-                                            New Contact
-                                        </a>
-                                    </div>
-                                    <!--end::Menu item-->
-
-                                    <!--begin::Menu separator-->
-                                    <div class="separator mt-3 opacity-75"></div>
-                                    <!--end::Menu separator-->
-
-                                    <!--begin::Menu item-->
-                                    <div class="menu-item px-3">
-                                        <div class="menu-content px-3 py-3">
-                                            <a class="btn btn-primary  btn-sm px-4" href="#">
-                                                Generate Reports
-                                            </a>
-                                        </div>
-                                    </div>
-                                    <!--end::Menu item-->
-                                </div>
-                                <!--end::Menu 2-->
-
-                                <!--end::Menu-->
                             </div>
                             <!--end::Header-->
 
@@ -1452,9 +1234,12 @@
                             <!--begin::Card header-->
                             <div class="card-header pt-7">
                                 <!--begin::Title-->
+
+
                                 <h3 class="card-title align-items-start flex-column">
                                     <span class="card-label fw-bold text-gray-800">Product Orders</span>
-                                    <span class="text-gray-400 mt-1 fw-semibold fs-6">Avg. 57 orders per day</span>
+                                    <span class="text-gray-400 mt-1 fw-semibold fs-6">Avg.
+                                        {{ $order['average_order_per_day'] }} orders per day</span>
                                 </h3>
                                 <!--end::Title-->
 
@@ -1463,7 +1248,7 @@
                                     <!--begin::Filters-->
                                     <div class="d-flex flex-stack flex-wrap gap-4">
                                         <!--begin::Destination-->
-                                        <div class="d-flex align-items-center fw-bold">
+                                        {{-- <div class="d-flex align-items-center fw-bold">
                                             <!--begin::Label-->
                                             <div class="text-gray-400 fs-7 me-2">Cateogry</div>
                                             <!--end::Label-->
@@ -1479,7 +1264,7 @@
                                                 <option value="b">Category A</option>
                                             </select>
                                             <!--end::Select-->
-                                        </div>
+                                        </div> --}}
                                         <!--end::Destination-->
 
                                         <!--begin::Status-->
@@ -1533,7 +1318,7 @@
                                             <th class="text-end min-w-100px">Created</th>
                                             <th class="text-end min-w-125px">Customer</th>
                                             <th class="text-end min-w-100px">Total</th>
-                                            <th class="text-end min-w-100px">Profit</th>
+                                            {{-- <th class="text-end min-w-100px">Profit</th> --}}
                                             <th class="text-end min-w-50px">Status</th>
                                             <th class="text-end"></th>
                                         </tr>
@@ -1543,7 +1328,7 @@
 
                                     <!--begin::Table body-->
                                     <tbody class="fw-bold text-gray-600">
-                                        <tr data-kt-table-widget-4="subtable_template" class="d-none">
+                                        {{-- <tr data-kt-table-widget-4="subtable_template" class="d-none">
                                             <td colspan="2">
                                                 <div class="d-flex align-items-center gap-3">
                                                     <a href="#"
@@ -1585,246 +1370,16 @@
                                                     32</div>
                                             </td>
                                             <td></td>
-                                        </tr>
+                                        </tr> --}}
 
-                                        <tr>
-                                            <td>
-                                                <a href="apps/ecommerce/catalog/edit-product.html"
-                                                    class="text-gray-800 text-hover-primary">#XGY-346</a>
-                                            </td>
+                                        @php
+                                            $orders = $order['orders'];
+                                        @endphp
 
-                                            <td class="text-end">
-                                                7 min ago
-                                            </td>
+                                        @foreach ($orders as $item)
+                                            <x-dashboard.product-order :order="$item" />
+                                        @endforeach
 
-                                            <td class="text-end">
-                                                <a href="#" class="text-gray-600 text-hover-primary">Albert
-                                                    Flores</a>
-                                            </td>
-
-                                            <td class="text-end">
-                                                $630.00 </td>
-
-                                            <td class="text-end">
-                                                <span class="text-gray-800 fw-bolder">$86.70</span>
-                                            </td>
-
-                                            <td class="text-end">
-                                                <span class="badge py-3 px-4 fs-7 badge-light-warning">Pending</span>
-                                            </td>
-
-                                            <td class="text-end">
-                                                <button type="button"
-                                                    class="btn btn-sm btn-icon btn-light btn-active-light-primary toggle h-25px w-25px"
-                                                    data-kt-table-widget-4="expand_row">
-                                                    <i class="ki-duotone ki-plus fs-4 m-0 toggle-off"></i> <i
-                                                        class="ki-duotone ki-minus fs-4 m-0 toggle-on"></i> </button>
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <td>
-                                                <a href="apps/ecommerce/catalog/edit-product.html"
-                                                    class="text-gray-800 text-hover-primary">#YHD-047</a>
-                                            </td>
-
-                                            <td class="text-end">
-                                                52 min ago
-                                            </td>
-
-                                            <td class="text-end">
-                                                <a href="#" class="text-gray-600 text-hover-primary">Jenny
-                                                    Wilson</a>
-                                            </td>
-
-                                            <td class="text-end">
-                                                $25.00 </td>
-
-                                            <td class="text-end">
-                                                <span class="text-gray-800 fw-bolder">$4.20</span>
-                                            </td>
-
-                                            <td class="text-end">
-                                                <span class="badge py-3 px-4 fs-7 badge-light-primary">Confirmed</span>
-                                            </td>
-
-                                            <td class="text-end">
-                                                <button type="button"
-                                                    class="btn btn-sm btn-icon btn-light btn-active-light-primary toggle h-25px w-25px"
-                                                    data-kt-table-widget-4="expand_row">
-                                                    <i class="ki-duotone ki-plus fs-4 m-0 toggle-off"></i> <i
-                                                        class="ki-duotone ki-minus fs-4 m-0 toggle-on"></i> </button>
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <td>
-                                                <a href="apps/ecommerce/catalog/edit-product.html"
-                                                    class="text-gray-800 text-hover-primary">#SRR-678</a>
-                                            </td>
-
-                                            <td class="text-end">
-                                                1 hour ago
-                                            </td>
-
-                                            <td class="text-end">
-                                                <a href="#" class="text-gray-600 text-hover-primary">Robert
-                                                    Fox</a>
-                                            </td>
-
-                                            <td class="text-end">
-                                                $1,630.00 </td>
-
-                                            <td class="text-end">
-                                                <span class="text-gray-800 fw-bolder">$203.90</span>
-                                            </td>
-
-                                            <td class="text-end">
-                                                <span class="badge py-3 px-4 fs-7 badge-light-warning">Pending</span>
-                                            </td>
-
-                                            <td class="text-end">
-                                                <button type="button"
-                                                    class="btn btn-sm btn-icon btn-light btn-active-light-primary toggle h-25px w-25px"
-                                                    data-kt-table-widget-4="expand_row">
-                                                    <i class="ki-duotone ki-plus fs-4 m-0 toggle-off"></i> <i
-                                                        class="ki-duotone ki-minus fs-4 m-0 toggle-on"></i> </button>
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <td>
-                                                <a href="apps/ecommerce/catalog/edit-product.html"
-                                                    class="text-gray-800 text-hover-primary">#PXF-534</a>
-                                            </td>
-
-                                            <td class="text-end">
-                                                3 hour ago
-                                            </td>
-
-                                            <td class="text-end">
-                                                <a href="#" class="text-gray-600 text-hover-primary">Cody
-                                                    Fisher</a>
-                                            </td>
-
-                                            <td class="text-end">
-                                                $119.00 </td>
-
-                                            <td class="text-end">
-                                                <span class="text-gray-800 fw-bolder">$12.00</span>
-                                            </td>
-
-                                            <td class="text-end">
-                                                <span class="badge py-3 px-4 fs-7 badge-light-success">Shipped</span>
-                                            </td>
-
-                                            <td class="text-end">
-                                                <button type="button"
-                                                    class="btn btn-sm btn-icon btn-light btn-active-light-primary toggle h-25px w-25px"
-                                                    data-kt-table-widget-4="expand_row">
-                                                    <i class="ki-duotone ki-plus fs-4 m-0 toggle-off"></i> <i
-                                                        class="ki-duotone ki-minus fs-4 m-0 toggle-on"></i> </button>
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <td>
-                                                <a href="apps/ecommerce/catalog/edit-product.html"
-                                                    class="text-gray-800 text-hover-primary">#XGD-249</a>
-                                            </td>
-
-                                            <td class="text-end">
-                                                2 day ago
-                                            </td>
-
-                                            <td class="text-end">
-                                                <a href="#" class="text-gray-600 text-hover-primary">Arlene
-                                                    McCoy</a>
-                                            </td>
-
-                                            <td class="text-end">
-                                                $660.00 </td>
-
-                                            <td class="text-end">
-                                                <span class="text-gray-800 fw-bolder">$52.26</span>
-                                            </td>
-
-                                            <td class="text-end">
-                                                <span class="badge py-3 px-4 fs-7 badge-light-success">Shipped</span>
-                                            </td>
-
-                                            <td class="text-end">
-                                                <button type="button"
-                                                    class="btn btn-sm btn-icon btn-light btn-active-light-primary toggle h-25px w-25px"
-                                                    data-kt-table-widget-4="expand_row">
-                                                    <i class="ki-duotone ki-plus fs-4 m-0 toggle-off"></i> <i
-                                                        class="ki-duotone ki-minus fs-4 m-0 toggle-on"></i> </button>
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <td>
-                                                <a href="apps/ecommerce/catalog/edit-product.html"
-                                                    class="text-gray-800 text-hover-primary">#SKP-035</a>
-                                            </td>
-
-                                            <td class="text-end">
-                                                2 day ago
-                                            </td>
-
-                                            <td class="text-end">
-                                                <a href="#" class="text-gray-600 text-hover-primary">Eleanor
-                                                    Pena</a>
-                                            </td>
-
-                                            <td class="text-end">
-                                                $290.00 </td>
-
-                                            <td class="text-end">
-                                                <span class="text-gray-800 fw-bolder">$29.00</span>
-                                            </td>
-
-                                            <td class="text-end">
-                                                <span class="badge py-3 px-4 fs-7 badge-light-danger">Rejected</span>
-                                            </td>
-
-                                            <td class="text-end">
-                                                <button type="button"
-                                                    class="btn btn-sm btn-icon btn-light btn-active-light-primary toggle h-25px w-25px"
-                                                    data-kt-table-widget-4="expand_row">
-                                                    <i class="ki-duotone ki-plus fs-4 m-0 toggle-off"></i> <i
-                                                        class="ki-duotone ki-minus fs-4 m-0 toggle-on"></i> </button>
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <td>
-                                                <a href="apps/ecommerce/catalog/edit-product.html"
-                                                    class="text-gray-800 text-hover-primary">#SKP-567</a>
-                                            </td>
-
-                                            <td class="text-end">
-                                                7 min ago
-                                            </td>
-
-                                            <td class="text-end">
-                                                <a href="#" class="text-gray-600 text-hover-primary">Dan
-                                                    Wilson</a>
-                                            </td>
-
-                                            <td class="text-end">
-                                                $590.00 </td>
-
-                                            <td class="text-end">
-                                                <span class="text-gray-800 fw-bolder">$50.00</span>
-                                            </td>
-
-                                            <td class="text-end">
-                                                <span class="badge py-3 px-4 fs-7 badge-light-success">Shipped</span>
-                                            </td>
-
-                                            <td class="text-end">
-                                                <button type="button"
-                                                    class="btn btn-sm btn-icon btn-light btn-active-light-primary toggle h-25px w-25px"
-                                                    data-kt-table-widget-4="expand_row">
-                                                    <i class="ki-duotone ki-plus fs-4 m-0 toggle-off"></i> <i
-                                                        class="ki-duotone ki-minus fs-4 m-0 toggle-on"></i> </button>
-                                            </td>
-                                        </tr>
                                     </tbody>
                                     <!--end::Table body-->
                                 </table>
@@ -1841,7 +1396,7 @@
                 <!--begin::Row-->
                 <div class="row gy-5 g-xl-10">
                     <!--begin::Col-->
-                    <div class="col-xl-4">
+                    {{-- <div class="col-xl-4">
 
                         <!--begin::List widget 5-->
                         <div class="card card-flush h-xl-100">
@@ -2470,8 +2025,8 @@
                                             <!--begin::Wrapper-->
                                             <div class="me-3">
                                                 <!--begin::Icon-->
-                                                <img src="assets/media/stock/ecommerce/215.gif"
-                                                    class="w-50px ms-n1 me-1" alt="" />
+                                                <img src="assets/media/stock/ecommerce/215.gif" class="w-50px ms-n1 me-1"
+                                                    alt="" />
                                                 <!--end::Icon-->
 
                                                 <!--begin::Title-->
@@ -2619,8 +2174,8 @@
                                             <!--begin::Wrapper-->
                                             <div class="me-3">
                                                 <!--begin::Icon-->
-                                                <img src="assets/media/stock/ecommerce/192.gif"
-                                                    class="w-50px ms-n1 me-1" alt="" />
+                                                <img src="assets/media/stock/ecommerce/192.gif" class="w-50px ms-n1 me-1"
+                                                    alt="" />
                                                 <!--end::Icon-->
 
                                                 <!--begin::Title-->
@@ -2769,7 +2324,7 @@
                         <!--end::List widget 5-->
 
 
-                    </div>
+                    </div> --}}
                     <!--end::Col-->
 
                     <!--begin::Col-->
@@ -2782,7 +2337,8 @@
                                 <!--begin::Title-->
                                 <h3 class="card-title align-items-start flex-column">
                                     <span class="card-label fw-bold text-dark">Stock Report</span>
-                                    <span class="text-gray-400 mt-1 fw-semibold fs-6">Total 2,356 Items in the
+                                    <span class="text-gray-400 mt-1 fw-semibold fs-6">Total {{ $productCount }} Items in
+                                        the
                                         Stock</span>
                                 </h3>
                                 <!--end::Title-->
@@ -2792,23 +2348,6 @@
                                     <!--begin::Filters-->
                                     <div class="d-flex flex-stack flex-wrap gap-4">
                                         <!--begin::Destination-->
-                                        <div class="d-flex align-items-center fw-bold">
-                                            <!--begin::Label-->
-                                            <div class="text-muted fs-7 me-2">Cateogry</div>
-                                            <!--end::Label-->
-
-                                            <!--begin::Select-->
-                                            <select
-                                                class="form-select form-select-transparent text-dark fs-7 lh-1 fw-bold py-0 ps-3 w-auto"
-                                                data-control="select2" data-hide-search="true"
-                                                data-dropdown-css-class="w-150px" data-placeholder="Select an option">
-                                                <option></option>
-                                                <option value="Show All" selected>Show All</option>
-                                                <option value="a">Category A</option>
-                                                <option value="b">Category B</option>
-                                            </select>
-                                            <!--end::Select-->
-                                        </div>
                                         <!--end::Destination-->
 
                                         <!--begin::Status-->
@@ -2834,8 +2373,9 @@
                                         <!--end::Status-->
 
                                         <!--begin::Search-->
-                                        <a href="apps/ecommerce/catalog/products.html" class="btn btn-light btn-sm">View
-                                            Stock</a>
+                                        <a href="{{ route('products') }}" class="btn btn-light btn-sm">
+                                            View Stock
+                                        </a>
                                         <!--end::Search-->
                                     </div>
                                     <!--begin::Filters-->
@@ -2847,8 +2387,7 @@
                             <!--begin::Card body-->
                             <div class="card-body">
                                 <!--begin::Table-->
-                                <table class="table align-middle table-row-dashed fs-6 gy-3"
-                                    id="kt_table_widget_5_table">
+                                <table class="table align-middle table-row-dashed fs-6 gy-3" id="kt_table_widget_5_table">
                                     <!--begin::Table head-->
                                     <thead>
                                         <!--begin::Table row-->
@@ -2866,254 +2405,9 @@
 
                                     <!--begin::Table body-->
                                     <tbody class="fw-bold text-gray-600">
-                                        <tr>
-                                            <!--begin::Item-->
-                                            <td>
-                                                <a href="apps/ecommerce/catalog/edit-product.html"
-                                                    class="text-dark text-hover-primary">Macbook Air M1</a>
-                                            </td>
-                                            <!--end::Item-->
-
-                                            <!--begin::Product ID-->
-                                            <td class="text-end">
-                                                #XGY-356 </td>
-                                            <!--end::Product ID-->
-
-                                            <!--begin::Date added-->
-                                            <td class="text-end">
-                                                02 Apr, 2023 </td>
-                                            <!--end::Date added-->
-
-                                            <!--begin::Price-->
-                                            <td class="text-end">
-                                                $1,230 </td>
-                                            <!--end::Price-->
-
-                                            <!--begin::Status-->
-                                            <td class="text-end">
-                                                <span class="badge py-3 px-4 fs-7 badge-light-primary">In Stock</span>
-                                            </td>
-                                            <!--end::Status-->
-
-                                            <!--begin::Qty-->
-                                            <td class="text-end" data-order="58">
-                                                <span class="text-dark fw-bold">58 PCS</span>
-                                            </td>
-                                            <!--end::Qty-->
-                                        </tr>
-                                        <tr>
-                                            <!--begin::Item-->
-                                            <td>
-                                                <a href="apps/ecommerce/catalog/edit-product.html"
-                                                    class="text-dark text-hover-primary">Surface Laptop 4</a>
-                                            </td>
-                                            <!--end::Item-->
-
-                                            <!--begin::Product ID-->
-                                            <td class="text-end">
-                                                #YHD-047 </td>
-                                            <!--end::Product ID-->
-
-                                            <!--begin::Date added-->
-                                            <td class="text-end">
-                                                01 Apr, 2023 </td>
-                                            <!--end::Date added-->
-
-                                            <!--begin::Price-->
-                                            <td class="text-end">
-                                                $1,060 </td>
-                                            <!--end::Price-->
-
-                                            <!--begin::Status-->
-                                            <td class="text-end">
-                                                <span class="badge py-3 px-4 fs-7 badge-light-danger">Out of
-                                                    Stock</span>
-                                            </td>
-                                            <!--end::Status-->
-
-                                            <!--begin::Qty-->
-                                            <td class="text-end" data-order="0">
-                                                <span class="text-dark fw-bold">0 PCS</span>
-                                            </td>
-                                            <!--end::Qty-->
-                                        </tr>
-                                        <tr>
-                                            <!--begin::Item-->
-                                            <td>
-                                                <a href="apps/ecommerce/catalog/edit-product.html"
-                                                    class="text-dark text-hover-primary">Logitech MX 250</a>
-                                            </td>
-                                            <!--end::Item-->
-
-                                            <!--begin::Product ID-->
-                                            <td class="text-end">
-                                                #SRR-678 </td>
-                                            <!--end::Product ID-->
-
-                                            <!--begin::Date added-->
-                                            <td class="text-end">
-                                                24 Mar, 2023 </td>
-                                            <!--end::Date added-->
-
-                                            <!--begin::Price-->
-                                            <td class="text-end">
-                                                $64 </td>
-                                            <!--end::Price-->
-
-                                            <!--begin::Status-->
-                                            <td class="text-end">
-                                                <span class="badge py-3 px-4 fs-7 badge-light-primary">In Stock</span>
-                                            </td>
-                                            <!--end::Status-->
-
-                                            <!--begin::Qty-->
-                                            <td class="text-end" data-order="290">
-                                                <span class="text-dark fw-bold">290 PCS</span>
-                                            </td>
-                                            <!--end::Qty-->
-                                        </tr>
-                                        <tr>
-                                            <!--begin::Item-->
-                                            <td>
-                                                <a href="apps/ecommerce/catalog/edit-product.html"
-                                                    class="text-dark text-hover-primary">AudioEngine HD3</a>
-                                            </td>
-                                            <!--end::Item-->
-
-                                            <!--begin::Product ID-->
-                                            <td class="text-end">
-                                                #PXF-578 </td>
-                                            <!--end::Product ID-->
-
-                                            <!--begin::Date added-->
-                                            <td class="text-end">
-                                                24 Mar, 2023 </td>
-                                            <!--end::Date added-->
-
-                                            <!--begin::Price-->
-                                            <td class="text-end">
-                                                $1,060 </td>
-                                            <!--end::Price-->
-
-                                            <!--begin::Status-->
-                                            <td class="text-end">
-                                                <span class="badge py-3 px-4 fs-7 badge-light-danger">Out of
-                                                    Stock</span>
-                                            </td>
-                                            <!--end::Status-->
-
-                                            <!--begin::Qty-->
-                                            <td class="text-end" data-order="46">
-                                                <span class="text-dark fw-bold">46 PCS</span>
-                                            </td>
-                                            <!--end::Qty-->
-                                        </tr>
-                                        <tr>
-                                            <!--begin::Item-->
-                                            <td>
-                                                <a href="apps/ecommerce/catalog/edit-product.html"
-                                                    class="text-dark text-hover-primary">HP Hyper LTR</a>
-                                            </td>
-                                            <!--end::Item-->
-
-                                            <!--begin::Product ID-->
-                                            <td class="text-end">
-                                                #PXF-778 </td>
-                                            <!--end::Product ID-->
-
-                                            <!--begin::Date added-->
-                                            <td class="text-end">
-                                                16 Jan, 2023 </td>
-                                            <!--end::Date added-->
-
-                                            <!--begin::Price-->
-                                            <td class="text-end">
-                                                $4500 </td>
-                                            <!--end::Price-->
-
-                                            <!--begin::Status-->
-                                            <td class="text-end">
-                                                <span class="badge py-3 px-4 fs-7 badge-light-primary">In Stock</span>
-                                            </td>
-                                            <!--end::Status-->
-
-                                            <!--begin::Qty-->
-                                            <td class="text-end" data-order="78">
-                                                <span class="text-dark fw-bold">78 PCS</span>
-                                            </td>
-                                            <!--end::Qty-->
-                                        </tr>
-                                        <tr>
-                                            <!--begin::Item-->
-                                            <td>
-                                                <a href="apps/ecommerce/catalog/edit-product.html"
-                                                    class="text-dark text-hover-primary">Dell 32 UltraSharp</a>
-                                            </td>
-                                            <!--end::Item-->
-
-                                            <!--begin::Product ID-->
-                                            <td class="text-end">
-                                                #XGY-356 </td>
-                                            <!--end::Product ID-->
-
-                                            <!--begin::Date added-->
-                                            <td class="text-end">
-                                                22 Dec, 2023 </td>
-                                            <!--end::Date added-->
-
-                                            <!--begin::Price-->
-                                            <td class="text-end">
-                                                $1,060 </td>
-                                            <!--end::Price-->
-
-                                            <!--begin::Status-->
-                                            <td class="text-end">
-                                                <span class="badge py-3 px-4 fs-7 badge-light-warning">Low
-                                                    Stock</span>
-                                            </td>
-                                            <!--end::Status-->
-
-                                            <!--begin::Qty-->
-                                            <td class="text-end" data-order="8">
-                                                <span class="text-dark fw-bold">8 PCS</span>
-                                            </td>
-                                            <!--end::Qty-->
-                                        </tr>
-                                        <tr>
-                                            <!--begin::Item-->
-                                            <td>
-                                                <a href="apps/ecommerce/catalog/edit-product.html"
-                                                    class="text-dark text-hover-primary">Google Pixel 6 Pro</a>
-                                            </td>
-                                            <!--end::Item-->
-
-                                            <!--begin::Product ID-->
-                                            <td class="text-end">
-                                                #XVR-425 </td>
-                                            <!--end::Product ID-->
-
-                                            <!--begin::Date added-->
-                                            <td class="text-end">
-                                                27 Dec, 2023 </td>
-                                            <!--end::Date added-->
-
-                                            <!--begin::Price-->
-                                            <td class="text-end">
-                                                $1,060 </td>
-                                            <!--end::Price-->
-
-                                            <!--begin::Status-->
-                                            <td class="text-end">
-                                                <span class="badge py-3 px-4 fs-7 badge-light-primary">In Stock</span>
-                                            </td>
-                                            <!--end::Status-->
-
-                                            <!--begin::Qty-->
-                                            <td class="text-end" data-order="124">
-                                                <span class="text-dark fw-bold">124 PCS</span>
-                                            </td>
-                                            <!--end::Qty-->
-                                        </tr>
+                                        @foreach ($products as $item)
+                                            <x-dashboard.product-item :product=$item />
+                                        @endforeach
                                     </tbody>
                                     <!--end::Table body-->
                                 </table>

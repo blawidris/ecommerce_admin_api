@@ -10,8 +10,6 @@ var handles = (function () {
     };
 
     const makeRequest = async (url, formData, type) => {
-
-
         if (type == "DELETE") {
             headers["Content-Type"] = "application/json";
             formData = JSON.stringify(formData);
@@ -127,6 +125,54 @@ var handles = (function () {
                     table.row($(parent)).remove().draw();
                 });
             }, 2000);
+        },
+
+        handleLogin: async function (form, button) {
+            const formData = new FormData(form);
+
+            // const url = "/login";
+            const response = await makeRequest(
+                "/admin/login",
+                formData,
+                "POST"
+            );
+
+            if (response.success) {
+                Swal.fire({
+                    text: response.message,
+                    icon: response.type,
+                    buttonsStyling: false,
+                    confirmButtonText: "Ok, got it!",
+                    customClass: {
+                        confirmButton: "btn btn-primary",
+                    },
+                }).then(function (result) {
+                    
+                     button.removeAttribute("data-kt-indicator");
+                     button.disabled = false;
+
+                    if (result.isConfirmed) {
+                        form.querySelector('[name="email"]').value = "";
+                        form.querySelector('[name="password"]').value = "";
+
+                        //form.submit(); // submit form
+                        var redirectUrl = form.getAttribute(
+                            "data-kt-redirect-url"
+                        );
+
+                        if (redirectUrl) {
+                            location.href = redirectUrl;
+                        }
+                    }
+                });
+            } else {
+
+
+                button.removeAttribute("data-kt-indicator");
+                button.disabled = false;
+
+                popupNotification(response);
+            }
         },
     };
 })();

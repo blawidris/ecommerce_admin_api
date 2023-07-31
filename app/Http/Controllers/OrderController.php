@@ -7,12 +7,17 @@ use App\Models\Order;
 use App\Models\OrderItem;
 use App\Models\Product;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class OrderController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     */
+
+    public function __construct()
+    {
+        $this->middleware('auth:admin');
+    }
+
+
     public function index()
     {
 
@@ -22,7 +27,8 @@ class OrderController extends Controller
 
         $data = [
             'pageTitle' => 'Orders',
-            'orders' => $orders
+            'orders' => $orders,
+            'user' => Auth::guard('admin')->user()
         ];
 
         return view('pages.sales.index', $data);
@@ -38,7 +44,8 @@ class OrderController extends Controller
         $data = [
             'pageTitle' => 'Add Order',
             'invoice' => $invoice,
-            'products' => $products
+            'products' => $products,
+            'user' => Auth::guard('admin')->user()
         ];
 
         return view('pages.sales.add', $data);
@@ -61,7 +68,7 @@ class OrderController extends Controller
             $prod = Product::findorFail('id', $orderItem);
 
             $subtotal += $prod->price * 1;
-        } 
+        }
 
 
     }
@@ -77,7 +84,8 @@ class OrderController extends Controller
 
         $data = [
             'pageTitle' => 'Order',
-            'customerOrder' => $customerOrder
+            'customerOrder' => $customerOrder,
+            'user' => Auth::guard('admin')->user()
         ];
 
         return view('pages.sales.view', $data);
@@ -101,7 +109,8 @@ class OrderController extends Controller
             'products' => $products,
             'order' => $order,
             'orderItems' => $order->items,
-            'countries' => $countries
+            'countries' => $countries,
+            'user' => Auth::guard('admin')->user()
         ];
 
         return view('pages.sales.edit', $data);

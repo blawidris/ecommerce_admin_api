@@ -7,17 +7,24 @@ use App\Models\CustomerAddresses;
 use App\Models\Customers;
 use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
 
 class CustomerController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     */
+
+    public function __construct()
+    {
+        $this->middleware('auth:admin');
+    }
+
+
     public function index()
     {
+
+
         $customers = Cache::remember('customers', 600, function () {
             return Customers::with('user')->orderBy('created_at', 'desc')->get();
         });
@@ -30,7 +37,8 @@ class CustomerController extends Controller
         $data = [
             'pageTitle' => 'Customers',
             'customers' => $customers,
-            'countries' => $countries
+            'countries' => $countries,
+            'user' => Auth::guard('admin')->user()
         ];
 
         return view('pages.customers.index', $data);
@@ -137,7 +145,8 @@ class CustomerController extends Controller
         $data = [
             'pageTitle' => 'Customer',
             'customer' => $customer,
-            'countries' => $countries
+            'countries' => $countries,
+            'user' => Auth::guard('admin')->user()
         ];
 
         return view('pages.customers.view', $data);

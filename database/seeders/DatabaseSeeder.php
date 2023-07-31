@@ -32,17 +32,19 @@ class DatabaseSeeder extends Seeder
         //     'email' => 'test@example.com',
         // ]);
 
-        Country::factory(10)->create();
-        User::factory(10)->create();
-        Customers::factory(10)->create();
-        Category::factory(5)->create();
-        Product::factory(20)->create();
-        Rating::factory(40)->create();
-        Payment::factory(10)->create();
-        Shipping::factory(10)->create();
-        Order::factory(10)->create();
-        OrderItem::factory(50)->create();
-        CustomerAddresses::factory(20)->create();
-        OrderHistory::factory(20)->create();
+        // Country::factory(10)->create();
+        // User::factory(10)->create();
+        // Customers::factory(10)->create();
+        // Category::factory(5)->create();
+        // Product::factory(20)->create();
+        // Rating::factory(40)->create();
+        // Payment::factory(10)->create();
+        // Shipping::factory(10)->create();
+        // Order::factory(10)->create();
+        // OrderItem::factory(50)->create();
+        // CustomerAddresses::factory(20)->create();
+        // OrderHistory::factory(20)->create();
+
+       $this->call(AdminSeeder::class);
     }
 }
