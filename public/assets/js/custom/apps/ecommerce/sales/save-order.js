@@ -243,7 +243,7 @@ var KTAppEcommerceSalesSaveOrder = (function () {
         for (let index = 0; index < targets.length; index++) {
             const element = targets[index];
 
-              const productId = element.getAttribute(
+            const productId = element.getAttribute(
                 "data-kt-ecommerce-edit-product-id"
             );
 
@@ -253,15 +253,13 @@ var KTAppEcommerceSalesSaveOrder = (function () {
                 const elValue = el.value;
 
                 if (elValue === productId) {
-                    el.setAttribute('checked',"checked");
+                    el.setAttribute("checked", "checked");
                 }
             });
-
         }
 
         // targets.forEach((element) => {
         //     //  const element = targets[index];
-
 
         // });
     };
@@ -358,7 +356,9 @@ var KTAppEcommerceSalesSaveOrder = (function () {
                         const order_id =
                             document.querySelector("input[name='id']").value;
 
-                        const url = order_id ? "/order/update" : "/order/store";
+                        const url = order_id
+                            ? "/admin/order/update"
+                            : "/admin/order/store";
                         const method = "POST";
 
                         await handles.formRequest(

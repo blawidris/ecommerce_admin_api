@@ -614,12 +614,12 @@
 
 @section('custom-js')
     <!--begin::Vendors Javascript(used for this page only)-->
-    <script src="assets/plugins/custom/datatables/datatables.bundle.js"></script>
+    <script src="{{ asset('assets/plugins/custom/datatables/datatables.bundle.js') }}"></script>
     <!--end::Vendors Javascript-->
 
     <!--begin::Custom Javascript(used for this page only)-->
-    <script src="assets/js/custom/apps/ecommerce/customers/listing/listing.js"></script>
-    <script src="assets/js/custom/apps/ecommerce/customers/listing/add.js"></script>
+    <script src="{{ asset('assets/js/custom/apps/ecommerce/customers/listing/listing.js') }}"></script>
+    <script src="{{ asset('assets/js/custom/apps/ecommerce/customers/listing/add.js') }}"></script>
     {{-- <script src="assets/js/custom/apps/ecommerce/customers/listing/export.js"></script> --}}
     <!--end::Custom Javascript-->
 @endsection

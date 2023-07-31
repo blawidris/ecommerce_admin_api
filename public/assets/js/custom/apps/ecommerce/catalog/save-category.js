@@ -253,8 +253,8 @@ var KTAppEcommerceSaveCategory = (function () {
                         // console.log(post_id);
                         const method = "POST";
                         const url = post_id
-                            ? "/category/update"
-                            : "/category/create";
+                            ? "/admin/category/update"
+                            : "/admin/category/create";
 
                         await handles.formRequest(
                             url,

@@ -89,7 +89,7 @@ var KTCustomersList = (function () {
                             id: userId,
                         };
 
-                        handles.delete("/customer/delete", data, e, datatable);
+                        handles.delete("/admin/customer/delete", data, e, datatable);
 
                         // Remove current row
                         datatable.row($(parent)).remove().draw();

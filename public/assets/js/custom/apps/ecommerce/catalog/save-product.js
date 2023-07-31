@@ -87,9 +87,7 @@ var KTAppEcommerceSaveProduct = (function () {
 
             // Init tagify --- more info: https://yaireo.github.io/tagify/
             new Tagify(tagify, {
-                whitelist: [
-                   
-                ],
+                whitelist: [],
                 dropdown: {
                     maxItems: 20, // <- mixumum allowed rendered suggestions
                     classname: "tagify__inline__suggestions", // <- custom classname for this dropdown, so it could be targeted
@@ -485,8 +483,8 @@ var KTAppEcommerceSaveProduct = (function () {
 
                         const method = "POST";
                         const link = product_id.value
-                            ? "/product/update"
-                            : "/product/add";
+                            ? "/admin/product/update"
+                            : "/admin/product/add";
 
                         // console.log(form)
                         await handles.formRequest(

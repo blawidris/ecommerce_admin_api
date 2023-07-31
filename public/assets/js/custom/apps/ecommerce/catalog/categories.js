@@ -79,7 +79,7 @@ var KTAppEcommerceCategories = (function () {
                         };
 
                         const response = await handles.delete(
-                            "/category/delete",
+                            "/admin/category/delete",
                             data,
                             e,
                             datatable
