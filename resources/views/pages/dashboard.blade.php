@@ -2333,7 +2333,7 @@
                     <!--end::Col-->
 
                     <!--begin::Col-->
-                    <div class="col-xl-8">
+                    <div class="col-xl-9">
 
                         <!--begin::Table Widget 5-->
                         <div class="card card-flush h-xl-100">
@@ -2433,9 +2433,10 @@
 @endsection
 
 @section('custom-js')
-    <script src="assets/js/widgets.bundle.js"></script>
-    <script src="assets/js/custom/widgets.js"></script>
-    <script src="assets/js/custom/apps/chat/chat.js"></script>
-    <script src="assets/js/custom/utilities/modals/upgrade-plan.js"></script>
-    <script src="assets/js/custom/utilities/modals/users-search.js"></script>
+    {{--
+        <script src="assets/js/widgets.bundle.js"></script>
+        <script src="assets/js/custom/widgets.js"></script>
+        <script src="assets/js/custom/apps/chat/chat.js"></script>
+        <script src="assets/js/custom/utilities/modals/upgrade-plan.js"></script>
+        <script src="assets/js/custom/utilities/modals/users-search.js"></script> --}}
 @endsection
