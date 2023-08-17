@@ -232,7 +232,7 @@
                                         <!--begin::Selected products-->
 
                                         <!--begin::Total price-->
-                                        <div class="fw-bold fs-4">
+                                        <div class="fw-bold fs-4 d-inline-flex gap-0">
                                             Total Cost: &#163;
                                             <span id="kt_ecommerce_edit_order_total_price">
                                                 {{ $order->total_price }}

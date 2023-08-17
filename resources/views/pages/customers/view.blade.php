@@ -342,7 +342,8 @@
                                     <!--begin::Card body-->
                                     <div class="card-body pt-0 pb-5">
                                         <!--begin::Form-->
-                                        <form class="form" action="#" id="kt_ecommerce_customer_profile">
+                                        <form class="form" action="#" id="kt_ecommerce_customer_profile"
+                                            data-kt-redirect="{{ route('customer.view', ['id' => $customer->id]) }}">
 
                                             @method('PUT')
                                             @csrf
@@ -1751,7 +1752,7 @@
                                                         <input class="form-check-input" name="shipping" type="checkbox"
                                                             value="{{ $customer->customerAddress->is_shipping ?? 0 }}"
                                                             id="kt_modal_update_address_billing"
-                                                            {{ $customer->customerAddress->is_shipping?? '' ? 'checked' : '' }} />
+                                                            {{ $customer->customerAddress->is_shipping ?? '' ? 'checked' : '' }} />
                                                         <!--end::Input-->
 
                                                         <!--begin::Label-->
@@ -1927,7 +1928,8 @@
                     <!--end::Modal dialog-->
                 </div>
                 <!--end::Modal - Update password-->
-                <!--begin::Modal - Update email-->
+
+                <!--begin::Modal - Update phone-->
                 <div class="modal fade" id="kt_modal_update_phone" tabindex="-1" aria-hidden="true">
                     <!--begin::Modal dialog-->
                     <div class="modal-dialog modal-dialog-centered mw-650px">
@@ -1952,9 +1954,12 @@
                             <!--begin::Modal body-->
                             <div class="modal-body scroll-y mx-5 mx-xl-15 my-7">
                                 <!--begin::Form-->
-                                <form id="kt_modal_update_phone_form" class="form" action="#">
+                                <form id="kt_modal_update_phone_form" class="form"
+                                    data-kt-redirect="{{ route('customer.view', ['id' => $customer->id]) }}">
                                     <!--begin::Notice-->
-
+                                    @csrf
+                                    @method('PUT')
+                                    <input type="hidden" name="customer_id" value="{{ $customer->id }}">
                                     <!--begin::Notice-->
                                     <div
                                         class="notice d-flex bg-light-primary rounded border-primary border border-dashed mb-9 p-6">
@@ -1990,7 +1995,7 @@
 
                                         <!--begin::Input-->
                                         <input class="form-control form-control-solid" placeholder=""
-                                            name="profile_phone" value="+6141 234 567" />
+                                            name="profile_phone" value="{{ $customer->phone }}" />
                                         <!--end::Input-->
                                     </div>
                                     <!--end::Input group-->

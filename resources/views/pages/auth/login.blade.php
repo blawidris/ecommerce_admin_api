@@ -143,7 +143,7 @@
 
     <!--begin::Javascript-->
     <script>
-        var hostUrl = '{!! url('/') !!}'
+       var hostUrl = '{!! url('/') !!}'
     </script>
 
     <!--begin::Global Javascript Bundle(mandatory for all pages)-->

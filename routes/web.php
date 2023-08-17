@@ -79,8 +79,8 @@ Route::group(['prefix' => 'admin'], function () {
 
         Route::post('/store', [CustomerController::class, 'store'])->name('customer.store');
         Route::put('/update-profile', [CustomerController::class, 'update'])->name('customer.update-profile');
-        Route::put('/update-address', [CustomerController::class, 'update'])->name('customer.update-address');
-        // Route::put('/update-address', [CuupdatemerController::class, 'update'])->name('customer.updatee');
+        Route::put('/update-address', [CustomerController::class, 'changeAddress'])->name('customer.update-address');
+        Route::put('/update-phone', [CuupdatemerController::class, 'changePhone'])->name('customer.update-phone');
         Route::delete('delete', [CustomerController::class, 'destroy'])->name('customer.delete');
     });
 

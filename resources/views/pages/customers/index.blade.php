@@ -608,9 +608,9 @@
 @endsection
 
 <!--begin::Javascript-->
-<script>
+{{-- <script>
     var hostUrl = {{!url('/')!}};
-</script>
+</script> --}}
 
 @section('custom-js')
     <!--begin::Vendors Javascript(used for this page only)-->

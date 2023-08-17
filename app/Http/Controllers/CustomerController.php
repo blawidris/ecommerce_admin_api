@@ -111,8 +111,10 @@ class CustomerController extends Controller
                 'zipcode' => $request->postcode,
                 'country_code' => $request->country,
                 'customer_id' => $createCustomer->id,
-                'is_shipping' => $request->is_shipping
+                'is_shipping' => $request->is_shipping,
+                'created_by' => Auth::guard('admin')->id()
             ];
+
 
 
             CustomerAddresses::create($customerAdData);
@@ -180,6 +182,7 @@ class CustomerController extends Controller
         $customerData = Customers::where('id', $request->customer_id)->update([
             'first_name' => $request->f_name,
             'last_name' => $request->l_name,
+            'updated_by' => Auth::guard('admin')->id()
         ]);
 
 
@@ -203,6 +206,33 @@ class CustomerController extends Controller
 
 
         return response()->json($this->sendMessage('Provided details has been updated'), 200);
+    }
+
+    public function changePhone(Request $req)
+    {
+        $validator = Validator::make(
+            $req->all(),
+            [
+                'customer_id' => 'required',
+                'phone' => 'required'
+            ]
+        );
+
+        if($validator->fails()){
+            return response()->json($this->sendMessage($validator->messages()->first(), 'error', false), 400);
+        }
+
+
+        $updatePhone = Customers::where('id', $req->customer_id)->update([
+            'phone' => $req->phone
+        ]);
+
+        if(!$updatePhone){
+            return response()->json($this->sendMessage('An error occur while updating phone, please try again', 'error', false), 400);
+        }
+
+        return response()->json($this->sendMessage('User phone number successfully updated'), 200);
+
     }
 
     /**

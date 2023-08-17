@@ -88,6 +88,7 @@ class CategoriesController extends Controller
                     'keywords' => $request->meta_keywords,
                 ]),
                 'thumbnail' => $thumbnail,
+                'created_by'=> date('Y-m-d H:i:s')
             ];
 
             // save to database
@@ -174,7 +175,7 @@ class CategoriesController extends Controller
             $data = [
                 'name' => $name,
                 'status' => $request->status,
-                'published_date' => $request->published_date,
+                'published_date' => date('Y-m-d H:i:s'),
                 'description' => $request->description,
                 'meta_tag' => json_encode([
                     'title' => $request->meta_title,
@@ -182,6 +183,7 @@ class CategoriesController extends Controller
                     'keywords' => $request->meta_keywords,
                 ]),
                 'thumbnail' => $thumbnail,
+                'updated_by' => Auth::guard('admin')->id()
             ];
 
             if (!Category::where('id', $id)->update($data)) {
@@ -209,30 +211,4 @@ class CategoriesController extends Controller
             return response()->json(['type' => 'success', 'success' => true, 'message' => 'Category deleted successfully'], 200);
         }
     }
-
-
-    // protected function upload($file, $name, $dir, $oldFile = '')
-    // {
-    //     $ext = $file->getClientOriginalExtension();
-
-    //     $fileDir = $dir . str_replace(' ', '_', strtolower($name));
-    //     $newFile = time() . '.' . $ext;
-
-    //     // set new name
-    //     $fileName = $fileDir . '/' . $newFile;
-
-    //     //check path is not empty
-    //     if (!empty($fileName) && Storage::exists($oldFile)) {
-    //         Storage::delete($oldFile);
-    //     }
-
-
-    //     if (!$file->storeAs("/$fileDir", $newFile)) {
-    //         return ['success' => false];
-    //     } else {
-
-    //         return ['success' => true, 'name' => $fileName];
-    //     }
-
-    // }
 }

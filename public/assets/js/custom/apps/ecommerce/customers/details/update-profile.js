@@ -59,7 +59,7 @@ var KTEcommerceUpdateProfile = (function () {
                         submitButton.disabled = true;
 
                         await handles.formRequest(
-                            "/customer/update-profile",
+                            "/admin/customer/update-profile",
                             form,
                             "POST",
                             submitButton
