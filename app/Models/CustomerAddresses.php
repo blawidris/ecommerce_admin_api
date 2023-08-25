@@ -33,4 +33,10 @@ class CustomerAddresses extends Model
     {
         return $this->hasOne(Country::class, 'code', 'country_code');
     }
+
+
+    public function address()
+    {
+        return $this->belongsTo(Customers::class, 'id', 'customer_id');
+    }
 }

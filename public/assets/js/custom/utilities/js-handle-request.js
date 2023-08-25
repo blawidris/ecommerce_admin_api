@@ -1,6 +1,7 @@
 "use strict";
 
 var handles = (function () {
+
     const _token = document
         .querySelector('meta[name="csrf-token"]')
         .getAttribute("content");
@@ -70,7 +71,7 @@ var handles = (function () {
 
     return {
         formRequest: async function (url, form, type, submitButton) {
-            const formData = new FormData(form);
+            const formData = new FormData(form);    ``
 
             // make a request
             const response = await makeRequest(url, formData, type);
@@ -147,7 +148,7 @@ var handles = (function () {
                         confirmButton: "btn btn-primary",
                     },
                 }).then(function (result) {
-                    
+
                      button.removeAttribute("data-kt-indicator");
                      button.disabled = false;
 

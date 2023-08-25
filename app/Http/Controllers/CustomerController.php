@@ -218,7 +218,7 @@ class CustomerController extends Controller
             ]
         );
 
-        if($validator->fails()){
+        if ($validator->fails()) {
             return response()->json($this->sendMessage($validator->messages()->first(), 'error', false), 400);
         }
 
@@ -227,12 +227,11 @@ class CustomerController extends Controller
             'phone' => $req->phone
         ]);
 
-        if(!$updatePhone){
+        if (!$updatePhone) {
             return response()->json($this->sendMessage('An error occur while updating phone, please try again', 'error', false), 400);
         }
 
         return response()->json($this->sendMessage('User phone number successfully updated'), 200);
-
     }
 
     /**
@@ -256,5 +255,29 @@ class CustomerController extends Controller
 
             return response()->json($this->sendMessage('Customer account deleted successfully'), 200);
         }
+    }
+
+
+    public function getAddress($id)
+
+    {
+        $customer = Customers::with('customerAddress')->findOrFail($id);
+
+
+        if (!$customer) {
+            return response()->json([]);
+        }
+
+        $data = [
+            'address' => $customer->customerAddress->address1,
+            'address2' => $customer->customerAddress->address2,
+            'city' => $customer->customerAddress->city,
+            'state' => $customer->customerAddress->state,
+            'country_code' => $customer->customerAddress->country_code,
+            'zipcode' => $customer->customerAddress->zipcode,
+
+        ];
+
+        return response()->json($data);
     }
 }

@@ -10,6 +10,21 @@ class Shipping extends Model
     use HasFactory;
 
 
+    protected $fillable = [
+        'address',
+        'customer_id',
+        'city',
+        'state',
+        'country_code',
+        'order_id',
+        'shipping_method',
+        'status',
+        'track_code',
+        'zipcode'
+
+    ];
+
+
     public function order()
     {
         return $this->belongsTo(Order::class, 'order_id');

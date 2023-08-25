@@ -1,5 +1,6 @@
 @extends('layouts.master')
 
+@section('pageTitle', $pageTitle)
 
 @section('content')
     <!--begin::Content wrapper-->
@@ -148,6 +149,32 @@
                                     </div>
                                     <!--end::Input group-->
 
+                                    <!--begin::Input group-->
+                                    <div class="fv-row">
+                                        <!--begin::Label-->
+                                        <label class="required form-label">Customer</label>
+                                        <!--end::Label-->
+
+                                        <!--begin::Select2-->
+                                        <select class="form-select mb-2" data-control="select2" data-hide-search="true"
+                                            data-placeholder="Select an option" name="customer_id"
+                                            id="kt_ecommerce_edit_customer">
+                                            <option></option>
+
+                                            @foreach ($customers as $customer)
+                                                <option value="{{ $customer->id }}">{{ $customer->first_name }}
+                                                    {{ $customer->last_name }}</option>
+                                            @endforeach
+
+                                        </select>
+                                        <!--end::Select2-->
+
+                                        <!--begin::Description-->
+                                        <div class="text-muted fs-7">Set the date of the order to process.</div>
+                                        <!--end::Description-->
+                                    </div>
+                                    <!--end::Input group-->
+
                                     {{-- <!--begin::Input group-->
                                     <div class="fv-row">
                                         <!--begin::Label-->
@@ -279,7 +306,7 @@
                                             <!--end::Label-->
 
                                             <!--begin::Input-->
-                                            <input class="form-control" name="billing_order_address_1"
+                                            <input class="form-control" name="billing_address_1"
                                                 placeholder="Address Line 1" value="" />
                                             <!--end::Input-->
                                         </div>
@@ -290,7 +317,7 @@
                                             <!--end::Label-->
 
                                             <!--begin::Input-->
-                                            <input class="form-control" name="billing_order_address_2"
+                                            <input class="form-control" name="billing_address_2"
                                                 placeholder="Address Line 2" />
                                             <!--end::Input-->
                                         </div>
@@ -305,7 +332,7 @@
                                             <!--end::Label-->
 
                                             <!--begin::Input-->
-                                            <input class="form-control" name="billing_order_city" placeholder=""
+                                            <input class="form-control" name="billing_city" placeholder=""
                                                 value="" />
                                             <!--end::Input-->
                                         </div>
@@ -316,7 +343,7 @@
                                             <!--end::Label-->
 
                                             <!--begin::Input-->
-                                            <input class="form-control" name="billing_order_postcode" placeholder=""
+                                            <input class="form-control" name="billing_postcode" placeholder=""
                                                 value="" />
                                             <!--end::Input-->
                                         </div>
@@ -327,7 +354,7 @@
                                             <!--end::Label-->
 
                                             <!--begin::Input-->
-                                            <input class="form-control" name="billing_order_state" placeholder=""
+                                            <input class="form-control" name="billing_state" placeholder=""
                                                 value="" />
                                             <!--end::Input-->
                                         </div>
@@ -342,7 +369,7 @@
 
                                         <!--begin::Select2-->
                                         <select class="form-select" data-placeholder="Select an option"
-                                            id="kt_ecommerce_edit_order_billing_country" name="billing_order_country">
+                                            id="kt_ecommerce_edit_order_billing_country" name="billing_country">
                                             <option></option>
                                             <option value="AF"
                                                 data-kt-select2-country="{{ asset('assets/media/flags/afghanistan.svg') }}">
@@ -1024,7 +1051,7 @@
                                     <!--begin::Checkbox-->
                                     <div class="form-check form-check-custom form-check-solid">
                                         <input class="form-check-input" type="checkbox" value=""
-                                            id="same_as_billing" checked />
+                                            id="same_as_billing" name="use_same_address" checked />
                                         <label class="form-check-label" for="same_as_billing">
                                             Shipping address is the same as billing address
                                         </label>
@@ -1046,7 +1073,7 @@
                                                 <!--end::Label-->
 
                                                 <!--begin::Input-->
-                                                <input class="form-control" name="kt_ecommerce_edit_order_address_1"
+                                                <input class="form-control" name="shipping_address_1"
                                                     placeholder="Address Line 1" value="" />
                                                 <!--end::Input-->
                                             </div>
@@ -1057,7 +1084,7 @@
                                                 <!--end::Label-->
 
                                                 <!--begin::Input-->
-                                                <input class="form-control" name="kt_ecommerce_edit_order_address_2"
+                                                <input class="form-control" name="shipping_address_2"
                                                     placeholder="Address Line 2" />
                                                 <!--end::Input-->
                                             </div>
@@ -1072,8 +1099,8 @@
                                                 <!--end::Label-->
 
                                                 <!--begin::Input-->
-                                                <input class="form-control" name="kt_ecommerce_edit_order_city"
-                                                    placeholder="" value="" />
+                                                <input class="form-control" name="shipping_city" placeholder=""
+                                                    value="" />
                                                 <!--end::Input-->
                                             </div>
 
@@ -1083,8 +1110,8 @@
                                                 <!--end::Label-->
 
                                                 <!--begin::Input-->
-                                                <input class="form-control" name="kt_ecommerce_edit_order_postcode"
-                                                    placeholder="" value="" />
+                                                <input class="form-control" name="shipping_postcode" placeholder=""
+                                                    value="" />
                                                 <!--end::Input-->
                                             </div>
 
@@ -1094,8 +1121,8 @@
                                                 <!--end::Label-->
 
                                                 <!--begin::Input-->
-                                                <input class="form-control" name="kt_ecommerce_edit_order_state"
-                                                    placeholder="" value="" />
+                                                <input class="form-control" name="shipping_state" placeholder=""
+                                                    value="" />
                                                 <!--end::Input-->
                                             </div>
                                         </div>
@@ -1109,7 +1136,7 @@
 
                                             <!--begin::Select2-->
                                             <select class="form-select" data-placeholder="Select an option"
-                                                id="kt_ecommerce_edit_order_shipping_country">
+                                                id="kt_ecommerce_edit_order_shipping_country" name="shipping_country">
                                                 <option></option>
                                                 <option value="AF"
                                                     data-kt-select2-country="{{ asset('assets/media/flags/afghanistan.svg') }}">
@@ -1836,11 +1863,6 @@
 
     <!--begin::Custom Javascript(used for this page only)-->
     <script src="{{ asset('assets/js/custom/apps/ecommerce/sales/save-order.js') }}"></script>
-    <script src="{{ asset('assets/js/widgets.bundle.js') }}"></script>
-    <script src="{{ asset('assets/js/custom/widgets.js') }}"></script>
-    <script src="{{ asset('assets/js/custom/apps/chat/chat.js') }}"></script>
-    <script src="{{ asset('assets/js/custom/utilities/modals/upgrade-plan.js') }}"></script>
-    <script src="{{ asset('assets/js/custom/utilities/modals/create-app.js') }}"></script>
     <script src="{{ asset('assets/js/custom/utilities/modals/users-search.js') }}"></script>
     <!--end::Custom Javascript-->
     <!--end::Javascript-->

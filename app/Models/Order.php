@@ -10,6 +10,16 @@ class Order extends Model
     use HasFactory;
 
 
+    protected $fillable = [
+        'order_code',
+        'customer_id',
+        'payment_id',
+        'shipping_id',
+        'status',
+        'total_price'
+    ];
+
+
     public function customer()
     {
         return $this->hasOne(Customers::class, 'id', 'customer_id');

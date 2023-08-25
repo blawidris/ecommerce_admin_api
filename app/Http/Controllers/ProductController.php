@@ -114,7 +114,8 @@ class ProductController extends Controller
                     'keywords' => $request->meta_keyword,
                 ]),
                 'publish_date' => $request->publish_date,
-                'media' => json_encode($request->media)
+                'media' => json_encode($request->media),
+                'created_by' => auth('admin')->id()
             ];
 
             if (!Product::create($data)) {
@@ -186,6 +187,7 @@ class ProductController extends Controller
             'avatar' => 'image|mimes:jpeg,png,jpg,gif,svg|max:2048',
             'description' => 'max:2000',
             'publish_date' => ['date'],
+            'updated_by' => auth('admin')->id()
         ]);
 
         $prod_id = $request->id;
@@ -261,13 +263,23 @@ class ProductController extends Controller
                 return response()->json($this->sendMessage('Product id is missing', 'error', false), 400);
             }
 
+            $product = Product::where('id', $id)->update(
+
+                [
+                    'deleted_by' => auth()->id()
+                ]
+            );
+
             if (!Product::where('id', $id)->delete()) {
                 throw new Exception('Sorry, looks like there are some errors detected, please try again');
             }
 
+
+
+
             return response()->json($this->sendMessage('Product deleted successfully', 'error', true));
         } catch (Exception $e) {
-            response()->json($this->sendMessage($e->getMessage(), 'error', false), 400);
+            echo $this->sendMessage($e->getMessage(), 'error', false);
         }
     }
 

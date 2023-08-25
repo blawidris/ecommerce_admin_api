@@ -82,6 +82,8 @@ Route::group(['prefix' => 'admin'], function () {
         Route::put('/update-address', [CustomerController::class, 'changeAddress'])->name('customer.update-address');
         Route::put('/update-phone', [CuupdatemerController::class, 'changePhone'])->name('customer.update-phone');
         Route::delete('delete', [CustomerController::class, 'destroy'])->name('customer.delete');
+
+        Route::get('/address/{id}', [CustomerController::class, 'getAddress'])->name('customer.address');
     });
 
     Route::group(['prefix' => 'order'], function () {

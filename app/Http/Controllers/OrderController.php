@@ -3,9 +3,12 @@
 namespace App\Http\Controllers;
 
 use App\Models\Country;
+use App\Models\Customers;
 use App\Models\Order;
 use App\Models\OrderItem;
 use App\Models\Product;
+use App\Models\Shipping;
+use Exception;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
@@ -42,49 +45,142 @@ class OrderController extends Controller
         $products = Product::all();
 
         $data = [
-            'pageTitle' => 'Add Order',
+            'pageTitle' => 'Create New Order',
             'invoice' => $invoice,
             'products' => $products,
-            'user' => Auth::guard('admin')->user()
+            'user' => Auth::guard('admin')->user(),
+            'customers' => Customers::orderBy('id', 'desc')->get()
         ];
 
         return view('pages.sales.add', $data);
     }
+
 
     /**
      * Store a newly created resource in storage.
      */
     public function store(Request $request)
     {
-        $order_code = $$request->invoice;
-        $total_amount = 0;
-        $subtotal = 0;
 
-        $orderIds = $request->product;
+        $customerId = $request->customer_id;
+        $payment_method = $request->payment_method;
+        $shipping_method = $request->shipping_method;
+        $order_code =  $request->invoice;
+        $productIds =  $request->product;
 
-        // calculate subtotal
-        foreach ($orderIds as $orderItem) {
 
-            $prod = Product::findorFail('id', $orderItem);
+        $billingData = [
+            'address1' => $request->billing_address_1,
+            'address2' => $request->billing_address_2,
+            'city' => $request->billing_city,
+            'state' => $request->billing_state,
+            'zipcode' => $request->billing_postcode,
+            'country_code' => "BIH",
+        ];
 
-            $subtotal += $prod->price * 1;
+
+        // store shipping
+        if ($request->has('use_same_address')) {
+
+            $shippingData = [
+                'address' => $request->billing_address_1,
+                'city' => $request->billing_city,
+                'state' => $request->billing_state,
+                'zipcode' => $request->billing_postcode,
+                'country_code' => 'BIH',
+                'shipping_method' => $shipping_method,
+                'track_code' => $this->random_number(10),
+                'status' => 'pending',
+                'customer_id' => $customerId,
+            ];
+        } else {
+
+            $shippingData = [
+                'customer_id' => $customerId,
+                'address1' => $request->shippping_address_1,
+                'address2' => $request->shippping_address_2,
+                'city' => $request->shippping_city,
+                'state' => $request->shippping_state,
+                'zipcode' => $request->shippping_postcode,
+                'country_code' => $request->shippping_country,
+                'shipping_method' => $shipping_method,
+                'track_code' => $this->random_number(10),
+                'status' => 'pending'
+            ];
         }
 
 
+        try {
+
+            $storeShippingData = Shipping::create($shippingData);
+
+            // fetch product
+            $orderItems = [];
+            $total_price = 0;
+
+            foreach ($productIds as $prodId) {
+
+                $item = Product::findOrFail($prodId);
+
+                // sum total price
+                $itemPrice = $item->price * 1;
+                $total_price += $itemPrice;
+
+                // parse orderItem data
+                $orderItems[$prodId] = [
+                    'product_id' => $prodId,
+                    'unit_price' => $item->price,
+                    'quantity' => 1,
+                ];
+            }
+
+
+            // Save order
+            $order = [
+                'order_code' => $order_code,
+                'customer_id' => $customerId,
+                'shipping_id' => $storeShippingData->id,
+                'total_price' => $total_price,
+                "updated_by" => auth()->user()->id,
+                'status' => 0
+            ];
+
+            $storeOrder = Order::create($order); #store data to db
+
+            #store order items
+            $storeOrderId = $storeOrder->id;
+
+            $updatedOrderItems = array_map(function ($item) use ($storeOrderId) {
+                $item['order_id'] = $storeOrderId;
+
+                return $item;
+            }, $orderItems);
+
+
+            // dd($updatedOrderItems);
+
+            OrderItem::insert($updatedOrderItems);
+
+
+            # update shipping address order id
+            Shipping::where('id', $storeShippingData->id)->update(['order_id' => $storeOrderId]);
+
+
+            return response()->json(['message' => 'Order product has been created', 'success' => true, 'type' => 'success']);
+        } catch (Exception $err) {
+            return response()->json(['message' => 'An error occurred. Please try again later.', 'type' => 'error', 'success' => false], 400);
+        }
     }
 
 
 
-    public function show(string $order_code, int $id)
+    public function show(Order $order)
     {
 
-        $customerOrder = Order::findOrFail($id);
-
-        // dd($customerOrder->items);
 
         $data = [
             'pageTitle' => 'Order',
-            'customerOrder' => $customerOrder,
+            'customerOrder' => $order,
             'user' => Auth::guard('admin')->user()
         ];
 

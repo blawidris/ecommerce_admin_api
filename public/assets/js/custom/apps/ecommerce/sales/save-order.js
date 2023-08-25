@@ -36,6 +36,12 @@ var KTAppEcommerceSalesSaveOrder = (function () {
             return $(span);
         };
 
+        $("#kt_ecommerce_edit_customer").select2({
+            placeholder: "Select a Customer",
+            allowClear: true,
+            minimumResultsForSearch: 10,
+        });
+
         // Init Select2 --- more info: https://select2.org/
         $("#kt_ecommerce_edit_order_billing_country").select2({
             placeholder: "Select a country",
@@ -292,6 +298,21 @@ var KTAppEcommerceSalesSaveOrder = (function () {
                         },
                     },
                 },
+                customer: {
+                    validators: {
+                        notEmpty: {
+                            message: "Customer is required",
+                        },
+                    },
+                },
+
+                product: {
+                    validators: {
+                        notEmpty: {
+                            message: "Customer is required",
+                        },
+                    },
+                },
                 // 'order_date': {
                 //     validators: {
                 //         notEmpty: {
@@ -353,12 +374,8 @@ var KTAppEcommerceSalesSaveOrder = (function () {
                         // Disable submit button whilst loading
                         submitButton.disabled = true;
 
-                        const order_id =
-                            document.querySelector("input[name='id']").value;
+                        const url = "/admin/order/store";
 
-                        const url = order_id
-                            ? "/admin/order/update"
-                            : "/admin/order/store";
                         const method = "POST";
 
                         await handles.formRequest(
@@ -383,6 +400,66 @@ var KTAppEcommerceSalesSaveOrder = (function () {
         });
     };
 
+    const handleSelectedCustomer = () => {
+        $("#kt_ecommerce_edit_customer").on("select2:select", async (e) => {
+            e.preventDefault();
+
+            // select input data
+
+            let address1 = document.querySelector(
+                "input[name=billing_address_1]"
+            );
+            let address2 = document.querySelector(
+                "input[name=billing_address_2]"
+            );
+            let city = document.querySelector("input[name=billing_city]");
+            let state = document.querySelector("input[name=billing_state]");
+            let zipcode = document.querySelector(
+                "input[name=billing_postcode]"
+            );
+
+            let country = document.getElementById(
+                "kt_ecommerce_edit_order_billing_country"
+            );
+
+            const url = "/admin/customer/address/" + e.params.data.id;
+
+            try {
+                let response = await fetch(url).then((result) => {
+                    if (!result.ok) {
+                        throw new Error("User information empty");
+                    }
+
+                    return result.json();
+                });
+
+                // set value to input
+                address1.value = response.address;
+                address2.value = response.address2;
+                city.value = response.city;
+                state.value = response.state;
+                zipcode.value = response.zipcode;
+
+                // set seleted country
+                const selectedOption = country.querySelector(
+                    `[value="${response.country}"]`
+                );
+
+                if (selectedOption) {
+                    selectedOption.selected = true;
+                }
+            } catch (error) {
+                console.error(error);
+
+                address1.value = "";
+                address2.value = "";
+                city.value = "";
+                state.value = "";
+                zipcode.value = "";
+            }
+        });
+    };
+
     // Public methods
     return {
         init: function () {
@@ -392,6 +469,7 @@ var KTAppEcommerceSalesSaveOrder = (function () {
             handleProductSelect();
             handleSubmit();
             handleSelectedProduct();
+            handleSelectedCustomer();
         },
     };
 })();
