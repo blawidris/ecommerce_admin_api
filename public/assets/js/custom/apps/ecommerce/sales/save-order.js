@@ -374,7 +374,7 @@ var KTAppEcommerceSalesSaveOrder = (function () {
                         // Disable submit button whilst loading
                         submitButton.disabled = true;
 
-                        const url = "/admin/order/store";
+                        const url = "/order/store";
 
                         const method = "POST";
 

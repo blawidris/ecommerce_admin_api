@@ -29,7 +29,7 @@ use Illuminate\Support\Facades\Route;
 Route::group(['prefix' => 'admin'], function () {
 
 
-    Route::get('/', [LoginController::class, 'login'])->name('auth.login');
+    Route::get('/', [LoginController::class, 'login'])->name('login');
     Route::get('/logout', [LoginController::class, 'logout'])->name('auth.logout');
     Route::get('/reset-password', [HomeController::class, 'resetPassword'])->name('auth.reset_password');
 
@@ -73,14 +73,14 @@ Route::group(['prefix' => 'admin'], function () {
     Route::group(['prefix' => 'customer'], function () {
         //GETS
         Route::get('/', [CustomerController::class, 'index'])->name('customers');
-        Route::get('/add', [CustomerControllerr::class, 'create'])->name('customer.add');
+        Route::get('/add', [CustomerController::class, 'create'])->name('customer.add');
         Route::get('/edit/{$id}', [CustomerController::class, 'edit'])->name('customer.edit');
         Route::get('/view/{id}', [CustomerController::class, 'show'])->name('customer.view');
 
         Route::post('/store', [CustomerController::class, 'store'])->name('customer.store');
         Route::put('/update-profile', [CustomerController::class, 'update'])->name('customer.update-profile');
         Route::put('/update-address', [CustomerController::class, 'changeAddress'])->name('customer.update-address');
-        Route::put('/update-phone', [CuupdatemerController::class, 'changePhone'])->name('customer.update-phone');
+        Route::put('/update-phone', [CustomerController::class, 'changePhone'])->name('customer.update-phone');
         Route::delete('delete', [CustomerController::class, 'destroy'])->name('customer.delete');
 
         Route::get('/address/{id}', [CustomerController::class, 'getAddress'])->name('customer.address');
@@ -112,8 +112,17 @@ Route::group(['prefix' => 'admin'], function () {
     });
 
 
+    Route::group(['prefix' => 'setting'], function () {
 
-    Route::get('/settings', [SettingController::class, 'index'])->name('setings');
+        Route::get('/', [SettingController::class, 'index'])->name('setting.index');
+
+        Route::post('/store', [SettingController::class, 'store'])->name('setting.store');
+        Route::post('/localization', [SettingController::class, 'storeLocalization'])->name('setting.localize');
+
+
+        Route::put('/store', [SettingController::class, 'storeLocalization'])->name('setting.store-update');
+        Route::put('/localization', [SettingController::class, 'storeLocalization'])->name('setting.store-localize');
+    });
 });
 
 // clear routes

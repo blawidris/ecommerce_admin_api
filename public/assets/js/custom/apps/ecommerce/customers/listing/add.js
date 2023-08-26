@@ -110,7 +110,7 @@ var KTModalCustomersAdd = (function () {
                         submitButton.disabled = true;
 
                         const response = await handles.formRequest(
-                            "/admin/customer/store",
+                            "/customer/store",
                             form,
                             "POST",
                             submitButton

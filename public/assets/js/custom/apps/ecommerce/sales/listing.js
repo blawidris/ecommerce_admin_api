@@ -140,7 +140,7 @@ var KTAppEcommerceSalesListing = (function () {
                     },
                 }).then(async function (result) {
                     if (result.value) {
-                        const url = "/admin/order/delete";
+                        const url = "/order/delete";
                         const id = d.getAttribute("data-order-id");
 
                         let data = {

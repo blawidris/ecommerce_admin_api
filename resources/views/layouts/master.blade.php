@@ -128,7 +128,7 @@
 
     <!--begin::Javascript-->
     <script>
-        var hostUrl = '{!! url('/') !!}'
+        var hostUrl = '{!! url('/') !!}/admin'
     </script>
 
     <!--begin::Global Javascript Bundle(mandatory for all pages)-->
@@ -152,6 +152,9 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.4/moment.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/dayjs@1/dayjs.min.js"></script>
     <script src="{{ asset('assets/plugins/custom/datatables/datatables.bundle.js') }}"></script>
+
+    <script src="{{ asset('assets/js/custom/utilities/modals/users-search.js') }}"></script>
+
 
     <!--end::Vendors Javascript-->
     {{-- <script>

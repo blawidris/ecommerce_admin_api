@@ -1,7 +1,6 @@
 "use strict";
 
 var handles = (function () {
-
     const _token = document
         .querySelector('meta[name="csrf-token"]')
         .getAttribute("content");
@@ -71,18 +70,20 @@ var handles = (function () {
 
     return {
         formRequest: async function (url, form, type, submitButton) {
-            const formData = new FormData(form);    ``
+            const formData = new FormData(form);
+            ``;
 
             // make a request
             const response = await makeRequest(url, formData, type);
 
-            if (!response.success) {
+            if (!response.ok) {
+                // Show error message on the top of the screen
                 submitButton.removeAttribute("data-kt-indicator");
                 submitButton.disabled = false;
 
                 popupNotification(response);
 
-                console.log(response);
+                // console.log(response);
 
                 return;
             }
@@ -148,9 +149,8 @@ var handles = (function () {
                         confirmButton: "btn btn-primary",
                     },
                 }).then(function (result) {
-
-                     button.removeAttribute("data-kt-indicator");
-                     button.disabled = false;
+                    button.removeAttribute("data-kt-indicator");
+                    button.disabled = false;
 
                     if (result.isConfirmed) {
                         form.querySelector('[name="email"]').value = "";
@@ -167,8 +167,6 @@ var handles = (function () {
                     }
                 });
             } else {
-
-
                 button.removeAttribute("data-kt-indicator");
                 button.disabled = false;
 

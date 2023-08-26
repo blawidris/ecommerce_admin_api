@@ -12,8 +12,11 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('settings', function (Blueprint $table) {
-            $table->id();
-            $table->timestamps();
+            // $table->id();
+            $table->enum('tab', [1, 2, 3, 4, 5])->primary();
+            $table->enum('name', ['localization', 'store', 'products', 'customers']);
+            $table->jsonb('value')->nullable();
+            // $table->timestamps();
         });
     }
 
