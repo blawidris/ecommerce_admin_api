@@ -6,6 +6,7 @@ use App\Models\Country;
 use App\Models\Customers;
 use App\Models\Order;
 use App\Models\OrderItem;
+use App\Models\Payment;
 use App\Models\Product;
 use App\Models\Shipping;
 use Exception;
@@ -135,12 +136,25 @@ class OrderController extends Controller
             }
 
 
+            // add payment data to db
+
+            $payment = Payment::create(
+                [
+                    'payment_method' => $payment_method,
+                    'created_by' => $customerId,
+                    'amount' => $total_price,
+                    'status' => 'pending'
+                ]
+            );
+
+
             // Save order
             $order = [
                 'order_code' => $order_code,
                 'customer_id' => $customerId,
                 'shipping_id' => $storeShippingData->id,
                 'total_price' => $total_price,
+                'payment_id' => $payment->id,
                 "updated_by" => auth()->user()->id,
                 'status' => 0
             ];
@@ -162,6 +176,7 @@ class OrderController extends Controller
             OrderItem::insert($updatedOrderItems);
 
 
+
             # update shipping address order id
             Shipping::where('id', $storeShippingData->id)->update(['order_id' => $storeOrderId]);
 
@@ -174,13 +189,13 @@ class OrderController extends Controller
 
 
 
-    public function show(Order $order)
+    public function show(Order $order, $id)
     {
 
 
         $data = [
             'pageTitle' => 'Order',
-            'customerOrder' => $order,
+            'customerOrder' => $order->findOrFail($id),
             'user' => Auth::guard('admin')->user()
         ];
 
@@ -189,12 +204,11 @@ class OrderController extends Controller
 
 
 
-    public function edit(string $order_code, int $id)
+    public function edit(Order $order, $id)
     {
 
-        $orderId = $id;
 
-        $order = Order::findOrFail($id);
+        $order = $order->findOrFail($id);
         $products = Product::orderBy('created_at', 'desc')->get();
         $countries = Country::orderBy('code', 'asc')->get();
 
@@ -206,7 +220,9 @@ class OrderController extends Controller
             'order' => $order,
             'orderItems' => $order->items,
             'countries' => $countries,
-            'user' => Auth::guard('admin')->user()
+            'user' => Auth::guard('admin')->user(),
+            'customers' => Customers::orderBy('id', 'desc')->get()
+
         ];
 
         return view('pages.sales.edit', $data);

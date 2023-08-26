@@ -1,6 +1,6 @@
 @extends('layouts.master')
 
-@section('pageTItle', $pageTitle)
+@section('pageTitle', $pageTitle)
 
 @section('content')
     <!--begin::Content wrapper-->
@@ -168,6 +168,34 @@
                                     <!--begin::Input group-->
                                     <div class="fv-row">
                                         <!--begin::Label-->
+                                        <label class="required form-label">Customer</label>
+                                        <!--end::Label-->
+
+                                        <!--begin::Select2-->
+                                        <select class="form-select mb-2" data-control="select2" data-hide-search="true"
+                                            data-placeholder="Select an option" name="customer_id"
+                                            id="kt_ecommerce_edit_customer">
+                                            <option></option>
+
+                                            @foreach ($customers as $customer)
+                                                <option value="{{ $customer->id }}"
+                                                    {{ $customer->id === $order->customer_id ? 'selected' : '' }}>
+                                                    {{ $customer->first_name }}
+                                                    {{ $customer->last_name }}</option>
+                                            @endforeach
+
+                                        </select>
+                                        <!--end::Select2-->
+
+                                        <!--begin::Description-->
+                                        <div class="text-muted fs-7">Set the date of the order to process.</div>
+                                        <!--end::Description-->
+                                    </div>
+                                    <!--end::Input group-->
+
+                                    <!--begin::Input group-->
+                                    <div class="fv-row">
+                                        <!--begin::Label-->
                                         {{-- <label class="required form-label">order Date</label> --}}
                                         <!--end::Label-->
 
@@ -307,7 +335,8 @@
 
                                             {{-- @dd($order->location) --}}
                                             <!--begin::Input-->
-                                            <input class="form-control" name="billing_address" placeholder="Address Line 1"
+                                            <input class="form-control" name="billing_address"
+                                                placeholder="Address Line 1"
                                                 value="{{ $order->customer->customerAddress->address1 ?? '' }}" />
                                             <!--end::Input-->
                                         </div>

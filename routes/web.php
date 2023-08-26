@@ -90,8 +90,8 @@ Route::group(['prefix' => 'admin'], function () {
         // GETS
         Route::get('/', [OrderController::class, 'index'])->name('orders');
         Route::get('/add', [OrderController::class, 'create'])->name('order.add');
-        Route::get('/edit/{order_code}/{id}', [OrderController::class, 'edit'])->name('order.edit');
-        Route::get('/view/{order_code}/{id}', [OrderController::class, 'show'])->where(['order_code' => '([A-Za-z0-9\-]+)', 'id' => '[0-9]+'])->name('order.view');
+        Route::get('/edit/{id}/{order_code}', [OrderController::class, 'edit'])->where(['order_code' => '([A-Za-z0-9\-]+)', 'id' => '[0-9]+'])->name('order.edit');
+        Route::get('/view/{id}/{order_code}', [OrderController::class, 'show'])->where(['order_code' => '([A-Za-z0-9\-]+)', 'id' => '[0-9]+'])->name('order.view');
 
 
         // POSTS
