@@ -169,7 +169,6 @@ var KTAppEcommerceSaveCategory = (function () {
             allowInput: true,
             onChange: function (selectedDates, dateStr, instance) {
                 // console.log(dateStr);
-
                 // datepicker.value =
             },
         });
@@ -253,8 +252,8 @@ var KTAppEcommerceSaveCategory = (function () {
                         // console.log(post_id);
                         const method = "POST";
                         const url = post_id
-                            ? "/admin/category/update"
-                            : "/admin/category/create";
+                            ? "/category/update"
+                            : "/category/create";
 
                         await handles.formRequest(
                             url,

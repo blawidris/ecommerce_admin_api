@@ -5,9 +5,11 @@ use App\Http\Controllers\CategoriesController;
 use App\Http\Controllers\CustomerController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\OrderController;
+use App\Http\Controllers\PostsController;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\SettingController;
 use App\Http\Controllers\SiteReportController;
+use App\Models\Posts;
 use Illuminate\Support\Facades\Artisan;
 use Illuminate\Support\Facades\Route;
 // use Illuminate\Support\Facades\Auth;
@@ -110,6 +112,11 @@ Route::group(['prefix' => 'admin'], function () {
         Route::get('/shipping', [SiteReportController::class, 'shipping'])->name('report.shipping');
         Route::get('/product', [SiteReportController::class, 'product'])->name('report.product');
     });
+
+
+    Route::resource('post', PostsController::class);
+    Route::put('/post/update', [PostsController::class, 'update'])->name('post.updates');
+
 
 
     Route::group(['prefix' => 'setting'], function () {

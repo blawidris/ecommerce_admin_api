@@ -76,7 +76,7 @@ var handles = (function () {
             // make a request
             const response = await makeRequest(url, formData, type);
 
-            if (!response.ok) {
+            if (response.type == "error") {
                 // Show error message on the top of the screen
                 submitButton.removeAttribute("data-kt-indicator");
                 submitButton.disabled = false;

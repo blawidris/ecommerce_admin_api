@@ -28,7 +28,7 @@
                     <ul class="breadcrumb breadcrumb-separatorless fw-semibold fs-7 my-0 pt-1">
                         <!--begin::Item-->
                         <li class="breadcrumb-item text-muted">
-                            <a href="../../../index.html" class="text-muted text-hover-primary">
+                            <a href="{{ route('dashboard') }}" class="text-muted text-hover-primary">
                                 Home </a>
                         </li>
                         <!--end::Item-->
@@ -40,7 +40,7 @@
 
                         <!--begin::Item-->
                         <li class="breadcrumb-item text-muted">
-                            eCommerce </li>
+                            Press </li>
                         <!--end::Item-->
                         <!--begin::Item-->
                         <li class="breadcrumb-item">
@@ -50,7 +50,7 @@
 
                         <!--begin::Item-->
                         <li class="breadcrumb-item text-muted">
-                            Products
+                            Post
                         </li>
                         <!--end::Item-->
 
@@ -79,9 +79,9 @@
                             <!--begin::Search-->
                             <div class="d-flex align-items-center position-relative my-1">
                                 <i class="ki-duotone ki-magnifier fs-3 position-absolute ms-4"><span
-                                        class="path1"></span><span class="path2"></span></i>
-                                        <input type="text" data-kt-ecommerce-product-filter="search"
-                                    class="form-control form-control-solid w-250px ps-12" placeholder="Search Product" />
+                                        class="path1"></span><span class="path2"></span></i> <input type="text"
+                                    data-kt-ecommerce-product-filter="search"
+                                    class="form-control form-control-solid w-250px ps-12" placeholder="Search Post" />
                             </div>
                             <!--end::Search-->
                         </div>
@@ -96,14 +96,13 @@
                                     <option></option>
                                     <option value="all">All</option>
                                     <option value="published">Published</option>
-                                    <option value="scheduled">Scheduled</option>
-                                    <option value="inactive">Inactive</option>
+                                    <option value="draft">Draft</option>
                                 </select>
                                 <!--end::Select2-->
                             </div>
 
                             <!--begin::Add product-->
-                            <a href="{{ route('product.add') }}" class="btn btn-primary">
+                            <a href="{{ route('post.create') }}" class="btn btn-primary">
                                 Add Product
                             </a>
                             <!--end::Add product-->
@@ -119,28 +118,33 @@
                         <table class="table align-middle table-row-dashed fs-6 gy-5" id="kt_ecommerce_products_table">
                             <thead>
                                 <tr class="text-start text-gray-400 fw-bold fs-7 text-uppercase gs-0">
-                                    <th class="w-10px pe-2">
+                                    <th class="w-10px pe-2 sorting_disabled" rowspan="1" colspan="1" aria-label=""
+                                        style="width: 29.9px;">
+
                                         <div class="form-check form-check-sm form-check-custom form-check-solid me-3">
                                             <input class="form-check-input" type="checkbox" data-kt-check="true"
                                                 data-kt-check-target="#kt_ecommerce_products_table .form-check-input"
-                                                value="1" />
+                                                value="1">
                                         </div>
                                     </th>
-                                    <th class="min-w-200px">Product</th>
-                                    <th class="text-end min-w-100px">SKU</th>
-                                    <th class="text-end min-w-70px">Qty</th>
-                                    <th class="text-end min-w-100px">Price</th>
-                                    <th class="text-end min-w-100px">Rating</th>
-                                    <th class="text-end min-w-100px">Status</th>
-                                    <th class="text-end min-w-70px">Actions</th>
+                                    <th class="min-w-250px sorting" tabindex="0"
+                                        aria-controls="kt_ecommerce_product_table" rowspan="1" colspan="1"
+                                        aria-label="Post: activate to sort column ascending" style="width: 740.963px;">
+                                        Title</th>
+                                    <th class="min-w-150px sorting" tabindex="0"
+                                        aria-controls="kt_ecommerce_product_table" rowspan="1" colspan="1"
+                                        aria-label="Post Status: activate to sort column ascending"
+                                        style="width: 198.613px;">Status</th>
+                                    <th class="text-end min-w-70px sorting_disabled" rowspan="1" colspan="1"
+                                        aria-label="Actions" style="width: 130.475px;">Actions
+                                    </th>
                                 </tr>
                             </thead>
                             <tbody class="fw-semibold text-gray-600">
 
 
-                                @foreach ($products as $product)
-                                    {{-- @dd($product->ratings()->average('rate')) --}}
-                                    <x-product.item :item="$product" />
+                                @foreach ($posts as $post)
+                                    <x-posts.blog :blog="$post" />
                                 @endforeach
 
                             </tbody>
@@ -171,8 +175,7 @@
     <!--end::Vendors Javascript-->
 
     <!--begin::Custom Javascript(used for this page only)-->
-    <script src="{{ asset('assets/js/custom/apps/ecommerce/catalog/products.js') }}"></script>
-    <script src="{{ asset('assets/js/widgets.bundle.js') }}"></script>
+    <script src="{{ asset('assets/js/custom/apps/ecommerce/post/list.js') }}"></script>
     <!--end::Custom Javascript-->
     <!--end::Javascript-->
 @endsection

@@ -33,7 +33,8 @@ class ProductController extends Controller
 
         $data = [
             'pageTitle' => 'Products',
-            'products' => $products
+            'products' => $products,
+            'user' => Auth::guard('admin')->user()
         ];
 
         return view('pages.products.index', $data);

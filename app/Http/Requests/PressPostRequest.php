@@ -1,15 +1,14 @@
 <?php
 
-namespace App\Http\Requests\Config;
+namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class LocalRequest extends FormRequest
+class PressPostRequest extends FormRequest
 {
-
-    public $stopOnFirstFailure = true;
-
-
+    /**
+     * Determine if the user is authorized to make this request.
+     */
     public function authorize(): bool
     {
         return true;
@@ -23,9 +22,10 @@ class LocalRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'country' => ['required'],
-            'language' => ['required'],
-            'currency' => ['required'],
+            'title' => ['required', 'unique:posts,title', 'max:255'],
+            'cover' => ['image', 'mimetypes:image/jpeg,image/png,image/webp']
         ];
     }
+
+
 }
